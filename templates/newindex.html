@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>castic</title>
+		<link rel="stylesheet" href="Dominic%20Zoerb-Dateien/style.css" type="text/css">
+		<link rel="shortcut icon" type="image/x-icon" href="logo.ico">
+		<script src="Dominic%20Zoerb-Dateien/jquery-3.html"></script>
+		<script src="Dominic%20Zoerb-Dateien/style.js"></script>
+		<style>
+			body{
+				font-size: 1.8em;
+				background-color: #e1e9eb;
+			}	
+			.title{
+				color: black; 
+				margin-top: 13%;
+				border-radius: 8px;
+				display: flex;
+				flex-direction: column;
+
+			}
+			.item{
+				margin-top: 2%;
+				background-color: white;
+				box-shadow: 0 0 5px black;
+				flex-grow: 2;	
+				padding: 3%;
+				order: 2;
+				border-radius: 5px;
+			}
+			nav{
+				box-shadow: 0 0 5px black;
+			}
+			.logo{
+				color: #b4a4b4;
+			}
+			h1 {
+				text-align: center;
+				margin-bottom: 5%;
+			}
+			.header{
+				padding: 5%;
+				background-color: #583D96;
+				color: white;
+				border-radius: 5px;
+				border: 2px solid #597999;
+				margin-top: 5%;
+			}
+			.general{
+				margin-top: 2%;
+				background-color: white;
+				padding: 3%;
+				border-radius: 5px;
+				box-shadow: 0 0 5px black;
+				margin-bottom: 10%;
+			}
+			.sidenav {
+			  height: 100%;
+			  width: 200px;
+			  position: fixed;
+			  z-index: 1;
+			  top: 0;
+			  left: 0;
+			  background-color: white;
+			  overflow-x: hidden;
+			  padding-top: 20px;
+			  padding-top: 15%;
+			}
+
+			.sidenav a {
+			  padding: 6px 6px 6px 32px;
+			  text-decoration: none;
+			  font-size: 25px;
+			  color: #818181;
+			  display: block;
+			}
+
+			.sidenav a:hover {
+			  color: #f1f1f1;
+			}
+			@media screen and (max-height: 450px) {
+			  .sidenav {padding-top: 15px;}
+			  .sidenav a {font-size: 18px;}
+			}
+			.main {
+  				margin-left: 200px; /* Same as the width of the sidenav */
+			}
+			.placeholder{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+		  <ul class="navbar-nav">
+		    <li class="nav-item active navli">
+		      <a class="nav-link" href="#"><img src="castic_logo.png"> castic</a>
+		    </li>
+		    <li class="nav-item navli">
+		      <a class="nav-link" href="#info">Information</a>
+		    </li>
+		    <li class="nav-item navli">
+		      <a class="nav-link" href="#">Configure</a>
+		    </li>
+		    <li class="nav-item navli">
+		      <a class="nav-link" href="#">Settings</a>
+		    </li>
+		    <li class="nav-item navli">
+		      <a class="nav-link" href="#">Docs</a>
+		    </li>
+		  </ul>
+		</nav>
+		<div class="sidenav">
+	        <a href="#main">General information</a>
+	        <a href="#repo1">repository 1</a>
+	  		<a href="#repo2">repository 2</a>
+		    <a href="#repo3">repository 3</a>
+		</div>
+		<div class="main" id="main">
+	   	<div class="container-fluid title">
+			<h1 id="info" class="header">Your backup information.</h1>
+			<div class="general">
+				<h2>General information: </h2>
+				<br>
+				<p>Hostname: host.tld</p>
+				<p>Storage path: /path/to/storage</p>
+				<p>Available disk-space: 2.1TB</p>
+				<p>Last check: 15:02 - 19.12.2018</p>
+				<p>Overall status: <span id="ostatus" style="color: green">healthy</span></p>
+				<img src="castic_logo2.png">
+			</div>
+			<h1 id="info" class="header" style="width: 80%;">Details to each repository.</h1>
+			<span id="repo1" class="placeholder"></span>
+			<div class="item">
+				<p>Name: repository 1</p>
+				<p>Absolute path: /some/path</p>
+				<p>Status: <span style="color: green">healthy</span></p>
+				<p>Used disk space: 1.2TB</p>
+				<p>Last update: 10:21 - 12.12.2018</p>
+			</div>
+			<span id="repo2" class="placeholder"></span>
+			<div class="item">
+				<p>Name: repository 2</p>
+				<p>Absolute path: /some/path</p>
+				<p>Status: <span style="color: green">healthy</span></p>
+				<p>Used disk space: 1.2TB</p>
+				<p>Last update: 10:21 - 12.12.2018</p>
+			</div>
+			<span id="repo3" class="placeholder"></span>
+			<div class="item">
+				<p>Name: repository 3</p>
+				<p>Absolute path: /some/path</p>
+				<p>Status: <span style="color: green">healthy</span></p>
+				<p>Used disk space: 1.2TB</p>
+				<p>Last update: 10:21 - 12.12.2018</p>
+			</div>
+		</div>
+		<br>
+		<script>
+			$('#ostatus').mouseover(function(){
+				$('#ostatus').css('background-color', 'yellow');
+			})
+		</script>
+	</div>
+	</body>
+</html>
