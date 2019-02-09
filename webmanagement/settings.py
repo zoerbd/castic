@@ -56,7 +56,7 @@ ROOT_URLCONF = 'webmanagement.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/var/backup/wrapper/webapp/templates/'],
+        'DIRS': ['/var/www/castic/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
