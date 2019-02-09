@@ -56,7 +56,8 @@ ROOT_URLCONF = 'webmanagement.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/var/www/castic/templates/'],
+        #'DIRS': ['/var/www/castic/templates/'],
+        'DIRS': ['/usr/src/app/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
