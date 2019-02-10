@@ -16,22 +16,12 @@
 		<div class="main" id="main">
 			<div class="container-fluid title">
 				<div class="item" style="margin-top: 10%;">
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
-					<p>Hey I am a setting!</p>
+					{% for conf in config  %}
+					<p>{{conf.name}}</p>
+					<form>
+						<input type="text" value="{{conf.value}}">
+					</form>
+					{% endfor  %}
 				</div>
 			</div>
 		</div>

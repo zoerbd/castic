@@ -1,3 +1,4 @@
 {
-   "backupPath":"/var/backup"
+   "backupPath":"/var/backup",
+   "automaticCheckRythm":"60m"
 }

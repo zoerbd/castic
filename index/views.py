@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import repositories
-import os, sys, json, subprocess, datetime
+import os, sys, json, subprocess, datetime, re
 
 # read config file
 with open('config.json') as jsonFile:
@@ -14,16 +14,18 @@ def index(request):
 	'''
 	repos = repositories.objects.values_list().values()
 	general = {
-		'hostname': 'host.tld',
+		'hostname': __shell__('cat /etc/hostname').replace('\n',''),
 		'path': config['backupPath'],
-		'space': '2.5TB',
+		'space': __getFreeDiskSpace__(),
 		'lastCheck': 'Nov. 12, 2018',
 		'status': 'healthy'
 	}
 	return render(request, 'information.html', {'repos':repos, 'general':general})
 
 def settings(request):
-	return render(request, 'settings.html')
+	conf = [ { 'value':list(config.values())[j], 'name':list(config.keys())[j]}
+		for j in range(len(config)) ]
+	return render(request, 'settings.html', {'config':conf})
 
 def docs(request):
 	return render(request, 'docs.html')
@@ -64,3 +66,44 @@ def __shell__(command):
 	This function makes it less pain to get shell answers
 	'''
 	return subprocess.check_output(command, shell=True).decode('utf-8')
+
+def __getFreeDiskSpace__():
+	'''
+	This function returns available disk space and corresponding mount-path
+	'''
+	# get mount-point	
+	root = config['backupPath'] + '/' # adding / very dirty waround
+	output = __shell__('df -h')
+
+	# iterate through possible mount-points by cutting /<something> after each iterat. 
+	mountPoint = []	
+	while not mountPoint:
+
+		# update root by cutting last /<something>
+		root = '/'.join(root.split('/')[:-1])
+
+		# in last iteration root-var is enpty str, so mounted path is /
+		if not root:
+			root = '/'
+
+		# check if mountpoint exists
+		pattern = re.compile(r'({}/?)\n'.format(root))
+		mountPoint = [match.group(1) for match in pattern.finditer(output)]
+
+		if len(mountPoint) > 1:
+			return __log__('Fatal err __getFreeDiskSpace__(): len of matched\
+			disk-mounts > 1.')
+
+	# get corresponding available space
+	pattern = re.compile(r'(\d+\w)\s+\d%\s+{}\n'.format(root))
+	availableSpace = [match.group(1) for match in pattern.finditer(output)]
+
+	# get corresponding overall space
+	pattern = pattern = re.compile(r'\s+(\d+\w+).+(\d+\w)\s+\d%\s+{}\n'.format(root))
+	overallSpace = [match.group(1) for match in pattern.finditer(output)]
+	
+	return '{} out of {} left on {}'.format(availableSpace[0], overallSpace[0], mountPoint[0])
+
+def __log__(msg):
+	print(msg)
+	return msg
