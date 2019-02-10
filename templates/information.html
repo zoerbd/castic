@@ -1,6 +1,8 @@
 {% extends 'index.html' %}
 {% block content  %}
 		<div class="sidenav">
+                    <a href="/update" style="color: green">Check backups</a>
+		    <br>
                     <a href="#main">General information</a>
 		    {% for repo in repos  %}
                     <a href="#{{repo.name}}">{{repo.name}}</a>

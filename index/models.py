@@ -4,6 +4,6 @@ from django.db import models
 class repositories(models.Model):
 	name = models.CharField(max_length=16)
 	absolPath = models.CharField(max_length=32, primary_key=True)
-	diskSpace = models.CharField(max_length=8)
+	diskSpace = models.CharField(max_length=16)
 	lastUpdate = models.DateField()
 	health = models.IntegerField()
