@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'index',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,8 +57,8 @@ ROOT_URLCONF = 'webmanagement.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #'DIRS': ['/var/www/castic/templates/'],
-        'DIRS': ['/usr/src/app/templates/'],
+        'DIRS': ['/var/www/castic/templates/'],
+        #'DIRS': ['/usr/src/app/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'webmanagement.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django',
+        'NAME': 'castic',
         'USER': 'postgres',
         'PASSWORD': 'AllgemeineAblage',
         'HOST': 'localhost',

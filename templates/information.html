@@ -2,49 +2,39 @@
 {% block content  %}
 		<div class="sidenav">
                     <a href="#main">General information</a>
-                    <a href="#repo1">repository 1</a>
-                    <a href="#repo2">repository 2</a>
-                    <a href="#repo3">repository 3</a>
+		    {% for repo in repos  %}
+                    <a href="#{{repo.name}}">{{repo.name}}</a>
+		    {% endfor  %}
                 </div>
                 <div class="main" id="main">
                 <div class="container-fluid title">
                         <h1 id="info" class="header">Your backup information.</h1>
                         <div class="general">
                                 <h2>General information: </h2>
-                                <br>
-                                <p>Hostname: host.tld</p>
-                                <p>Storage path: /path/to/storage</p>
-                                <p>Available disk-space: 2.1TB</p>
-                                <p>Last check: 15:02 - 19.12.2018</p>
-                                <p>Overall status: <span id="ostatus" class="status">healthy</span></p>
+                                <br>				
+				<p>Hostname: {{general.hostname}}</p>
+				<p>Storage path: {{general.path}}</p>
+				<p>Available space: {{general.space}}</p>
+				<p>Last check: {{general.lastCheck}}</p>
+                                <p>Overall status: <span id="ostatus" style="color:green">{{general.status}}</span></p>
 				{% load static  %}
                                 <img id="biglogo" src="{% static "logo2.png" %}">
                         </div>
-                        <h1 id="info" class="header" style="width: 80%;">Details to each repository.</h1>
-                        <span id="repo1" class="placeholder"></span>
-                        <div class="item">
-                                <p>Name: repository 1</p>
-                                <p>Absolute path: /some/path</p>
-                                <p>Status: <span class="status">healthy</span></p>
-                                <p>Used disk space: 1.2TB</p>
-                                <p>Last update: 10:21 - 12.12.2018</p>
-                        </div>
-                        <span id="repo2" class="placeholder"></span>
-                        <div class="item">
-                                <p>Name: repository 2</p>
-                                <p>Absolute path: /some/path</p>
-                                <p>Status: <span class="status">healthy</span></p>
-                                <p>Used disk space: 1.2TB</p>
-                                <p>Last update: 10:21 - 12.12.2018</p>
-                        </div>
-                        <span id="repo3" class="placeholder"></span>
-                        <div class="item">
-                                <p>Name: repository 3</p>
-                                <p>Absolute path: /some/path</p>
-                                <p>Status: <span class="status">healthy</span></p>
-                                <p>Used disk space: 1.2TB</p>
-                                <p>Last update: 10:21 - 12.12.2018</p>
-                        </div>
+                        <h1 id="info" class="header">Details to each repository.</h1>
+			{% for repo in repos  %}
+				<span id="{{ repo.name  }}" class="placeholder"></span>
+				<div class="item">
+					<p>Name: {{ repo.name }}</p>
+					<p>Absolute path: {{repo.absolPath}}</p>
+					{% if repo.health %}
+						<p>Status: <span style="color:green">healthy</span></p>
+					{% else %}
+						<p>Status: <span style="color:red">not healthy</span></p>
+					{% endif %}
+					<p>Used disk space: {{repo.diskSpace}}</p>
+					<p>Last update: {{repo.lastUpdate}}</p>
+				</div>
+			{% endfor  %}
                 <script>
                         $('.status').mouseover(function(){
                                 $(this).css('background-color', '#ecf1df');
@@ -55,15 +45,6 @@
                                 $(this).css('background-color', 'white');
                                 $(this).css('padding', '0px');
                         })
-                        /*
-                        $('img').mouseover(function(){
-                                $('#biglogodiv').animate({opacity: '0.5'});
-                                $(this).css('box-shadow', '0 0 10px #000000');
-                        })
-                        $('img').mouseout(function(){
-                                $(this).css('box-shadow', '0 0 0 #000000');
-                        })
-                        */
                         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
                                 $('.sidenav').css('display', 'none');
                                 $('#main').css('width', '100%');
