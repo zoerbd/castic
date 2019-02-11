@@ -1,27 +1,26 @@
 {% extends 'index.html' %}
 {% block content %}
                 <div class="sidenav">
-		    <!--
-                    {% for repo in repos  %}
-                    <a href="#{{repo.name}}">{{repo.name}}</a>
-                    {% endfor  %}
-		    -->
-		    <a href="#">Setting1</a>
-		    <a href="#">Setting1</a>
-		    <a href="#">Setting1</a>
-		    <a href="#">Setting1</a>
-		    <a href="#">Setting1</a>
-		    <a href="#">Setting1</a>
+		    {% for cat in cats  %}
+			<a href="#{{cat}}">{{cat}}</a>
+		    {% endfor  %}
                 </div>
 		<div class="main" id="main">
 			<div class="container-fluid title">
 				<div class="item" style="margin-top: 10%;">
-					{% for conf in config  %}
-					<p>{{conf.name}}</p>
 					<form>
-						<input type="text" value="{{conf.value}}">
-					</form>
+					{% for cat in content %}
+						{% for pair in cat  %}	
+						<p>{{pair.key}}</p>
+						<input id="{{pair.key}}" type="text" value="{{pair.value}}">
+						<br>
+						<br>
+						{% endfor  %}
 					{% endfor  %}
+					<br>
+					<button class="btn btn-light">Submit</button>
+					</form>
+
 				</div>
 			</div>
 		</div>

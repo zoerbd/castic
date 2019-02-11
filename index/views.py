@@ -7,7 +7,6 @@ import os, sys, json, subprocess, datetime, re
 with open('config.json') as jsonFile:
 	config = json.load(jsonFile)
 
-# Create your views here.
 def index(request):
 	'''
 	fetch backup data from postgres and render it to template
@@ -15,17 +14,25 @@ def index(request):
 	repos = repositories.objects.values_list().values()
 	general = {
 		'hostname': __shell__('cat /etc/hostname').replace('\n',''),
-		'path': config['backupPath'],
+		'path': config['general']['backupPath'],
 		'space': __getFreeDiskSpace__(),
-		'lastCheck': 'Nov. 12, 2018',
-		'status': 'healthy'
+		'lastCheck': __getLastDate__(),
+		'status': __getOverallHealth__()
 	}
 	return render(request, 'information.html', {'repos':repos, 'general':general})
 
 def settings(request):
-	conf = [ { 'value':list(config.values())[j], 'name':list(config.keys())[j]}
-		for j in range(len(config)) ]
-	return render(request, 'settings.html', {'config':conf})
+	'''
+	Backend for settings-page.
+	Created dynamically, based on config.json.
+	'''
+	cats = list(config.keys())
+	catsContent = [[{'key':list(config[cat].keys())[i], 'value':
+			list(config[cat].values())[i]} for i in 
+			range(len(list(config[cat].keys())))] for cat in cats]
+
+	return render(request, 'settings.html', {"cats":cats, 
+	"content":catsContent})
 
 def docs(request):
 	return render(request, 'docs.html')
@@ -52,13 +59,22 @@ def update(request):
 	# update repository data in db
 	for j,repo in enumerate(repos):
 		statusNum = [1 if stat else 0 for stat in [status[j]]][0]
-		repositories.objects.update_or_create(
-			name = repo.split('/')[-1],
-			absolPath = repo,
-			diskSpace = '1.2TB', #__shell__('du -sh {}'.format(repo)).split(' ')[0],
-			lastUpdate = datetime.datetime.now(),
-			health = statusNum
-		)
+		repoSpace = __shell__('du -sh {}'.format(repo)).split('\t')[0]
+		try:
+			repositories.objects.update_or_create(
+				name = repo.split('/')[-1],
+				absolPath = repo,
+				diskSpace = repoSpace,
+				lastUpdate = datetime.datetime.now(),
+				health = statusNum
+			)
+		except:
+			col = repositories.objects.get(absolPath=repo)
+			col.name = repo.split('/')[-1]
+			col.diskSpace = repoSpace
+			col.lastUpdate = datetime.datetime.now()
+			col.health = statusNum
+			col.save()
 	return redirect('/')
 
 def __shell__(command):
@@ -99,7 +115,7 @@ def __getFreeDiskSpace__():
 	availableSpace = [match.group(1) for match in pattern.finditer(output)]
 
 	# get corresponding overall space
-	pattern = pattern = re.compile(r'\s+(\d+\w+).+(\d+\w)\s+\d%\s+{}\n'.format(root))
+	pattern = re.compile(r'\s+(\d+\w+).+(\d+\w)\s+\d%\s+{}\n'.format(root))
 	overallSpace = [match.group(1) for match in pattern.finditer(output)]
 	
 	return '{} out of {} left on {}'.format(availableSpace[0], overallSpace[0], mountPoint[0])
@@ -107,3 +123,26 @@ def __getFreeDiskSpace__():
 def __log__(msg):
 	print(msg)
 	return msg
+
+def __getLastDate__():
+	'''
+	This function returns last date of overall checks
+	'''
+	values = repositories.objects.values_list().values()
+	for j in range(1, len(values)):
+		latest = values[j]['lastUpdate']
+		if values[j-1]['lastUpdate'] > latest:
+			latest = values[j-1]['lastUpdate']
+	return latest
+
+def __getOverallHealth__():
+	'''
+	This function returns last state of overall health.
+	If any repository is unhealthy -> overall unhealthy,
+	Else healthy.
+	'''
+	values = repositories.objects.values_list().values()
+	for value in values:
+		if not value['health']:
+			return 0
+	return 1

@@ -1,4 +1,16 @@
 {
-   "backupPath":"/var/backup",
-   "automaticCheckRythm":"60m"
+   "general" : {
+	   "backupPath":"/var/backup",
+	   "autoCheck":"60m",
+	   "executeCommandAfterCheck":""
+   },
+   "notify" : {
+	   "mailAddress":"yourmail@something.tld",
+	   "sendMailNotifications":"True",
+	   "warnIfDiskSpaceSmallerThan":"20G",
+	   "mailFrom":"castic@something.tld",
+	   "smtpServer":"smtp.something.tld",
+	   "smtpUsername":"zod",
+	   "smtpPassword":"..............."
+   }
 }

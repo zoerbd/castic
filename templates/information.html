@@ -1,13 +1,14 @@
 {% extends 'index.html' %}
 {% block content  %}
 		<div class="sidenav">
-                    <a href="/update" style="color: green">Check backups</a>
+                    <a href="/update" style="color:green">Check backups</a>
 		    <br>
                     <a href="#main">General information</a>
 		    {% for repo in repos  %}
                     <a href="#{{repo.name}}">{{repo.name}}</a>
 		    {% endfor  %}
                 </div>
+		<br>
                 <div class="main" id="main">
                 <div class="container-fluid title">
                         <h1 id="info" class="header">Your backup information.</h1>
@@ -18,7 +19,11 @@
 				<p>Storage path: {{general.path}}</p>
 				<p>Available space: {{general.space}}</p>
 				<p>Last check: {{general.lastCheck}}</p>
-                                <p>Overall status: <span id="ostatus" style="color:green">{{general.status}}</span></p>
+				{% if general.status  %}
+                                <p>Overall status: <span id="ostatus" class="status" >healthy</span></p>
+				{% else  %}
+                                <p>Overall status: <span id="ostatus" class="status" >unhealthy</span></p>
+				{% endif  %}
 				{% load static  %}
                                 <img id="biglogo" src="{% static "logo2.png" %}">
                         </div>
@@ -29,13 +34,14 @@
 					<p>Name: {{ repo.name }}</p>
 					<p>Absolute path: {{repo.absolPath}}</p>
 					{% if repo.health %}
-						<p>Status: <span style="color:green">healthy</span></p>
+						<p>Status: <span class="status">healthy</span></p>
 					{% else %}
 						<p>Status: <span style="color:red">not healthy</span></p>
 					{% endif %}
 					<p>Used disk space: {{repo.diskSpace}}</p>
 					<p>Last update: {{repo.lastUpdate}}</p>
 				</div>
+				<br>
 			{% endfor  %}
                 <script>
                         $('.status').mouseover(function(){
