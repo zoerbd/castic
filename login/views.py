@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import bcrypt
 from .forms import loginForm
-from .models import login
+from .models import passwd
 
 # Create your views here.
 def login(request):
@@ -22,7 +22,7 @@ def __checkLogin__(user, pw):
 	'''
 	Verify user login
 	'''
-	col = login.objects.get(username=user)
+	col = passwd.objects.get(username=user)
 	if not col:
 		return False
 	return bcrypt.checkpw(pw.encode('utf-8'), col.values()['password'])		# don't know if this shit works
