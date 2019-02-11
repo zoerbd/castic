@@ -44,11 +44,11 @@ def update(request):
 	appRoot = '/var/www/castic'#settings.BASE_DIR
 
 	# correct format of backupPath
-	if config['backupPath'][-1] == '/':
-		config['backupPath'] = config['backupPath'][:-1]
+	if config['general']['backupPath'][-1] == '/':
+		config['general']['backupPath'] = config['general']['backupPath'][:-1]
 	
 	# build path to repos based on given passwords
-	repos = [ '{}/{}'.format(config['backupPath'], directory) 
+	repos = [ '{}/{}'.format(config['general']['backupPath'], directory) 
 		for directory in os.listdir(appRoot + '/passwords')]
 
 	# check if each corresponding repo is valid
@@ -88,7 +88,7 @@ def __getFreeDiskSpace__():
 	This function returns available disk space and corresponding mount-path
 	'''
 	# get mount-point	
-	root = config['backupPath'] + '/' # adding / very dirty waround
+	root = config['general']['backupPath'] + '/' # adding / very dirty waround
 	output = __shell__('df -h')
 
 	# iterate through possible mount-points by cutting /<something> after each iterat. 
