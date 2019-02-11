@@ -85,12 +85,29 @@ def __shell__(command):
 
 def __getFreeDiskSpace__():
 	'''
-	This function returns available disk space and corresponding mount-path
+	This function returns str that describes available disk space and corresponding mount-path
 	'''
 	# get mount-point	
-	root = config['general']['backupPath'] + '/' # adding / very dirty waround
+	root = config['general']['backupPath'] + '/' # adding /: very dirty waround
 	output = __shell__('df -h')
 
+	mountPoint = __getMountPoint__(output, root) # fix this shit here: return value
+	availableSpace = __getAvailableSpace__(output, mountPoint)
+	overallSpace = __getOverallSpace__(output, mountPoint)
+	
+	return '{} out of {} left on {}'.format(availableSpace, overallSpace, mountPoint)
+
+def __getOverallSpace__(output, root):
+	'''
+	Return overall space of disk at mountpoint
+	'''
+	pattern = re.compile(r'\s+(\d+\w+).+(\d+\w)\s+\d%\s+{}\n'.format(root))
+	return [match.group(1) for match in pattern.finditer(output)][0]
+
+def __getMountPoint__(output, root):
+	'''
+	Return mountpoint of backup-disk
+	'''
 	# iterate through possible mount-points by cutting /<something> after each iterat. 
 	mountPoint = []	
 	while not mountPoint:
@@ -107,18 +124,15 @@ def __getFreeDiskSpace__():
 		mountPoint = [match.group(1) for match in pattern.finditer(output)]
 
 		if len(mountPoint) > 1:
-			return __log__('Fatal err __getFreeDiskSpace__(): len of matched\
-			disk-mounts > 1.')
+			return __log__('Fatal err __getFreeDiskSpace__(): len of matched disk-mounts > 1.')
+	return mountPoint
 
-	# get corresponding available space
+def __getAvailableSpace__(output, root):
+	'''
+	Return available disk-space of mount-points disk
+	'''
 	pattern = re.compile(r'(\d+\w)\s+\d%\s+{}\n'.format(root))
-	availableSpace = [match.group(1) for match in pattern.finditer(output)]
-
-	# get corresponding overall space
-	pattern = re.compile(r'\s+(\d+\w+).+(\d+\w)\s+\d%\s+{}\n'.format(root))
-	overallSpace = [match.group(1) for match in pattern.finditer(output)]
-	
-	return '{} out of {} left on {}'.format(availableSpace[0], overallSpace[0], mountPoint[0])
+	return [match.group(1) for match in pattern.finditer(output)][0]
 
 def __log__(msg):
 	print(msg)
