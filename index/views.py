@@ -125,7 +125,7 @@ def __getMountPoint__(output, root):
 
 		if len(mountPoint) > 1:
 			return __log__('Fatal err __getFreeDiskSpace__(): len of matched disk-mounts > 1.')
-	return mountPoint
+	return mountPoint[0]
 
 def __getAvailableSpace__(output, root):
 	'''
