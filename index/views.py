@@ -12,7 +12,7 @@ def index(request):
 	check if user is authenticated and 
 	fetch backup data from postgres and render it to template
 	'''
-	if request.user.is_authenticated:
+	if request.root.is_authenticated:
 		repos = repositories.objects.values_list().values()
 		general = {
 			'hostname': __shell__('cat /etc/hostname').replace('\n',''),
