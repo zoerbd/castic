@@ -28,6 +28,8 @@
 		<div class='container-fluid title'>
 			<form action='/login' method="POST">
 				{%  csrf_token  %}
+				<h1>castic Login</h1>
+				<h2>Dear user, please authenticate yourself to get access.</h2>
 				<div class="fieldWrapper form-group">
 						{{ form.name.errors }}
 						<label for="{{ form.name.id_for_label }}">Username:</label>
