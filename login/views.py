@@ -11,7 +11,7 @@ def login(request):
 	if request.method == 'POST':
 		form = loginForm(request.POST)
 		if form.is_valid():
-			if authenticate(form['username'], form['password']):
+			if authenticate(username=form['name'], password=form['password']):
 				redirect('/')
 	else:
 		form = loginForm()
