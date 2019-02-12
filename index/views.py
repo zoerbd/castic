@@ -12,7 +12,7 @@ def index(request):
 	check if user is authenticated and 
 	fetch backup data from postgres and render it to template
 	'''
-	if request.root.is_authenticated:
+	if request.user.is_authenticated:
 		repos = repositories.objects.values_list().values()
 		general = {
 			'hostname': __shell__('cat /etc/hostname').replace('\n',''),
@@ -23,62 +23,6 @@ def index(request):
 		}
 		return render(request, 'information.html', {'repos':repos, 'general':general})
 	return redirect('/login')
-
-def settings(request):
-	'''
-	Backend for settings-page.
-	Created dynamically, based on config.json.
-	'''
-	cats = list(config.keys())
-	catsContent = [[{'key':list(config[cat].keys())[i], 'value':
-			list(config[cat].values())[i]} for i in 
-			range(len(list(config[cat].keys())))] for cat in cats]
-
-	return render(request, 'settings.html', {"cats":cats, 
-	"content":catsContent})
-
-def docs(request):
-	return render(request, 'docs.html')
-
-def update(request):
-	'''
-	check if repos are healthty and update db
-	'''
-	appRoot = '/var/www/castic'#settings.BASE_DIR
-
-	# correct format of backupPath
-	if config['general']['backupPath'][-1] == '/':
-		config['general']['backupPath'] = config['general']['backupPath'][:-1]
-	
-	# build path to repos based on given passwords
-	repos = [ '{}/{}'.format(config['general']['backupPath'], directory) 
-		for directory in os.listdir(appRoot + '/passwords')]
-
-	# check if each corresponding repo is valid
-	status = [ 'no error' in __shell__('restic -r {} --password-file {} \
-		--no-cache check'.format(repo, appRoot + '/passwords/'
-		+ repo.split('/')[-1])) for repo in repos ]
-
-	# update repository data in db
-	for j,repo in enumerate(repos):
-		statusNum = [1 if stat else 0 for stat in [status[j]]][0]
-		repoSpace = __shell__('du -sh {}'.format(repo)).split('\t')[0]
-		try:
-			repositories.objects.update_or_create(
-				name = repo.split('/')[-1],
-				absolPath = repo,
-				diskSpace = repoSpace,
-				lastUpdate = datetime.datetime.now(),
-				health = statusNum
-			)
-		except:
-			col = repositories.objects.get(absolPath=repo)
-			col.name = repo.split('/')[-1]
-			col.diskSpace = repoSpace
-			col.lastUpdate = datetime.datetime.now()
-			col.health = statusNum
-			col.save()
-	return redirect('/')
 
 def __shell__(command):
 	'''
