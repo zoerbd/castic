@@ -9,17 +9,20 @@ with open('config.json') as jsonFile:
 
 def index(request):
 	'''
+	check if user is authenticated and 
 	fetch backup data from postgres and render it to template
 	'''
-	repos = repositories.objects.values_list().values()
-	general = {
-		'hostname': __shell__('cat /etc/hostname').replace('\n',''),
-		'path': config['general']['backupPath'],
-		'space': __getFreeDiskSpace__(),
-		'lastCheck': __getLastDate__(),
-		'status': __getOverallHealth__()
-	}
-	return render(request, 'information.html', {'repos':repos, 'general':general})
+	if request.user.is_authenticated:
+		repos = repositories.objects.values_list().values()
+		general = {
+			'hostname': __shell__('cat /etc/hostname').replace('\n',''),
+			'path': config['general']['backupPath'],
+			'space': __getFreeDiskSpace__(),
+			'lastCheck': __getLastDate__(),
+			'status': __getOverallHealth__()
+		}
+		return render(request, 'information.html', {'repos':repos, 'general':general})
+	return redirect('/login')
 
 def settings(request):
 	'''
