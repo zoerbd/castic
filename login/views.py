@@ -11,7 +11,8 @@ def login(request):
 		form = loginForm(request.POST)
 		if form.is_valid():
 			if authenticate(username=form['name'], password=form['password']):
-				redirect('/')
+				return redirect('http://zoerb.cc:8080/')
+		return redirect('http://duckduckgo.com/unallowed-access')
 	else:
 		form = loginForm()
 	return render(request, 'login.html', {'form' : form})
