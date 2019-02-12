@@ -17,6 +17,10 @@
 				display: flex;
   				justify-content: center;
   				align-items: center;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: auto;
+				margin-bottom: auto;
 			}
 		</style>
 	</head>
@@ -25,7 +29,7 @@
 			<form action='/login' method="POST">
 				{%  csrf_token  %}
 				{{ form }}
-				<button type="submit" value="enter" class="btn btn-light"></button>
+				<button type="submit" value="enter" class="btn btn-light">Login</button>
 			</form>
 		</div>
 		<script>
