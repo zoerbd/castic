@@ -25,7 +25,7 @@
 			<form action='/login' method="POST">
 				{%  csrf_token  %}
 				{{ form }}
-				<button type="submit" value="enter"></button>
+				<button type="submit" value="enter" class="btn btn-light"></button>
 			</form>
 		</div>
 		<script>
@@ -33,7 +33,6 @@
 			for (let i=0; i < input.length; i++){
 				input[i].addClass = 'form-control';
 			}
-			$('button').addClass = 'btn btn-light';
 		</script>
 	</body>
 </html>
