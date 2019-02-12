@@ -24,7 +24,9 @@
 		<div class='container-fluid title'>
 			<form action='/login' method="POST">
 				{%  csrf_token  %}
-				{{ form }}
+				{{ form.name }}
+				{{ form.password }}
+				{{ form.submit }}
 				<input type="submit" value="enter">
 			</form>
 		</div>
