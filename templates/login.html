@@ -11,7 +11,7 @@
 		<script src="{% static "jquery-3.3.1.min.js" %}"></script>
 		<script src="{% static "style.js" %}"></script>
 		<style>
-			.title{
+			.title {
 				color: black; 
 				border-radius: 8px;
 				display: flex;
@@ -24,10 +24,8 @@
 		<div class='container-fluid title'>
 			<form action='/login' method="POST">
 				{%  csrf_token  %}
-				{{ form.name }}
-				{{ form.password }}
-				{{ form.submit }}
-				<input type="submit" value="enter">
+				{{ form }}
+				<button type="submit" value="enter"></button>
 			</form>
 		</div>
 		<script>
@@ -35,6 +33,7 @@
 			for (let i=0; i < input.length; i++){
 				input[i].addClass = 'form-control';
 			}
+			$('button').addClass = 'btn btn-light';
 		</script>
 	</body>
 </html>
