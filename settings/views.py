@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import json
 
 # read config file
 with open('config.json') as jsonFile:
