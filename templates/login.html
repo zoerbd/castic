@@ -28,7 +28,16 @@
 		<div class='container-fluid title'>
 			<form action='/login' method="POST">
 				{%  csrf_token  %}
-				{{ form }}
+				<div class="fieldWrapper form-group">
+						{{ form.name.errors }}
+						<label for="{{ form.name.id_for_label }}">Username:</label>
+						{{ form.name }}
+				</div>
+				<div class="fieldWrapper form-group">
+						{{ form.password.errors }}
+						<label for="{{ form.password.id_for_label }}">Password:</label>
+						{{ form.password }}
+				</div>
 				<button type="submit" value="enter" class="btn btn-light">Login</button>
 			</form>
 		</div>
