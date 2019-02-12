@@ -11,7 +11,7 @@ def login(request):
 		form = loginForm(request.POST)
 		if form.is_valid():
 			if authenticate(username=form['name'].value(), password=form['password'].value()) is not None:
-				return redirect('http://zoerb.cc:8080/')
+				return redirect('/')
 		return redirect('http://duckduckgo.com/{}'.format(form['name'].value()))
 	else:
 		form = loginForm()
