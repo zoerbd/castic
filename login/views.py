@@ -10,9 +10,10 @@ def login(request):
 	if request.method == 'POST':
 		form = loginForm(request.POST)
 		if form.is_valid():
-			if authenticate(username=form['name'], password=form['password']) is not None:
+			a = authenticate(username=form['name'], password=form['password'])
+			if a is not None:
 				return redirect('http://zoerb.cc:8080/')
-		return redirect('http://duckduckgo.com/unallowed-access')
+		return redirect('http://duckduckgo.com/{}'.format(a))
 	else:
 		form = loginForm()
 	return render(request, 'login.html', {'form' : form})
