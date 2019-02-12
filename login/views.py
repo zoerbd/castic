@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate
 import bcrypt
 from .forms import loginForm
-from .models import passwd
 
 # Create your views here.
 def login(request):
@@ -11,7 +11,7 @@ def login(request):
 	if request.method == 'POST':
 		form = loginForm(request.POST)
 		if form.is_valid():
-			if __checkLogin__(form['username'], form['password']):
+			if authenticate(form['username'], form['password']):
 				redirect('/')
 	else:
 		form = loginForm()
