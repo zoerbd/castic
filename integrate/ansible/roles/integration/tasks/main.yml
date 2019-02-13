@@ -1,0 +1,5 @@
+---
+- name: Install packages
+- name: Setup Restic
+- name: Integrate Restic
+...
