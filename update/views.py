@@ -3,6 +3,10 @@ from django.conf import settings
 from index.models import repositories
 import os, sys, json, subprocess, datetime, re
 
+# read config file
+with open('config.json') as jsonFile:
+        config = json.load(jsonFile)
+
 # Create your views here.
 def update(request):
         '''
