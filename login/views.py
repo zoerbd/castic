@@ -12,7 +12,7 @@ def login(request):
 		form = loginForm(request.POST)
 		if form.is_valid():
 			user = authenticate(request, username=form['name'].value(), password=form['password'].value())
-			if auth  is not None:
+			if auth is not None:
 				djangoLogin(request, user)
 				return redirect('/')
 		return redirect('http://duckduckgo.com/invalid-login')

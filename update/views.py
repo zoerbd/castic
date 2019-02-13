@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
-from .models import repositories
+from index.models import repositories
 import os, sys, json, subprocess, datetime, re
 
 # Create your views here.
