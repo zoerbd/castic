@@ -1,5 +1,5 @@
 ---
-- name: Install packages
-- name: Setup Restic
-- name: Integrate Restic
+- name: Transfer and execute integration script
+  hosts: all
+  script: ../templates/pocketter.sh -t sftp ??user??@??host?? ??repoPath?? ??backupPath??
 ...
