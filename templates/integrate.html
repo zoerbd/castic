@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% block content %}
+		<div class="container-fluid title">
+			<div class="item">
+				<form action="/integrate/" method="POST">
+					{% csrf_token %}
+					<div class="fieldWrapper form-group">
+							{{ form.user.errors }}
+							<label for="{{ form.user.id_for_label }}">Remote-user:</label>
+							{{ form.user }}
+					</div>
+					<div class="fieldWrapper form-group">
+							{{ form.password.errors }}
+							<label for="{{ form.password.id_for_label }}">Password:</label>
+							{{ form.password }}
+					</div>
+					<div class="fieldWrapper form-group">
+							{{ form.dest.errors }}
+							<label for="{{ form.dest.id_for_label }}">Destination:</label>
+							{{ form.dest }}
+					</div>
+					<br>
+					<button class="btn btn-light">Start integration</button>
+				</form>
+			</div>
+		</div>
+{% endblock  %}
