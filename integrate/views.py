@@ -75,8 +75,8 @@ class Rendering:
 			for pair in files:
 				for line in pair[1]:
 					updatedPair = [ [ pair[0].replace(originRoot, renderedRoot), 
-									self.__doReplacement__(line, match.group(1)) ]
-									for match in pattern.finditer(line) ]
+									self.__doReplacement__(line, pattern) ]
+									for line in pair[1] ]
 					try:
 						os.system('mkdir -p {}'.format(''.join(updatedPair[0][0].split('/')[:-1])))
 					except:
@@ -89,14 +89,15 @@ class Rendering:
 			print(peter)
 			return 0
 
-	def __doReplacement__(self, line, variable):
+	def __doReplacement__(self, line, pattern):
 		'''
 		Called from __renderAnsible__.
 		This function is used to avoid to compute same expression 
 		two times in list comprehension, keep it more readable.
 		-> Returns affected pattern and content to replace
 		'''
-		pdb.set_trace()
 		if line.count('?') < 4:
 			return line
+		for match in pattern.finditer(line):
+			variable = match.group(1)
 		return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
