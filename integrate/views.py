@@ -76,10 +76,6 @@ class Rendering:
 					updatedPair = [ [ pair[0].replace(originRoot, renderedRoot), 
 									self.__doReplacement__(line, pattern) ]
 									for line in pair[1] ]
-					try:
-						os.system('mkdir -p {}'.format(''.join(updatedPair[0][0].split('/')[:-1])))
-					except:
-						pass
 
 				# recreate ansible files once (used decorator below)
 				self.__createAnsibleFiles__(updatedPair)
