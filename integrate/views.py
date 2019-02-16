@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from .forms import integrateInformation
-import os, sys, json, subprocess
+import os, sys, json, subprocess, re
 
 # read config file
 with open('config.json') as jsonFile:
@@ -37,9 +37,36 @@ def __renderAnsible__(user, pw, dest, repoPath, resticPW = None):
 		roles and executes it on after that on remote machine.
 		Integration is based on my shell script to integrate restic.
 		'''
+		originRoot = './integrate/ansible'
+		renderedRoot = './integrate/.ansible_rendered'
+
 		# read recursively all ansible-files, return list with [<path>, <content>] for each file
 		files = [ [os.path.join(root, filename), open(os.path.join(root, filename)).readlines()] 
-		for root, subdirs, filenames in os.walk('./integrate/ansible') 
+		for root, subdirs, filenames in os.walk(originRoot) 
 		for filename in filenames ]
-		return files
 
+		# save rendered stuff to new dir later on
+		os.mkdir(renderedRoot)
+
+		# parse and replace marked tags in ansible files
+		pattern = re.compile(r'.*\?{2}(\w+)\?{2}')
+		for pair in files:
+			updatedPair = [ path.replace(originRoot, renderedRoot), __doReplacement__(line, pattern.finditer(line).group(1).strip()) 		# warning: does only work for one var per line
+						for path, content in pair 
+						for line in content ]
+
+			# write rendered content to new rendered files
+			[ open(filename, 'w').write(''.join(content)) 
+				for filename, content in updatetPair ]
+		return 
+
+def __doReplacement__(line, variable):
+	'''
+	Called from __renderAnsible__.
+	This function is used  for avoiding to compute same 
+	expression two times in list comprehension and keep it more readable.
+	-> Returns affected pattern and content to replace
+	'''
+	if not variable in line:
+		return line
+	return line.replace('??{}??'.format(variable), eval(variable))
