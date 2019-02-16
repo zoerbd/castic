@@ -68,7 +68,7 @@ class Rendering:
 									self.__doReplacement__(line, match.group(1).strip()) ]
 									for match in pattern.finditer(line) ]
 					try:
-						print(updatedPair[0])
+						os.system('mkdir -p {}'.format(''.join(updatedPair[0][0].split('/')[:-1])))
 					except:
 						pass
 				# write rendered content to new rendered files
