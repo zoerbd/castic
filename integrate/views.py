@@ -47,7 +47,7 @@ class Rendering:
 			Integration is based on my shell script to integrate restic.
 			'''
 			originRoot = './integrate/ansible'
-			renderedRoot = './integrate/.ansible_rendered'
+			renderedRoot = './integrate/ansible_rendered'
 
 			# read recursively all ansible-files, return list with [<path>, <content>] for each file
 			files = [ [os.path.join(root, filename), open(os.path.join(root, filename)).readlines()] 
