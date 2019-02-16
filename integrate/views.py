@@ -67,11 +67,11 @@ class Rendering:
 					updatedPair = [ [ pair[0].replace(originRoot, renderedRoot), 
 									self.__doReplacement__(line, match.group(1).strip()) ]
 									for match in pattern.finditer(line) ]
-
+					print(updatedPair[0])
 				# write rendered content to new rendered files
 				[ open(filename, 'w').write(''.join(content)) 
 					for filename, content in updatedPair ]
-			return 
+			return
 
 	def __doReplacement__(self, line, variable):
 		'''
