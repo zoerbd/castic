@@ -84,7 +84,7 @@ class Rendering:
 					peter.append(updatedPair)
 
 				# recreate ansible files once (used decorator below)
-				self.__createAnsibleFiles__()
+				self.__createAnsibleFiles__(updatedPair)
 
 				# write rendered content to new rendered files
 				for filename, content in updatedPair:
