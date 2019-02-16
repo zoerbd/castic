@@ -102,10 +102,12 @@ class Rendering:
 		'''
 		if line.count('?') < 4:
 			return line
-		for match in pattern.finditer(line):
-			variable = match.group(1)
-		return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
+		for j, match in enumerate(pattern.finditer(line)):
+			variable = match.group(j+1)
+			line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
+		return line#line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
 
 	def __createAnsibleFiles__(self, updatedPair):
-		with open(filename, 'w') as fileobj:
-			fileobj.write('')
+		for filename, content in updatedPair:
+			with open(filename, 'w') as fileobj:
+				fileobj.write('')
