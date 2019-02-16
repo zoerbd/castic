@@ -3,6 +3,10 @@ from django.conf import settings
 from .forms import integrateInformation
 import os, sys, json, subprocess
 
+# read config file
+with open('config.json') as jsonFile:
+	config = json.load(jsonFile)
+
 # Create your views here.
 def integrate(request):
 	'''
@@ -14,7 +18,7 @@ def integrate(request):
 			__renderAnsible__(form['user'].value(), form['password'].value(), 
 			form['dest'].value(), form['resticPassword'].value(), form['repoPath'].value())
 		return redirect('/')
-	return render(request, 'integrate.html', {"form": integrateInformation()})
+	return render(request, 'integrate.html', {"form": integrateInformation(), "config":config})
 
 
 def __shell__(command):
