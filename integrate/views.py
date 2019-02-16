@@ -93,14 +93,6 @@ class Rendering:
 			print(peter)
 			return 0
 		
-	def __executeOnce__(func):
-		def wrapper(*args, **kwargs):
-			if not wrapper.has_run:
-				wrapper.has_run = True
-				return func(*args, **kwargs)
-		wrapper.has_run = False
-		return wrapper
-
 	def __doReplacement__(self, line, pattern):
 		'''
 		Called from __renderAnsible__.
@@ -114,7 +106,6 @@ class Rendering:
 			variable = match.group(1)
 		return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
 
-	#@__executeOnce__
 	def __createAnsibleFiles__(self, updatedPair):
 		for filename, content in updatedPair:
 			with open(filename, 'w') as fileobj:
