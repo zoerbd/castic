@@ -1,1 +1,1 @@
-restic -r sftp:"??ownHost??":"??repoPath??" backup "Yessir" --password-file /etc/restic.pw
+restic -r sftp:"??ownHost??":"??repoPath??" backup "/etc/" --password-file /etc/restic.pw
