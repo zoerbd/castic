@@ -48,7 +48,10 @@ class Rendering:
 		This function executes the previously rendered ansible-backend
 		and returns the exit message.
 		'''
-		return __shell__('ansible-playbook ./integrate/ansible_rendered/setup.yml -e \"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={1}\"'.format(self.user, self.pw))
+		result = Popen( [ 'ansible-playbook', './integrate/ansible_rendered/setup.yml', '-e', 
+						'\"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={2}\"'.format(self.user, self.pw) ], 
+						stdout = PIPE, stderr = PIPE)
+		return ''.join([line.encode('utf-8') for line in result.communicate()])
 
 	def renderAnsible(self):
 			'''
