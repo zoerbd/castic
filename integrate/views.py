@@ -31,7 +31,7 @@ def __shell__(command):
         '''
         This function makes it less pain to get shell answers
         '''
-        return subprocess.check_output(command, shell=True).decode('utf-8')
+        return subprocess.check_output('{} 2>&1'.format(command), shell=True).decode('utf-8')
 
 class Rendering:
 	def __init__(self, user, pw, dest, repoPath, backupPath, resticPW = ''.join([chr(random.randint(41,125)) for i in range(128)])):
@@ -48,7 +48,7 @@ class Rendering:
 		This function executes the previously rendered ansible-backend
 		and returns the exit message.
 		'''
-		return __shell__('ansible-playbook ./ansible_rendered/setup.yml -e \"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={1}\"'.format(self.user, self.pw))
+		return __shell__('ansible-playbook ./integrate/ansible_rendered/setup.yml -e \"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={1}\"'.format(self.user, self.pw))
 
 	def renderAnsible(self):
 			'''
@@ -89,10 +89,10 @@ class Rendering:
 	def __doReplacement__(self, line, variable):
 		'''
 		Called from __renderAnsible__.
-		This function is used  for avoiding to compute same 
-		expression two times in list comprehension and keep it more readable.
+		This function is used to avoid to compute same expression 
+		two times in list comprehension, keep it more readable.
 		-> Returns affected pattern and content to replace
 		'''
 		if line.count('?') < 4:
 			return line
-			return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
+		return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
