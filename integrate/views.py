@@ -50,7 +50,7 @@ class Rendering:
 		and returns the exit message.
 		'''
 		result = Popen( [ 'ansible-playbook', './integrate/ansible_rendered/setup.yml', '-e', 
-						'\"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={2}\"'.format(self.user, self.pw) ], 
+						'\"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={1}\"'.format(self.user, self.pw) ], 
 						stdout = PIPE, stderr = PIPE)
 		return ''.join([line.encode('utf-8') for line in result.communicate()])
 
