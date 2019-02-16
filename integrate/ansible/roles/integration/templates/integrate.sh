@@ -9,7 +9,7 @@ fi
 chmod 600 ~/.ssh
 
 # setup password-free ssh
-echo "??resticPW??" > /etc/restic.pw
+echo '??resticPW??' > /etc/restic.pw
 chmod 600 /etc/restic.pw
 
 # generate key if not existing

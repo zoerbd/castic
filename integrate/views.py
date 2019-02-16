@@ -71,7 +71,6 @@ class Rendering:
 
 			# parse and replace marked tags in ansible files
 			pattern = re.compile(r'\?{2}(\w+)\?{2}')
-			peter = []
 			for pair in files:
 				for line in pair[1]:
 					updatedPair = [ [ pair[0].replace(originRoot, renderedRoot), 
@@ -81,7 +80,6 @@ class Rendering:
 						os.system('mkdir -p {}'.format(''.join(updatedPair[0][0].split('/')[:-1])))
 					except:
 						pass
-					peter.append(updatedPair)
 
 				# recreate ansible files once (used decorator below)
 				self.__createAnsibleFiles__(updatedPair)
@@ -90,7 +88,6 @@ class Rendering:
 				for filename, content in updatedPair:
 					with open(filename, 'a') as fileobj:
 						fileobj.write(''.join(content))
-			print(peter)
 			return 0
 		
 	def __doReplacement__(self, line, pattern):

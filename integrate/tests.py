@@ -7,8 +7,8 @@ class FormTest(TestCase):
 		formData = {
 			'user':'zoerbdo',
 			'password':'AdminAdmin',
-			'dest':'zoerb.ccd',
-			'repoPath':'/var/backup/',
+			'dest':'zoerb.cc',
+			'repoPath':'/var/backup/repo',
 			'backupPath':'/etc/'
 			}
 		response = self.client.post("/integrate/", formData)
