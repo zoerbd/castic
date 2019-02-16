@@ -82,12 +82,24 @@ class Rendering:
 					except:
 						pass
 					peter.append(updatedPair)
+
+				# recreate ansible files once (used decorator below)
+				self.__createAnsibleFiles__()
+
 				# write rendered content to new rendered files
 				for filename, content in updatedPair:
-					with open(filename, 'w') as fileobj:
+					with open(filename, 'a') as fileobj:
 						fileobj.write(''.join(content))
 			print(peter)
 			return 0
+		
+	def __executeOnce__(func):
+		def wrapper(*args, **kwargs):
+			if not wrapper.has_run:
+				wrapper.has_run = True
+				return func(*args, **kwargs)
+		wrapper.has_run = False
+		return wrapper
 
 	def __doReplacement__(self, line, pattern):
 		'''
@@ -101,3 +113,9 @@ class Rendering:
 		for match in pattern.finditer(line):
 			variable = match.group(1)
 		return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
+
+	@__executeOnce__
+	def __createAnsibleFiles__(self, updatedPair):
+		for filename, content in updatedPair:
+			with open(filename, 'w') as fileobj:
+				fileobj.write('')
