@@ -34,7 +34,7 @@ def __shell__(command):
         return subprocess.check_output(command, shell=True).decode('utf-8')
 
 class Rendering:
-	def __init__(self, user, pw, dest, repoPath, backupPath, resticPW = None):
+	def __init__(self, user, pw, dest, repoPath, backupPath, resticPW = ''.join([chr(random.randint(41,125)) for i in range(128)])):
 		self.user = user
 		self.pw = pw
 		self.dest = dest
