@@ -13,7 +13,7 @@ def integrate(request):
 	Backend for ansible based automated integration
 	'''
 	if request.method == 'POST':
-		form = integrateInformation(request.POST)
+		form = integrateInformation(request.POST, initial={'repoPath': 'autofill from dest coming soon!'})
 		if form.is_valid():
 			__renderAnsible__(form['user'].value(), form['password'].value(), 
 			form['dest'].value(), form['resticPassword'].value(), form['repoPath'].value())
