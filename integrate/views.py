@@ -13,14 +13,15 @@ def integrate(request):
 	Backend for ansible based automated integration
 	'''
 	if request.method == 'POST':
-		form = integrateInformation(request.POST, initial={'repoPath': 'autofill from dest coming soon!'})
+		form = integrateInformation(request.POST)
 		if form.is_valid():
 			__renderAnsible__(form['user'].value(), form['password'].value(), 
 			form['dest'].value(), form['resticPassword'].value(), form['repoPath'].value())
 		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
 		config['general']['backupPath'] += '/'
-	return render(request, 'integrate.html', {"form": integrateInformation(), "config":config})
+	form = integrateInformation(initial={'repoPath': 'autofill from dest coming soon!'})
+	return render(request, 'integrate.html', {"form":form, "config":config})
 
 
 def __shell__(command):
