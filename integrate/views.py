@@ -37,6 +37,7 @@ class Rendering:
 		self.pw = pw
 		self.dest = dest
 		self.repoPath = repoPath
+		self.backupPath = backupPath
 		self.resticPW = resticPW
 
 	def renderAnsible(self):
@@ -66,7 +67,8 @@ class Rendering:
 					#for path, content in pair 
 					#for line in content ]
 				for line in pair[1]:
-					a = [[pair[0].replace(originRoot, renderedRoot), self.__doReplacement__(line, match.group(1).strip())] for match in pattern.finditer(line)]
+					a = [[pair[0].replace(originRoot, renderedRoot), self.__doReplacement__(line, match.group(1).strip())]
+						for match in pattern.finditer(line)]
 
 				# write rendered content to new rendered files
 				#[ open(filename, 'w').write(''.join(content)) 
