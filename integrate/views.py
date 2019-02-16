@@ -16,7 +16,7 @@ def integrate(request):
 		form = integrateInformation(request.POST)
 		if form.is_valid():
 			files = Rendering(form['user'].value(), form['password'].value(), 
-			form['dest'].value(), form['repoPath'].value()).renderAnsible()
+			form['dest'].value(), form['repoPath'].value(), form['backupPath'].value()).renderAnsible()
 			return render(request, 'checkOutput.html', {'output':files})
 		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
@@ -32,7 +32,7 @@ def __shell__(command):
         return subprocess.check_output(command, shell=True).decode('utf-8')
 
 class Rendering:
-	def __init__(self, user, pw, dest, repoPath, resticPW = None):
+	def __init__(self, user, pw, dest, repoPath, backupPath, resticPW = None):
 		self.user = user
 		self.pw = pw
 		self.dest = dest
