@@ -19,12 +19,12 @@ def integrate(request):
 			rend = Rendering(form['user'].value(), form['password'].value(), 
 					form['dest'].value(), form['repoPath'].value(), form['backupPath'].value())
 			rend.renderAnsible()
-			result = rend.doIntegration()
+			result = rend.doIntegrationAndSavePW()
 			return render(request, 'checkOutput.html', {'output':result})
 		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
 		config['general']['backupPath'] += '/'
-	form = integrateInformation() #initial={'repoPath': 'autofillComingSoon!'})
+	form = integrateInformation()
 	return render(request, 'integrate.html', {"form":form, "config":config})
 
 
@@ -44,7 +44,7 @@ class Rendering:
 		self.resticPW = resticPW
 		self.ownHost = __shell__('cat /etc/hostname'.replace('\n', ''))
 
-	def doIntegration(self):
+	def doIntegrationAndSavePW(self):
 		'''
 		This function executes the previously rendered ansible-backend
 		and returns the exit message.
@@ -52,6 +52,8 @@ class Rendering:
 		result = Popen( [ 'ansible-playbook', './integrate/ansible_rendered/setup.yml', '-e', 
 						'\"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={1}\"'.format(self.user, self.pw) ], 
 						stdout = PIPE, stderr = PIPE)
+		with open(os.path.join('./passwords', self.dest), 'w') as pwfile:
+			pwfile.write(self.resticPW)
 		return ''.join([line.decode('utf-8') for line in result.communicate()])
 
 	def renderAnsible(self):
@@ -85,9 +87,8 @@ class Rendering:
 				#[ open(filename, 'w').write(''.join(content)) 
 				#	for filename, content in updatedPair ]
 				for filename, content in updatedPair:
-					fileobj = open(filename, 'w')
-					fileobj.write(''.join(content))
-					fileobj.close()
+					with open(filename, 'w') as fileobj:
+						fileobj.write(''.join(content))
 			return files
 
 	def __doReplacement__(self, line, variable):
