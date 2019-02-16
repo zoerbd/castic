@@ -40,4 +40,6 @@ def __renderAnsible__(user, pw, dest, resticPW, repoPath):
 		files = [ [os.path.join(root, filename), os.path.join(root, filename).readlines()] 
 		for root, subdirs, filenames in os.walk('./integrate/ansible') 
 		for filename in filenames ]
+		print(files[0])
+		return
 
