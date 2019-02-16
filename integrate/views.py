@@ -70,7 +70,7 @@ class Rendering:
 			for filename in filenames ]
 
 			# parse and replace marked tags in ansible files
-			pattern = re.compile(r'.*\?{2}(\w+)\?{2}')
+			pattern = re.compile(r'.\?{2}(\w+)\?{2}')
 			peter = []
 			for pair in files:
 				for line in pair[1]:
@@ -102,9 +102,8 @@ class Rendering:
 		'''
 		if line.count('?') < 4:
 			return line
-		for j, match in enumerate(pattern.finditer(line)):
-			pdb.set_trace()
-			variable = match.group(j+1)
+		for match in pattern.finditer(line):
+			variable = match.group(1)
 			line = line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
 		return line#line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
 
