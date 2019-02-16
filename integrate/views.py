@@ -16,8 +16,7 @@ def integrate(request):
 		form = integrateInformation(request.POST)
 		if form.is_valid():
 			files = Rendering(form['user'].value(), form['password'].value(), 
-					form['dest'].value(), form['repoPath'].value(), form['backupPath'].value())
-					.renderAnsible()
+					form['dest'].value(), form['repoPath'].value(), form['backupPath'].value()).renderAnsible()
 			return render(request, 'checkOutput.html', {'output':files})
 		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
