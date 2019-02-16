@@ -15,8 +15,13 @@ def integrate(request):
 	if request.method == 'POST':
 		form = integrateInformation(request.POST)
 		if form.is_valid():
+<<<<<<< HEAD
 			files = Rendering(form['user'].value(), form['password'].value(), 
 			form['dest'].value(), form['repoPath'].value()).renderAnsible()
+=======
+			files = __renderAnsible__(form['user'].value(), form['password'].value(), 
+			form['dest'].value(), form['repoPath'].value(), form['backupPath'].value())
+>>>>>>> 6f36ac59d4dd3ddb11c61f81694e1d7bddfa0107
 			return render(request, 'checkOutput.html', {'output':files})
 		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
@@ -31,6 +36,7 @@ def __shell__(command):
         '''
         return subprocess.check_output(command, shell=True).decode('utf-8')
 
+<<<<<<< HEAD
 class Rendering:
 	def __init__(self, user, pw, dest, repoPath, resticPW = None):
 		self.user = user
@@ -38,6 +44,16 @@ class Rendering:
 		self.dest = dest
 		self.repoPath = repoPath
 		self.resticPW = resticPW
+=======
+def __renderAnsible__(user, pw, dest, repoPath, backupPath, resticPW = None):
+		'''
+		This function renders the ansible configuration and 
+		roles and executes it on after that on remote machine.
+		Integration is based on my shell script to integrate restic.
+		'''
+		originRoot = './integrate/ansible'
+		renderedRoot = './integrate/.ansible_rendered'
+>>>>>>> 6f36ac59d4dd3ddb11c61f81694e1d7bddfa0107
 
 	def renderAnsible(self):
 			'''
