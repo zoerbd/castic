@@ -84,9 +84,11 @@ class Rendering:
 						pass
 					peter.append(updatedPair)
 				# write rendered content to new rendered files
+				pdb.set_trace()
 				for filename, content in updatedPair:
 					with open(filename, 'w') as fileobj:
 						fileobj.write(''.join(content))
+			print(peter)
 			return 0
 
 	def __doReplacement__(self, line, variable):
