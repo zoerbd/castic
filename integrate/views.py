@@ -39,6 +39,7 @@ class Rendering:
 		self.repoPath = repoPath
 		self.backupPath = backupPath
 		self.resticPW = resticPW
+		self.ownHost = __shell__('cat /etc/hostname'.replace('\n', ''))
 
 	def renderAnsible(self):
 			'''
@@ -60,7 +61,7 @@ class Rendering:
 			for pair in files:
 				for line in pair[1]:
 					updatedPair = [ [ pair[0].replace(originRoot, renderedRoot), 
-									self.__doReplacement__(line, match.group(1).strip()) ]
+									self.__doReplacement__(line, match.group(1)) ]
 									for match in pattern.finditer(line) ]
 					try:
 						os.system('mkdir -p {}'.format(''.join(updatedPair[0][0].split('/')[:-1])))
