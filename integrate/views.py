@@ -54,12 +54,6 @@ class Rendering:
 			for root, subdirs, filenames in os.walk(originRoot) 
 			for filename in filenames ]
 
-			# save rendered stuff to new dir later on
-			try:
-				os.mkdir(renderedRoot)
-			except:
-				pass
-
 			# parse and replace marked tags in ansible files
 			pattern = re.compile(r'.*\?{2}(\w+)\?{2}')
 			for pair in files:
