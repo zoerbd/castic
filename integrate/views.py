@@ -14,6 +14,7 @@ def integrate(request):
 	'''
 	if request.method == 'POST':
 		form = integrateInformation(request.POST)
+		print(form.is_valid)
 		if form.is_valid():
 			files = __renderAnsible__(form['user'].value(), form['password'].value(), 
 			form['dest'].value(), form['resticPassword'].value(), form['repoPath'].value())
