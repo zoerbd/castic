@@ -17,8 +17,8 @@ def integrate(request):
 		if form.is_valid():
 			files = __renderAnsible__(form['user'].value(), form['password'].value(), 
 			form['dest'].value(), form['resticPassword'].value(), form['repoPath'].value())
-		#return redirect('/')
-		return render(request, 'checkOutput.html', {'output':files[0]})
+			return render(request, 'checkOutput.html', {'output':files[0]})
+		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
 		config['general']['backupPath'] += '/'
 	form = integrateInformation(initial={'repoPath': 'autofill from dest coming soon!'})
