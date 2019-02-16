@@ -104,7 +104,7 @@ class Rendering:
 			return line
 		for j, match in enumerate(pattern.finditer(line)):
 			variable = match.group(j+1)
-			line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
+			line = line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
 		return line#line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
 
 	def __createAnsibleFiles__(self, updatedPair):
