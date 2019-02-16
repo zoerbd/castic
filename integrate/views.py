@@ -15,10 +15,10 @@ def integrate(request):
 	if request.method == 'POST':
 		form = integrateInformation(request.POST)
 		if form.is_valid():
-			render = Rendering(form['user'].value(), form['password'].value(), 
+			rend = Rendering(form['user'].value(), form['password'].value(), 
 					form['dest'].value(), form['repoPath'].value(), form['backupPath'].value())
-			render.renderAnsible()
-			result = render.doIntegration()
+			rend.renderAnsible()
+			result = rend.doIntegration()
 			return render(request, 'checkOutput.html', {'output':result})
 		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
