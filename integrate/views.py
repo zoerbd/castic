@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from .forms import integrateInformation
-import os, sys, json, subprocess, re, pdb
+import os, sys, json, subprocess, re, pdb, random
 
 # read config file
 with open('config.json') as jsonFile:
