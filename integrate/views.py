@@ -103,7 +103,7 @@ class Rendering:
 		if line.count('?') < 4:
 			return line
 		for j, match in enumerate(pattern.finditer(line)):
-			variable = match.group(j+1)
+			variable = match.group(j)
 			line = line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
 		return line#line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
 
