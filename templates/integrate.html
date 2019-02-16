@@ -19,6 +19,16 @@
 							<label for="{{ form.dest.id_for_label }}">Destination:</label>
 							{{ form.dest }}
 					</div>
+					<div class="fieldWrapper form-group">
+							{{ form.repoPath.errors }}
+							<label for="{{ form.repoPath.id_for_label }}">Path to repository: /var/www/</label>
+							{{ form.repoPath }}
+					</div>
+					<div class="fieldWrapper form-group">
+							{{ form.resticPassword.errors }}
+							<label for="{{ form.resticPassword.id_for_label }}">Destination:</label>
+							{{ form.resticPassword }}
+					</div>
 					<br>
 					<button class="btn btn-light">Start integration</button>
 				</form>
