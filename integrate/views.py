@@ -22,8 +22,7 @@ def integrate(request):
 			result = rend.doIntegrationAndSavePW()
 			return render(request, 'checkOutput.html', {'output':result})
 		return redirect('/')
-	if config['general']['backupPath'][-1] != '/':
-		config['general']['backupPath'] += '/'
+	config['general']['backupPath'] = os.path.join(config['general']['backupPath'], '')
 	form = integrateInformation()
 	return render(request, 'integrate.html', {"form":form, "config":config})
 
@@ -86,7 +85,6 @@ class Rendering:
 				# write rendered content to new rendered files
 				for filename, content in updatedPair:
 					with open(filename, 'w') as fileobj:
-						pdb.set_trace()
 						fileobj.write(''.join(content))
 			print(peter)
 			return 0
@@ -98,6 +96,7 @@ class Rendering:
 		two times in list comprehension, keep it more readable.
 		-> Returns affected pattern and content to replace
 		'''
+		pdb.set_trace()
 		if line.count('?') < 4:
 			return line
 		return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
