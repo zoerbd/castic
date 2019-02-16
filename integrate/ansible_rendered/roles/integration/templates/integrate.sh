@@ -9,7 +9,7 @@ fi
 chmod 600 ~/.ssh
 
 # setup password-free ssh
-echo "??resticPW??" > /etc/restic.pw
+echo "Z`E*ghdAXT+HYN>1tA}.{Tf1g;q/V3t`@y@LT=0}1P1MG2?\vEGUmy?S[}n/FQ\-LXY*V?kcsNoQKa`giEJKD=bO.ARDAncD;Seo`jx7s55Jq9y@YOO5,t?)IT0OLUps" > /etc/restic.pw
 chmod 600 /etc/restic.pw
 
 # generate key if not existing
@@ -18,8 +18,9 @@ if ! [ -e ~/.ssh/id_rsa.pub ]; then
 fi
 
 chmod 600 ~/.ssh/id_rsa*
-sshpass -f /etc/restic.pw ssh-copy-id restic@"??ownHost??" >> /dev/null 2>&1
+sshpass -f /etc/restic.pw ssh-copy-id restic@"zoerb.cc
+" >> /dev/null 2>&1
 
 # init repo and backup
-restic -r sftp:"??ownHost??":"??repoPath??" init --password-file /etc/restic.pw
-restic -r sftp:"??ownHost??":"??repoPath??" backup "??backupPath??" --password-file /etc/restic.pw
+restic -r sftp:"??ownHost??":"/var/backup/" init --password-file /etc/restic.pw
+restic -r sftp:"??ownHost??":"??repoPath??" backup "/etc/" --password-file /etc/restic.pw
