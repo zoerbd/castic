@@ -26,6 +26,11 @@
 							{{ form.repoPath }}
 					</div>
 					<div class="fieldWrapper form-group">
+						{{ form.backupPath.errors }}
+						<label for="{{ form.backupPath.id_for_label }}">Path to backup at remote-machine:</label>
+						{{ form.backupPath }}
+					</div>
+					<div class="fieldWrapper form-group">
 							{{ form.ownPassword.errors }}
 							<label for="{{ form.ownPassword.id_for_label }}">I want to set the Repository password manually</label>
 							{{ form.ownPassword }}

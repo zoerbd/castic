@@ -5,6 +5,7 @@ class integrateInformation(forms.Form):
 	user = forms.CharField(label='Remote-user', max_length=16)
 	dest = forms.CharField(label='dest', max_length=16)
 	repoPath = forms.CharField(label='repoPath', max_length=16)
+	backupPath = forms.CharField(label='backupPath', max_length=16)
 
 	# passwords
 	password = forms.CharField(widget=forms.PasswordInput())
