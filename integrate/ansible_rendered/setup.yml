@@ -1,9 +1,1 @@
----
-- name: Integrate new system to backup infrastructure
-  hosts: all
-  remote_user: ??user??
-  become: true
-
-  roles:
-    - integration
 ...
