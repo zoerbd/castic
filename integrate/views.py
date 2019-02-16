@@ -79,7 +79,6 @@ class Rendering:
 		expression two times in list comprehension and keep it more readable.
 		-> Returns affected pattern and content to replace
 		'''
-		pdb.set_trace()
-		if not variable in line:
+		if line.count('?') < 4:
 			return line
 		return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
