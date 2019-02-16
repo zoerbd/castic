@@ -114,7 +114,7 @@ class Rendering:
 			variable = match.group(1)
 		return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
 
-	@__executeOnce__
+	#@__executeOnce__
 	def __createAnsibleFiles__(self, updatedPair):
 		for filename, content in updatedPair:
 			with open(filename, 'w') as fileobj:
