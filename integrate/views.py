@@ -70,7 +70,7 @@ class Rendering:
 				# write rendered content to new rendered files
 				[ open(filename, 'w').write(''.join(content)) 
 					for filename, content in updatedPair ]
-			return peter
+			return files
 
 	def __doReplacement__(self, line, variable):
 		'''
