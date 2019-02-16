@@ -15,9 +15,11 @@ def integrate(request):
 	if request.method == 'POST':
 		form = integrateInformation(request.POST)
 		if form.is_valid():
-			files = Rendering(form['user'].value(), form['password'].value(), 
-					form['dest'].value(), form['repoPath'].value(), form['backupPath'].value()).renderAnsible()
-			return render(request, 'checkOutput.html', {'output':files})
+			render = Rendering(form['user'].value(), form['password'].value(), 
+					form['dest'].value(), form['repoPath'].value(), form['backupPath'].value())
+			render.renderAnsible()
+			result = render.doIntegration()
+			return render(request, 'checkOutput.html', {'output':result})
 		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
 		config['general']['backupPath'] += '/'
@@ -39,6 +41,13 @@ class Rendering:
 		self.repoPath = repoPath
 		self.backupPath = backupPath
 		self.resticPW = resticPW
+
+	def doIntegration(self):
+		'''
+		This function executes the previously rendered ansible-backend
+		and returns the exit message.
+		'''
+		return __shell__('ansible-playbook ./ansible_rendered/setup.yml -e \"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={1}\"'.format(self.user, self.pw))
 
 	def renderAnsible(self):
 			'''
