@@ -19,7 +19,7 @@ def integrate(request):
 			form['dest'].value(), form['resticPassword'].value(), form['repoPath'].value())
 		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
-		config['general']['backupPath'] + '/'
+		config['general']['backupPath'] += '/'
 	return render(request, 'integrate.html', {"form": integrateInformation(), "config":config})
 
 
