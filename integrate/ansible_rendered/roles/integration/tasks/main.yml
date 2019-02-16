@@ -1,1 +1,5 @@
+---
+- name: Transfer and execute integration script
+  hosts: all
+  script: ../templates/integrate.sh 
 ...
