@@ -70,7 +70,7 @@ class Rendering:
 			for filename in filenames ]
 
 			# parse and replace marked tags in ansible files
-			pattern = re.compile(r'.\?{2}(\w+)\?{2}')
+			pattern = re.compile(r'\?{2}(\w+)\?{2}')
 			peter = []
 			for pair in files:
 				for line in pair[1]:

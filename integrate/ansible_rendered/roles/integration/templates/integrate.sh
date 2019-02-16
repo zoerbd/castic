@@ -9,7 +9,7 @@ fi
 chmod 600 ~/.ssh
 
 # setup password-free ssh
-echo "riEn;qf7>0fbE^,wAYOtYrTgfOMwH@}q>cXTz2ylrgKrb^-qyLikGikSXI0c5SAtk1*=B3|ez:XR@<Z\Kh[^qc_FcCNmx,z1t;;wjn]/9isxo>2=.DNsFX)@n-:/Ww.B" > /etc/restic.pw
+echo "G;L3t:y,?xu;<uQ5CF:wut+f6<}vqTPo:N>ez^N|o0BBat\|l8?Mk9jO{=huI]ZRf+UE:3@qk*s-b<-AT1e4oF8bm0[`^Vo^mly5C[q2:_?J`Zb@VET7)lK,CJilcJu3" > /etc/restic.pw
 chmod 600 /etc/restic.pw
 
 # generate key if not existing
