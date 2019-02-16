@@ -68,8 +68,12 @@ class Rendering:
 						pass
 					peter.append(updatedPair)
 				# write rendered content to new rendered files
-				[ open(filename, 'w').write(''.join(content)) 
-					for filename, content in updatedPair ]
+				#[ open(filename, 'w').write(''.join(content)) 
+				#	for filename, content in updatedPair ]
+				for filename, content in updatedPair:
+					fileobj = open(filename, 'w')
+					fileobj.write(''.join(content))
+					fileobj.close()
 			return files
 
 	def __doReplacement__(self, line, variable):
