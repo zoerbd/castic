@@ -16,7 +16,8 @@ def integrate(request):
 		form = integrateInformation(request.POST)
 		if form.is_valid():
 			files = Rendering(form['user'].value(), form['password'].value(), 
-			form['dest'].value(), form['repoPath'].value(), form['backupPath'].value()).renderAnsible()
+					form['dest'].value(), form['repoPath'].value(), form['backupPath'].value())
+					.renderAnsible()
 			return render(request, 'checkOutput.html', {'output':files})
 		return redirect('/')
 	if config['general']['backupPath'][-1] != '/':
@@ -63,16 +64,14 @@ class Rendering:
 			# parse and replace marked tags in ansible files
 			pattern = re.compile(r'.*\?{2}(\w+)\?{2}')
 			for pair in files:
-				#updatedPair = [ [path.replace(originRoot, renderedRoot), __doReplacement__(line, pattern.finditer(line).group(1).strip()) ]
-					#for path, content in pair 
-					#for line in content ]
 				for line in pair[1]:
-					a = [[pair[0].replace(originRoot, renderedRoot), self.__doReplacement__(line, match.group(1).strip())]
-						for match in pattern.finditer(line)]
+					updatedPair = [ [ pair[0].replace(originRoot, renderedRoot), 
+									self.__doReplacement__(line, match.group(1).strip()) ]
+									for match in pattern.finditer(line) ]
 
 				# write rendered content to new rendered files
-				#[ open(filename, 'w').write(''.join(content)) 
-				#	for filename, content in updatetPair ]
+				[ open(filename, 'w').write(''.join(content)) 
+					for filename, content in updatedPair ]
 			return 
 
 	def __doReplacement__(self, line, variable):
