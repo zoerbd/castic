@@ -15,9 +15,10 @@ def integrate(request):
 	if request.method == 'POST':
 		form = integrateInformation(request.POST)
 		if form.is_valid():
-			__renderAnsible__(form['user'].value(), form['password'].value(), 
+			files = __renderAnsible__(form['user'].value(), form['password'].value(), 
 			form['dest'].value(), form['resticPassword'].value(), form['repoPath'].value())
-		return redirect('/')
+		#return redirect('/')
+		return render(request, 'checkOutput.html', {'output':files[0]})
 	if config['general']['backupPath'][-1] != '/':
 		config['general']['backupPath'] += '/'
 	form = integrateInformation(initial={'repoPath': 'autofill from dest coming soon!'})
@@ -40,6 +41,5 @@ def __renderAnsible__(user, pw, dest, resticPW, repoPath):
 		files = [ [os.path.join(root, filename), os.path.join(root, filename).readlines()] 
 		for root, subdirs, filenames in os.walk('./integrate/ansible') 
 		for filename in filenames ]
-		print(files[0])
-		return
+		return files
 
