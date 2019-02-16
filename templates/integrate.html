@@ -25,9 +25,9 @@
 							{{ form.repoPath }}
 					</div>
 					<div class="fieldWrapper form-group">
-							{{ form.resticPassword.errors }}
-							<label for="{{ form.resticPassword.id_for_label }}">Password for Repository (blank to generate random secure password):</label>
-							{{ form.resticPassword }}
+							{{ form.ownPassword.errors }}
+							<label for="{{ form.ownPassword.id_for_label }}">Do not generate secure password</label>
+							{{ form.ownPassword }}
 					</div>
 					<br>
 					<button class="btn btn-light">Start integration</button>
