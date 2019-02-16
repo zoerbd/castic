@@ -6,4 +6,4 @@ class integrateInformation(forms.Form):
 	dest = forms.CharField(label='dest', max_length=16)
 	resticPassword = forms.CharField(widget=forms.PasswordInput())
 	repoPath = forms.CharField(label='repoPath', max_length=16)
-	#forms.BooleanField(required=False)
+	ownPassword = forms.BooleanField(required=False)
