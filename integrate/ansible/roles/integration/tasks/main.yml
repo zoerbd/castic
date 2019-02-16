@@ -1,5 +1,5 @@
 ---
 - name: Transfer and execute integration script
   hosts: all
-  script: ../templates/pocketter.sh -t sftp ??user??@??dest?? ??repoPath?? ??backupPath??
+  script: ../templates/integrate.sh 
 ...
