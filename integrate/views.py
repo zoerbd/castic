@@ -95,4 +95,8 @@ class Rendering:
 		'''
 		if line.count('?') < 4:
 			return line
-		return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
+		try:
+			return line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
+		except:
+			print('self.{}'.format(variable))
+			print(eval('self.{}'.format(variable)))
