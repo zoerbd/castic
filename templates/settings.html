@@ -2,7 +2,7 @@
 {% block content %}
             <div class="sidenav">
 				{% for cat in cats  %}
-					<a href="#{{cat}}">{{cat.category}}</a>
+					<a href="#{{cat.category}}">{{cat.category}}</a>
 				{% endfor %}
             </div>
 		<div class="main" id="main">
@@ -12,11 +12,19 @@
 					{%  for cat in cats  %}
 						<div class="item">
 							<h2>{{cat.category}}</h2>
-							{%  for setting in cat.content  %}
-								{% csrf_token %}
-								<!--label>{{setting.key}}</label>
-								<input type="text" value="{{setting.value}}"-->
-								{{form}}
+							{% for setting in form %}
+								{% for entry in cat.content %}
+									<!--p>{{setting.name}} -- {{entry.key}}</p-->
+									{% if setting.name in entry.key %}
+									<div class="fieldWrapper form-group">
+										{% csrf_token %}
+										{{ setting.errors }}
+										<label id="{{ setting.id_for_label }}" for="{{ setting.id_for_label }}">{{ setting.label }}:</label>
+										{{ setting }}
+									</div>
+									{% endif %}
+								{%endfor%}
+								<br>
 							{%  endfor  %}
 						</div>
 					{%  endfor  %}
