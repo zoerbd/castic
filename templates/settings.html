@@ -1,28 +1,28 @@
 {% extends 'index.html' %}
 {% block content %}
-                <div class="sidenav">
-		    {% for cat in cats  %}
-			<a href="#{{cat}}">{{cat}}</a>
-		    {% endfor  %}
-                </div>
+            <div class="sidenav">
+				{% for cat in cats  %}
+					<a href="#{{cat}}">{{cat.category}}</a>
+				{% endfor %}
+            </div>
 		<div class="main" id="main">
+			<br>
 			<div class="container-fluid title">
-				<div class="item" style="margin-top: 10%;">
-					<form action='/settings/' method='POST'>
-					{% for cat in content %}
-						{% csrf_token %}
-						{% for pair in cat  %}	
-						<p>{{pair.key}}</p>
-						<input id="{{pair.key}}" type="text" value="{{pair.value}}">
-						<br>
-						<br>
-						{% endfor  %}
-					{% endfor  %}
-					<br>
-					<button class="btn btn-light">Submit</button>
-					</form>
-
-				</div>
+				<form action='/settings/' method='POST'>
+					{%  for cat in cats  %}
+						<div class="item">
+							<h2>{{cat.category}}</h2>
+							{%  for setting in cat.content  %}
+								{% csrf_token %}
+								<!--label>{{setting.key}}</label>
+								<input type="text" value="{{setting.value}}"-->
+								{{form}}
+							{%  endfor  %}
+						</div>
+					{%  endfor  %}
+				<br>
+				<button class="btn btn-light">Submit</button>
+				</form>
 			</div>
 		</div>
 {% endblock  %}

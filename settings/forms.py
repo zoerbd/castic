@@ -2,19 +2,19 @@ from django import forms
 
 class settingsForm(forms.Form):
 	# general
-	backupPath = forms.CharField(label='backup path', max_length=32)
+	backupPath = forms.CharField(label='Backup path', max_length=32)
 
 	# check
-	DoCheckInBackground = forms.CharField(label='', max_length=32)
-	checkMode = forms.CharField(label='', max_length=32)
-	autoCheck = forms.CharField(label='', max_length=32)
-	executeCommandAfterCheck = forms.CharField(label='', max_length=32)
+	DoCheckInBackground = forms.CharField(label='Check backups in background', max_length=32)
+	checkMode = forms.CharField(label='Check mode', max_length=32)
+	autoCheck = forms.CharField(label='Auto check', max_length=32)
+	executeCommandAfterCheck = forms.CharField(label='Execute command after check', max_length=32)
 
 	# notify
-	mailAddress = forms.CharField(label='', max_length=32)
-	sendMailNotifications = forms.CharField(label='', max_length=32)
-	warnIfDiskSpaceSmallerThan = forms.CharField(label='', max_length=32)
-	mailFrom = forms.CharField(label='', max_length=32)
-	smtpServer = forms.CharField(label='', max_length=32)
-	smtpUsername = forms.CharField(label='', max_length=32)
+	mailAddress = forms.CharField(label='Mail-address', max_length=32)
+	sendMailNotifications = forms.CharField(label='Send notifications via mail', max_length=32)
+	warnIfDiskSpaceSmallerThan = forms.CharField(label='Warn if disk space smaller than', max_length=32)
+	mailFrom = forms.CharField(label='Mail from', max_length=32)
+	smtpServer = forms.CharField(label='SMTP-server', max_length=32)
+	smtpUsername = forms.CharField(label='SMTP-user', max_length=32)
 	smtpPassword = forms.CharField(widget=forms.PasswordInput())

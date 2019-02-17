@@ -28,7 +28,7 @@ def settings(request):
                         return render(request, 'checkOutput.html', {"output" : newConf})
                 return render(request, 'checkOutput.html', {"output" : 'Form was invalid!'})
         form = settingsForm()
-        return render(request, 'settings.html', {"cats":categories, "content":cats, "form":form})
+        return render(request, 'settings.html', {"categories":categories, "cats":cats, "form":form})
 
 def __updateConfig__(conf):
         return json.dumps(conf, ensure_ascii=False)                
