@@ -10,11 +10,10 @@
 			<div class="container-fluid title">
 				<form action='/settings/' method='POST'>
 					{%  for cat in cats  %}
-						<div class="item">
+						<div class="item" id="{{cat.category}}">
 							<h2>{{cat.category}}</h2>
 							{% for setting in form %}
 								{% for entry in cat.content %}
-									<!--p>{{setting.name}} -- {{entry.key}}</p-->
 									{% if setting.name in entry.key %}
 									<div class="fieldWrapper form-group">
 										{% csrf_token %}

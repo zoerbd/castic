@@ -14,12 +14,12 @@ def settings(request):
         '''
         categories = list(config.keys())
         cats = [
-                [ {'category':cat, 'content':[
-                        {'key':key, 'value':config[cat][key]}
-                ]} 
-                for key in list(config[cat].keys()) ][0]
+                {'category':cat, 'content':[
+                        [{'key':key, 'value':config[cat][key]} for key in list(config[cat].keys())]
+                ][0]} 
                 for cat in categories
         ]
+        #return render(request, 'checkOutput.html', {'output':cats[1]['content'][2]['key']})#['content'][0]['key']})
 
         if request.method == 'POST':
                 form = settingsForm(request.POST)
@@ -31,10 +31,15 @@ def settings(request):
         # prepare initial values from config file
         initialValues = [
                 [{value['key']:value['value']}
-                for value in cat['content']][0]
+                for value in cat['content']]
                 for cat in cats
         ]
-        initialValues = {**initialValues[0], **initialValues[1], **initialValues[2]}    # merge initial values - fix this later to be more dynamic
+        new = initialValues[0][0]
+        for category in initialValues:
+                for j in range(1, len(category)):
+                        print(category[j])
+                        new.update(**category[j-1], **category[j])
+        #initialValues = {**initialValues[0], **initialValues[1], **initialValues[2]}    # merge initial values - fix this later to be more dynamic
 
         form = settingsForm(initial=initialValues)
         return render(request, 'settings.html', {"categories":categories, "cats":cats, "form":form})
