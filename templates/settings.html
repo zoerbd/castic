@@ -10,7 +10,9 @@
 			<div class="container-fluid title">
 				<form action='/settings/' method='POST'>
 					{%  for cat in cats  %}
-						<div class="item" id="{{cat.category}}">
+						<p id="{{cat.category}}"></p>
+						<br>
+						<div class="item">
 							<h2>{{cat.category}}</h2>
 							{% for setting in form %}
 								{% for entry in cat.content %}
@@ -23,7 +25,7 @@
 									</div>
 									<br>
 									{% endif %}
-								{%endfor%}
+								{% endfor %}
 							{%  endfor  %}
 						</div>
 					{%  endfor  %}

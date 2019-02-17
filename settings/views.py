@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import settingsForm
-import json
+import json, shutil
 
 # read config file
 with open('config.json') as jsonFile:
@@ -19,13 +19,18 @@ def settings(request):
                 ][0]} 
                 for cat in categories
         ]
-        #return render(request, 'checkOutput.html', {'output':cats[1]['content'][2]['key']})#['content'][0]['key']})
 
         if request.method == 'POST':
                 form = settingsForm(request.POST)
                 if form.is_valid():
-                        newConf = __updateConfig__(form.cleaned_data)
-                        return render(request, 'checkOutput.html', {"output" : newConf})
+                        newConf = __updateConfig__(config, form.cleaned_data)
+
+                        # write out new config
+                        shutil.copyfile('config.json', 'config.json.orig')
+                        with open('config.json', 'w') as wfile:
+                                wfile.write(newConf)
+
+                        return redirect('/settings/')
                 return render(request, 'checkOutput.html', {"output" : 'Form was invalid!'})
 
         # prepare initial values from config file
@@ -34,15 +39,28 @@ def settings(request):
                 for value in cat['content']]
                 for cat in cats
         ]
-        new = initialValues[0][0]
-        for category in initialValues:
-                for j in range(1, len(category)):
-                        print(category[j])
-                        new.update(**category[j-1], **category[j])
-        #initialValues = {**initialValues[0], **initialValues[1], **initialValues[2]}    # merge initial values - fix this later to be more dynamic
 
-        form = settingsForm(initial=initialValues)
+        # merge initial values - fix this later to be more dynamic and less spaghetti
+        newInitialValues = initialValues[0][0]
+        for categ in initialValues:
+                for j in range(1, len(categ)):
+                        newInitialValues.update(**categ[j-1], **categ[j])
+
+        form = settingsForm(initial=newInitialValues)
         return render(request, 'settings.html', {"categories":categories, "cats":cats, "form":form})
 
-def __updateConfig__(conf):
-        return json.dumps(conf, ensure_ascii=False)                
+def __updateConfig__(confOrig, confNew):
+        '''
+        This function is called from settings().
+        It returns the updated config as JSON string
+        (Basically also solves the problem that the backend 
+        returns a non categorized settings-dict
+        '''
+        for section in confOrig:
+                for key in confNew:
+                        try:
+                                confOrig[section][key]
+                                confOrig[section][key] = confNew[key]
+                        except:
+                                pass
+        return json.dumps(confOrig, ensure_ascii=False)
