@@ -3,8 +3,8 @@
 	   "backupPath":"/var/backup"
    },
    "check" : {
-           "DoCheckInBackground":"False",
-           "checkMode":"default",
+        "DoCheckInBackground":"False",
+        "checkMode":"default",
 	   "autoCheck":"60m",
 	   "executeCommandAfterCheck":""
    },

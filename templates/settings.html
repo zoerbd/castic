@@ -8,8 +8,9 @@
 		<div class="main" id="main">
 			<div class="container-fluid title">
 				<div class="item" style="margin-top: 10%;">
-					<form>
+					<form action='/settings/' method='POST'>
 					{% for cat in content %}
+						{% csrf_token %}
 						{% for pair in cat  %}	
 						<p>{{pair.key}}</p>
 						<input id="{{pair.key}}" type="text" value="{{pair.value}}">

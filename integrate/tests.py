@@ -12,4 +12,3 @@ class FormTest(TestCase):
 			'backupPath':'/etc/'
 			}
 		response = self.client.post("/integrate/", formData)
-		#self.assertFormError(response, 'form', 'something', 'This field is required.')
