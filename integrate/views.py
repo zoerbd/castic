@@ -51,7 +51,7 @@ class Rendering:
 		result = Popen( [ 'ansible-playbook', './integrate/ansible_rendered/setup.yml', '-e', 
 						'\"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={1}\"'.format(self.user, self.pw) ], 
 						stdout = PIPE, stderr = PIPE)
-		with open(os.path.join('./passwords', self.dest), 'w') as pwfile:
+		with open(os.path.join('./passwords', self.repoPath), 'w') as pwfile:
 			pwfile.write(self.resticPW)
 		return ''.join([line.decode('utf-8') for line in result.communicate()])
 
