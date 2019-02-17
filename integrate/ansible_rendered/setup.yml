@@ -1,7 +1,7 @@
 ---
 - name: Integrate new system to backup infrastructure
   hosts: all
-  remote_user: zoerbdo
+  remote_user: zod
   become: true
 
   roles:

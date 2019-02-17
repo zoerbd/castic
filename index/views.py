@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import repositories
 import os, sys, json, subprocess, datetime, re
-from webmanagement.settings import config
+from webmanagement.settings import config, __shell__, __log__
 
 def index(request):
 	'''
@@ -20,12 +20,6 @@ def index(request):
 		}
 		return render(request, 'information.html', {'repos':repos, 'general':general})
 	return redirect('/login')
-
-def __shell__(command):
-	'''
-	This function makes it less pain to get shell answers
-	'''
-	return subprocess.check_output(command, shell=True).decode('utf-8')
 
 def __getFreeDiskSpace__():
 	'''
@@ -77,10 +71,6 @@ def __getAvailableSpace__(output, root):
 	'''
 	pattern = re.compile(r'(\d+\w)\s+\d%\s+{}\n'.format(root))
 	return [match.group(1) for match in pattern.finditer(output)][0]
-
-def __log__(msg):
-	print(msg)
-	return msg
 
 def __getLastDate__():
 	'''

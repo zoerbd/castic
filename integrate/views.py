@@ -3,7 +3,7 @@ from django.conf import settings
 from .forms import integrateInformation
 import os, sys, json, subprocess, re, pdb, random
 from subprocess import Popen, PIPE
-from webmanagement.settings import config
+from webmanagement.settings import config, __shell__
 
 # Create your views here.
 def integrate(request):
@@ -22,13 +22,6 @@ def integrate(request):
 	config['general']['backupPath'] = os.path.join(config['general']['backupPath'], '')
 	form = integrateInformation()
 	return render(request, 'integrate.html', {"form":form, "config":config})
-
-
-def __shell__(command):
-        '''
-        This function makes it less pain to get shell answers
-        '''
-        return subprocess.check_output('{} 2>&1'.format(command), shell=True).decode('utf-8')
 
 class Rendering:
 	def __init__(self, user, pw, dest, repoPath, backupPath, resticPW = ''.join([chr(random.randint(41,125)) for i in range(128)])):

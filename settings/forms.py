@@ -6,7 +6,6 @@ class settingsForm(forms.Form):
 
 	# check
 	DoCheckInBackground = forms.CharField(label='Check backups in background', max_length=32)
-	checkMode = forms.CharField(label='Check mode', max_length=32)
 	autoCheck = forms.CharField(label='Auto check', max_length=32)
 	executeCommandAfterCheck = forms.CharField(label='Execute command after check', max_length=32, required=False)
 

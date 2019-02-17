@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-import os, json
+import os, json, subprocess
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -133,3 +133,13 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # read config file
 with open('config.json') as jsonFile:
         config = json.load(jsonFile)
+
+def __shell__(command):
+        '''
+        This function makes it less pain to get shell answers
+        '''
+        return subprocess.check_output(command, shell=True).decode('utf-8')
+       
+def __log__(msg):
+	print(msg)
+	return msg
