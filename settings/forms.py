@@ -8,7 +8,7 @@ class settingsForm(forms.Form):
 	DoCheckInBackground = forms.CharField(label='Check backups in background', max_length=32)
 	checkMode = forms.CharField(label='Check mode', max_length=32)
 	autoCheck = forms.CharField(label='Auto check', max_length=32)
-	executeCommandAfterCheck = forms.CharField(label='Execute command after check', max_length=32)
+	executeCommandAfterCheck = forms.CharField(label='Execute command after check', max_length=32, required=False)
 
 	# notify
 	mailAddress = forms.CharField(label='Mail-address', max_length=32)
@@ -16,5 +16,5 @@ class settingsForm(forms.Form):
 	warnIfDiskSpaceSmallerThan = forms.CharField(label='Warn if disk space smaller than', max_length=32)
 	mailFrom = forms.CharField(label='Mail from', max_length=32)
 	smtpServer = forms.CharField(label='SMTP-server', max_length=32)
-	smtpUsername = forms.CharField(label='SMTP-user', max_length=32)
-	smtpPassword = forms.CharField(widget=forms.PasswordInput())
+	smtpUsername = forms.CharField(label='SMTP-user', max_length=32, required=False)
+	smtpPassword = forms.CharField(label='SMTP-password', widget=forms.PasswordInput(), required=False)

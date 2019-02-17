@@ -1,11 +1,8 @@
-from django.shortcuts import render, redirect
-from django.conf import settings
 from index.models import repositories
 import os, sys, json, subprocess, datetime, re
-from webmanagement.settings import config, BASE_DIR
+from webmanagement.settings import config, BASE_DI
 
-# Create your views here.
-def update(request):
+
         '''
         check if repos are healthty and update db
         '''
@@ -45,11 +42,3 @@ def update(request):
 
         # execute shell "command after"-option
         os.system(config['check']['executeCommandAfterCheck'])
-
-        return redirect('/')
-
-def __shell__(command):
-        '''
-        This function makes it less pain to get shell answers
-        '''
-        return subprocess.check_output(command, shell=True).decode('utf-8')

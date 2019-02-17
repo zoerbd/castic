@@ -2,10 +2,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import repositories
 import os, sys, json, subprocess, datetime, re
-
-# read config file
-with open('config.json') as jsonFile:
-	config = json.load(jsonFile)
+from webmanagement.settings import config
 
 def index(request):
 	'''
@@ -35,7 +32,7 @@ def __getFreeDiskSpace__():
 	This function returns str that describes available disk space and corresponding mount-path
 	'''
 	# get mount-point	
-	root = config['general']['backupPath'] + '/' # adding /: very dirty waround
+	root = os.path.join(config['general']['backupPath'], '')	# make sure path ends with /
 	output = __shell__('df -h')
 
 	mountPoint = __getMountPoint__(output, root) # fix this shit here: return value

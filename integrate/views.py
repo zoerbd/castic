@@ -3,10 +3,7 @@ from django.conf import settings
 from .forms import integrateInformation
 import os, sys, json, subprocess, re, pdb, random
 from subprocess import Popen, PIPE
-
-# read config file
-with open('config.json') as jsonFile:
-	config = json.load(jsonFile)
+from webmanagement.settings import config
 
 # Create your views here.
 def integrate(request):

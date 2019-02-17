@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import settingsForm
 import json, shutil
-
-# read config file
-with open('config.json') as jsonFile:
-        config = json.load(jsonFile)
+from webmanagement.settings import config
 
 # Create your views here.
 def settings(request):
