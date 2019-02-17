@@ -27,7 +27,16 @@ def settings(request):
                         newConf = __updateConfig__(form.cleaned_data)
                         return render(request, 'checkOutput.html', {"output" : newConf})
                 return render(request, 'checkOutput.html', {"output" : 'Form was invalid!'})
-        form = settingsForm()
+
+        # prepare initial values from config file
+        initialValues = [
+                [{value['key']:value['value']}
+                for value in cat['content']][0]
+                for cat in cats
+        ]
+        initialValues = {**initialValues[0], **initialValues[1], **initialValues[2]}    # merge initial values - fix this later to be more dynamic
+
+        form = settingsForm(initial=initialValues)
         return render(request, 'settings.html', {"categories":categories, "cats":cats, "form":form})
 
 def __updateConfig__(conf):

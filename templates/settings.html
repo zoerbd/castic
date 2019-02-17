@@ -19,12 +19,12 @@
 									<div class="fieldWrapper form-group">
 										{% csrf_token %}
 										{{ setting.errors }}
-										<label id="{{ setting.id_for_label }}" for="{{ setting.id_for_label }}">{{ setting.label }}:</label>
+										<label id="{{ setting.id_for_label }}" for="{{ setting.id_for_label }}">{{ setting.label }}: </label>
 										{{ setting }}
 									</div>
+									<br>
 									{% endif %}
 								{%endfor%}
-								<br>
 							{%  endfor  %}
 						</div>
 					{%  endfor  %}
