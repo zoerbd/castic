@@ -3,9 +3,10 @@ from django.conf import settings
 from .forms import integrateInformation
 import os, sys, json, subprocess, re, pdb, random
 from subprocess import Popen, PIPE
-from webmanagement.settings import config, __shell__
+from webmanagement.settings import config, __shell__, loginRequired
 
 # Create your views here.
+@loginRequired
 def integrate(request):
 	'''
 	Backend for ansible based automated integration
