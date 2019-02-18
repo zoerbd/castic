@@ -12,7 +12,7 @@ def checkRepositories():
 	os.path.join(config['general']['backupPath'], '')
 
 	# build path to repos based on given passwords
-	repos = [ '{}/{}'.format(config['general']['backupPath'], directory)
+	repos = [ config['general']['backupPath'] + directory
 			for directory in os.listdir(appRoot + '/passwords')]
 
 	# check if each corresponding repo is valid
