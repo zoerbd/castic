@@ -30,8 +30,16 @@
 						</div>
 					{%  endfor  %}
 				<br>
-				<button class="btn btn-light">Submit</button>
+				<button class="btn btn-light" formaction="/clear_check_data">Submit</button>
 				</form>
+			</div>
+			<br>
+			<div class="container-fluid title">
+				<div class="item">
+					<form action="/settings/clear_check_data">
+					<button class="btn btn-light">Clear and renew all data from backup checks</button>
+					</form>
+				</div>
 			</div>
 		</div>
 {% endblock  %}
