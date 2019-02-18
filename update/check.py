@@ -1,5 +1,5 @@
 from index.models import repositories
-import os, sys, json, subprocess, datetime, re
+import os, sys, json, subprocess, re
 from webmanagement.settings import config, BASE_DIR, __shell__
 
 def checkRepositories():
@@ -29,14 +29,14 @@ def checkRepositories():
 							name = repo.split('/')[-1],
 							absolPath = repo,
 							diskSpace = repoSpace,
-							lastUpdate = datetime.datetime.now(),
+							#lastUpdate = datetime.datetime.now(), --> doing that automatically (defined in index/models.py)
 							health = statusNum
 					)
 			except:
 					col = repositories.objects.get(absolPath=repo)
 					col.name = repo.split('/')[-1]
 					col.diskSpace = repoSpace
-					col.lastUpdate = datetime.datetime.now()
+					#col.lastUpdate = datetime.datetime.now() --> doing that automatically (defined in index/models.py)
 					col.health = statusNum
 					col.save()
 

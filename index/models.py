@@ -5,5 +5,5 @@ class repositories(models.Model):
 	name = models.CharField(max_length=16)
 	absolPath = models.CharField(max_length=32, primary_key=True)
 	diskSpace = models.CharField(max_length=16)
-	lastUpdate = models.DateField()
+	lastUpdate = models.DateField(auto_now_add=True)
 	health = models.IntegerField()
