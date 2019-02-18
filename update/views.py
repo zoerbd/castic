@@ -20,6 +20,7 @@ def update(request):
 
         # if result returned something, an error occurred
         if result:
+                __log__(result)
                 return render(request, 'checkOutput.html', {'output':result})
         return redirect('/')
 
