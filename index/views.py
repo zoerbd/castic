@@ -60,7 +60,7 @@ def __getMountPoint__(output, root):
 		mountPoint = [match.group(1) for match in pattern.finditer(output)]
 
 		if len(mountPoint) > 1:
-			return __log__('Fatal err __getFreeDiskSpace__(): len of matched disk-mounts > 1.')
+			return __log__('Fatal error in index/views __getFreeDiskSpace__(): len of matched disk-mounts > 1.')
 	return mountPoint[0]
 
 def __getAvailableSpace__(output, root):

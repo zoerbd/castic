@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os, json, subprocess
 from django.shortcuts import redirect
+from django.utils.timezone import now
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -144,8 +145,15 @@ def __shell__(command):
         return subprocess.check_output(command, shell=True).decode('utf-8')
        
 def __log__(msg):
-	print(msg)
-	return msg
+    # if empty argument given, no error occurred
+    if not msg:
+        return
+
+    # document and return
+    print(msg)
+    with open('castic.log', 'a') as logfile:
+        logfile.write('{} - {}'.format(now(), msg))
+    return msg
 
 def loginRequired(func):
     '''

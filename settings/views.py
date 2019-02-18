@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import settingsForm
-import json, shutil
-from webmanagement.settings import config, loginRequired
+import json, shutil, re
+from webmanagement.settings import config, loginRequired, __log__
 
 # Create your views here.
 @loginRequired
@@ -28,8 +28,9 @@ def settings(request):
                         with open('config.json', 'w') as wfile:
                                 wfile.write(newConf)
 
+                        __log__(__updateAutoCheck__(newConf))
                         return redirect('/settings/')
-                return render(request, 'checkOutput.html', {"output" : 'Form was invalid!'})
+                return render(request, 'checkOutput.html', {"output" : __log__('Form was invalid!')})
 
         # prepare initial values from config file
         initialValues = [
@@ -62,3 +63,52 @@ def __updateConfig__(confOrig, confNew):
                         except:
                                 pass
         return json.dumps(confOrig, ensure_ascii=False)
+
+def __updateAutoCheck__(conf):
+        '''
+        This function is called from settings() out of settings/views.
+        It updates users cronjob for doing AutoCheck (simply call /update on given time).
+        '''
+        checkInterval = json.loads(conf)['check']['autoCheck']
+        if __checkAutoCheckSyntax__(checkInterval):
+                checkInterval = '24h'
+        cronjob = __generateCronjobStr__(checkInterval)
+
+        # replace in crontab-file if actual cronjobStr in cronjob-var (instead of error)
+        if '* * *' in cronjob:
+                return __log__(__replaceAutoCheckCronjob__(checkInterval))
+
+def __checkAutoCheckSyntax__(checkInterval):
+        '''
+        This function is called from __updateAutoCheck__() out of settings/views.
+        Returns error-str if input is invalid.
+        '''
+        pattern = re.compile(r'[False|\d+[h|m]]')
+        if not pattern.finditer(checkInterval):
+                return __log__('Got invalid syntax in AutoCheck setting.\nRestoring to default value of 24h\nGiven value {}.'.format(checkInterval))
+
+def __generateCronjobStr__(checkInterval):
+        '''
+        This function is called from __updateAutoCheck__() out of settings/views. 
+        It generates the cronjob for automating the backup check.
+        Returns error-str if an exception occurrs.
+        '''
+        if not checkInterval:
+                return __log__('AutoCheck disabled in settings.')
+        cronjob = 'm h * * *  curl http://localhost/update/'            # ----- WARNING: DOES not work because of login
+
+        # get number of checkInterval in int
+        checkIntervalNumber = int(checkInterval.replace('h', '').replace('m', ''))      
+
+        if 'h' in checkInterval:
+                return cronjob.replace('m h', '0 {}'.format(24 / checkIntervalNumber))
+        return cronjob.replace('m h', '{} 0'.format(60 / checkIntervalNumber)) 
+
+def __replaceAutoCheckCronjob__(checkInterval):
+        '''
+        This function is called from __updateAutoCheck__() out of settings/views. 
+        It replaces the cronjob for automating the backup check.
+        Returns error-str if an exception occurrs. 
+        '''
+        crontabPath = '/var/spool/cron/root'    # maybe make this as setting available later
+        return
