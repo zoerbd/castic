@@ -2,24 +2,22 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import repositories
 import os, sys, json, subprocess, datetime, re
-from webmanagement.settings import config, __shell__, __log__
+from webmanagement.settings import config, __shell__, __log__, loginRequired
 
+@loginRequired
 def index(request):
 	'''
-	check if user is authenticated and 
 	fetch backup data from postgres and render it to template
 	'''
-	if request.user.is_authenticated:
-		repos = repositories.objects.values_list().values()
-		general = {
-			'hostname': __shell__('cat /etc/hostname').replace('\n',''),
-			'path': config['general']['backupPath'],
-			'space': __getFreeDiskSpace__(),
-			'lastCheck': __getLastDate__(),
-			'status': __getOverallHealth__()
-		}
-		return render(request, 'information.html', {'repos':repos, 'general':general})
-	return redirect('/login')
+	repos = repositories.objects.values_list().values()
+	general = {
+		'hostname': __shell__('cat /etc/hostname').replace('\n',''),
+		'path': config['general']['backupPath'],
+		'space': __getFreeDiskSpace__(),
+		'lastCheck': __getLastDate__(),
+		'status': __getOverallHealth__()
+	}
+	return render(request, 'information.html', {'repos':repos, 'general':general})
 
 def __getFreeDiskSpace__():
 	'''

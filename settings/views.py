@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from .forms import settingsForm
 import json, shutil
-from webmanagement.settings import config
+from webmanagement.settings import config, loginRequired
 
 # Create your views here.
+@loginRequired
 def settings(request):
         '''
         Backend for settings-page.

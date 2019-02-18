@@ -1,6 +1,6 @@
 FROM python:3.6
 MAINTAINER zoerbd
-ADD . /usr/src/app
+ADD . /var/www/castic
 WORKDIR /usr/src/app
 RUN pip install -r requirements.txt
 EXPOSE 8000

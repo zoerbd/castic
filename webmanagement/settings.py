@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os, json, subprocess
+from django.shortcuts import redirect
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -59,7 +60,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['/var/www/castic/templates/'],
-        #'DIRS': ['/usr/src/app/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,6 +130,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# ------------------------------------------------------------>
+# ---- Globally used config-vars and function defined here ---
+
 # read config file
 with open('config.json') as jsonFile:
         config = json.load(jsonFile)
@@ -143,3 +146,14 @@ def __shell__(command):
 def __log__(msg):
 	print(msg)
 	return msg
+
+def loginRequired(func):
+    '''
+    Basic decorator to apply on views to require user to be logged in.
+    '''
+    def wrapper(*args, **kwargs):
+        if not args[0].user.is_authenticated:
+            return redirect('/login')
+        return func(*args, **kwargs)
+    return wrapper
+# ------------------------------------------------------------>
