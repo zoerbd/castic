@@ -1,6 +1,7 @@
 from index.models import repositories
 import os, sys, json, subprocess, re
 from webmanagement.settings import config, BASE_DIR, __shell__
+from django.utils.timezone import now
 
 def checkRepositories():
 	'''
@@ -12,13 +13,13 @@ def checkRepositories():
 	os.path.join(config['general']['backupPath'], '')
 
 	# build path to repos based on given passwords
-	repos = [ config['general']['backupPath'] + directory
-			for directory in os.listdir(appRoot + '/passwords')]
+	repos = [ os.path.join(config['general']['backupPath'],directory)
+			for directory in os.listdir(os.path.join(appRoot, 'passwords'))]
 
 	# check if each corresponding repo is valid
 	status = [ 'no error' in __shell__('restic -r {} --password-file {} \
-			--no-cache check'.format(repo, appRoot + '/passwords/'
-			+ repo.split('/')[-1])) for repo in repos ]
+			--no-cache check'.format(repo, os.path.join(appRoot, 'passwords',
+			repo.split('/')[-1]))) for repo in repos ]
 
 	# update repository data in db
 	for j,repo in enumerate(repos):
@@ -29,14 +30,14 @@ def checkRepositories():
 							name = repo.split('/')[-1],
 							absolPath = repo,
 							diskSpace = repoSpace,
-							#lastUpdate = datetime.datetime.now(), --> doing that automatically (defined in index/models.py)
+							lastUpdate = now(), #--> doing that initially (defined in index/models.py)
 							health = statusNum
 					)
 			except:
 					col = repositories.objects.get(absolPath=repo)
 					col.name = repo.split('/')[-1]
 					col.diskSpace = repoSpace
-					#col.lastUpdate = datetime.datetime.now() --> doing that automatically (defined in index/models.py)
+					col.lastUpdate = now() #--> doing that initially (defined in index/models.py)
 					col.health = statusNum
 					col.save()
 
