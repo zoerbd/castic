@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import repositories
-import os, sys, json, subprocess, datetime, re
+import os, sys, json, subprocess, re
 from webmanagement.settings import config, __shell__, __log__, loginRequired
 
 @loginRequired
