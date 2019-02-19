@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import settingsForm
-import json, shutil, re
+import json, shutil, re, os
 from webmanagement.settings import config, loginRequired, __log__, BASE_DIR
 
 # Create your views here.
@@ -101,8 +101,8 @@ def __generateCronjobStr__(checkInterval):
         checkIntervalNumber = int(checkInterval.replace('h', '').replace('m', ''))      
 
         if 'h' in checkInterval:
-                return cronjob.replace('m h', '0 {}'.format(24 / checkIntervalNumber))
-        return cronjob.replace('m h', '{} 0'.format(60 / checkIntervalNumber)) 
+                return cronjob.replace('m h', '0 */{}'.format(int(24 - checkIntervalNumber)))
+        return cronjob.replace('m h', '*/{} 0'.format(int(60 - checkIntervalNumber)))
 
 def __replaceAutoCheckCronjob__(checkInterval, cronjobStr):
         '''
@@ -119,7 +119,7 @@ def __replaceAutoCheckCronjob__(checkInterval, cronjobStr):
         for j, line in enumerate(crontabContent):
                 if os.path.join(BASE_DIR, 'bin/update.py') in line:
                         crontabContent[j] = cronjobStr
-                elif (j-1) == len(crontabContent):
+                elif j == len(crontabContent) - 1:
                         crontabContent.append(cronjobStr)
 
         # write out new cronjob
