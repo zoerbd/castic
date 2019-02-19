@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import settingsForm
 import json, shutil, re
-from webmanagement.settings import config, loginRequired, __log__
+from webmanagement.settings import config, loginRequired, __log__, BASE_DIR
 
 # Create your views here.
 @loginRequired
@@ -76,7 +76,7 @@ def __updateAutoCheck__(conf):
 
         # replace in crontab-file if actual cronjobStr in cronjob-var (instead of error)
         if '* * *' in cronjob:
-                return __log__(__replaceAutoCheckCronjob__(checkInterval))
+                return __log__(__replaceAutoCheckCronjob__(checkInterval, cronjob))
 
 def __checkAutoCheckSyntax__(checkInterval):
         '''
@@ -95,7 +95,7 @@ def __generateCronjobStr__(checkInterval):
         '''
         if not checkInterval:
                 return __log__('AutoCheck disabled in settings.')
-        cronjob = 'm h * * *  curl http://localhost/update/'            # ----- WARNING: DOES not work because of login
+        cronjob = 'm h * * *  {}'.format(os.path.join(BASE_DIR, 'bin/update.py'))
 
         # get number of checkInterval in int
         checkIntervalNumber = int(checkInterval.replace('h', '').replace('m', ''))      
@@ -104,11 +104,24 @@ def __generateCronjobStr__(checkInterval):
                 return cronjob.replace('m h', '0 {}'.format(24 / checkIntervalNumber))
         return cronjob.replace('m h', '{} 0'.format(60 / checkIntervalNumber)) 
 
-def __replaceAutoCheckCronjob__(checkInterval):
+def __replaceAutoCheckCronjob__(checkInterval, cronjobStr):
         '''
         This function is called from __updateAutoCheck__() out of settings/views. 
         It replaces the cronjob for automating the backup check.
         Returns error-str if an exception occurrs. 
         '''
         crontabPath = '/var/spool/cron/root'    # maybe make this as setting available later
-        return
+        shutil.copyfile(crontabPath, crontabPath + '.orig')     # save backup file in case of bugs/exceptions
+        with open(crontabPath, 'r') as crontab:
+                crontabContent = crontab.readlines()
+        
+        # replace current cronjob, if none set, append
+        for j, line in enumerate(crontabContent):
+                if os.path.join(BASE_DIR, 'bin/update.py') in line:
+                        crontabContent[j] = cronjobStr
+                elif (j-1) == len(crontabContent):
+                        crontabContent.append(cronjobStr)
+
+        # write out new cronjob
+        with open(crontabPath, 'w') as crontab:
+                crontab.write(''.join(crontabContent))
