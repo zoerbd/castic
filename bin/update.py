@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python36
 import os, sys
 sys.path.insert(0, '/var/www/castic/') # insert path to import project-stuff (make more dynamic later on)
 
