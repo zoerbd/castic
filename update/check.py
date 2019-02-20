@@ -1,6 +1,8 @@
 from index.models import repositories
 import os, sys, json, subprocess, re
-from webmanagement.settings import config, BASE_DIR, __shell__
+from webmanagement.settings import config, BASE_DIR, __shell__, __log__
+from .mailing import mailingNotification
+from index.views import __getFreeDiskSpace__
 from django.utils.timezone import now
 
 def checkRepositories():
@@ -43,3 +45,33 @@ def checkRepositories():
 
 	# execute shell "command after"-option
 	os.system(config['check']['executeCommandAfterCheck'])
+
+	# call diskSpace-warning if necessary
+	__warnIfLowSpace__()
+
+def __warnIfLowSpace__():
+	'''
+	Called from checkRepositories().
+	Checks if disk space below notification-size.
+	'''
+	pattern = re.compile(r'(\d+[M|G|T])')
+	space = list(pattern.finditer(__getFreeDiskSpace__()))[0].group(1)		# get available disk-space to plain '(\d+[M|G|T])'-str (default return shape= 'X out of Y left on .')
+	minSpace = config['notify']['warnIfDiskSpaceSmallerThan']
+	pattern = re.compile(r'\d+[M|G|T]')
+	if not pattern.finditer(minSpace):
+		return __log__('Invalid value for \'Warn if disk space smaller than\'-option.')
+	
+	# convert units if necessary
+	# split into values- and units-part for easier processing
+	values = [float(item[:-1]) for item in [space, minSpace]]
+	units = [item[-1] for item in [space, minSpace]]
+
+	# if unequal convert
+	if units[0] != units[1]:
+		order = ['M', 'G', 'T']
+		exp = order.index(units[0]) - order.index(units[1])
+		values[0] = values[0] * (1000 ** exp)
+	
+	# if available space below 'warnIfSpaceSmallerThan'-value, send warning log and mail if enabled
+	if values[0] - values[1] < 0:
+		return __log__('WARNING: Available disk space is below \'warnIfSpaceSmallerThan\'-value.\nMail-notification returned with: \'{}\'.'.format(mailingNotification().manageMailing()))
