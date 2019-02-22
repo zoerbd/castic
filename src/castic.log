@@ -1,0 +1,29 @@
+2019-02-22 21:57:07.521979+00:00 - Exited because setup is not wished.2019-02-22 21:57:12.083795+00:00 - Exited because setup is not wished.2019-02-22 21:57:31.413055+00:00 - Exited because setup is not wished.2019-02-22 21:58:10.216131+00:00 - Exited because setup is not wished.2019-02-22 21:58:26.137124+00:00 - Exited because setup is not wished.2019-02-22 21:58:35.890894+00:00 - Exited because setup is not wished.2019-02-22 22:01:23.891392+00:00 - Exiting: script has to be executed as root!2019-02-22 22:01:59.957101+00:00 - Exiting: script has to be executed as root!2019-02-22 22:02:17.968695+00:00 - Exiting: script has to be executed as root!2019-02-22 22:02:32.443763+00:00 - Exiting: script has to be executed as root!2019-02-22 22:03:06.660913+00:00 - Error occurred while trying to setup database: False2019-02-22 22:08:38.012183+00:00 - Database migration returned with: No changes detected2019-02-22 22:08:38.511957+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  Applying login.0001_initial... OK
+  Applying login.0002_delete_passwd... OK2019-02-22 22:12:28.167378+00:00 - Database migration returned with: No changes detected2019-02-22 22:12:28.693222+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  No migrations to apply.2019-02-22 22:12:46.588070+00:00 - Database migration returned with: No changes detected2019-02-22 22:12:47.092868+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  No migrations to apply.2019-02-22 22:14:21.747200+00:00 - Database migration returned with: No changes detected2019-02-22 22:14:22.292356+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  No migrations to apply.2019-02-22 22:15:07.019828+00:00 - Database migration returned with: No changes detected2019-02-22 22:15:07.574344+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  No migrations to apply.2019-02-22 22:15:46.107113+00:00 - Database migration returned with: No changes detected2019-02-22 22:15:46.624996+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  No migrations to apply.2019-02-22 22:16:58.895239+00:00 - Database migration returned with: No changes detected2019-02-22 22:16:59.499010+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  No migrations to apply.2019-02-22 22:17:23.984193+00:00 - Database migration returned with: No changes detected2019-02-22 22:17:24.491541+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  No migrations to apply.2019-02-22 22:18:49.185990+00:00 - Database migration returned with: No changes detected2019-02-22 22:18:49.705741+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  No migrations to apply.

@@ -2,11 +2,13 @@
 '''
 This script is made to be called from setup.py file.
 '''
+import pdb
 
-from .settings import __shell__, __log__
+from globals import __shell__, __log__
+from settings import BASE_DIR
 import sys, os
 
-sys.path.insert(0, '/var/www/castic/')
+sys.path.insert(0, os.path.join(BASE_DIR))
 from django.conf import settings
 from django import setup
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "castic.settings")
@@ -20,23 +22,26 @@ class setupDependencies:
 		'''
 		Setup for production.
 		'''
+		if int(__shell__('id -u')) != 0:
+			return __log__('Exiting: script has to be executed as root!')
 		if not self.__ask__('Start interactive setup for your webserver-environment?'):
 			return __log__('Exited because setup is not wished.')
 		self.__installOSPackages__()
 
 		# setup database
 		dbSetups = {
-			'mysql':'self.__mysqlSetup__()',
-			'sqllite':'self.__sqlliteSetup__()',
-			'postgres':'self.__postgresSetup__()'
+			'a':'self.__mysqlSetup__()',
+			'b':'self.__sqlliteSetup__()',
+			'c':'self.__postgresSetup__()'
 		}
-		dbSetupOption = self.__ask__('Which database should be used for backend?', '[\'MySQL\'|\'SQLLite\'|\'Postgres\']')
+		dbSetupOption = self.__ask__('Which database should be used for backend?\n  a) MySQL\n  b) SQLLite\
+		\n  c) Postgres\n ', '[\'a\'|\'b\'|\'c\']')
 		if dbSetupOption:
 			result = eval(dbSetups[dbSetupOption])
 			if not result:
 				return __log__('Error occurred while trying to setup database: {}'.format(result))
-			[ __log__('Database migration returned with: {}'.format(__shell__(command))) 
-			  for command in ['../manage.py makemigrations', '../manage.py migrate'] ]
+			[ __log__('Database migration returned with: {}'.format(__shell__(command)))
+			  for command in ['./manage.py makemigrations', './manage.py migrate'] ]
 		
 		# setup user
 		print('Create user for authenticate for castic webmanagement.')
@@ -46,7 +51,7 @@ class setupDependencies:
 		# setup webserver infrastructure
 		webInfastruct = self.__ask__('Which webserver infrastructure do you want to setup? \
 		\n  a) gunicorn + nginx reverse proxy (recommended)\n  b) apache2 + mod_wsgi\
-		\n  c) Docker (for testing in an isolated virtual environment)', '[\'a\'|\'b\'|\'c\']')
+		\n  c) Docker (for testing in an isolated virtual environment)\n  ', '[\'a\'|\'b\'|\'c\']')
 		webInfrastructures = {
 			'a':'self.__gunicornSetup__()',
 			'b':'self.__apacheSetup__()',
@@ -54,27 +59,32 @@ class setupDependencies:
 		}
 		if not webInfastruct:
 			return __log__('Error occurred while trying to setup database: {}.'.format(webInfastruct))
+		# ----------------
+		# ////// getting error here: 
+		# ------> TypeError: 'dict' object is not callable
 		result = eval(webInfrastructures(webInfastruct))
+		# //////
+		# ----------------
 		if not result:
 			return __log__('Error occurred while trying to setup webserver infrastructure: {}.'.format(result))
 
 	def __mysqlSetup__(self):
-		return False
+		return True
 	
 	def __sqlliteSetup__(self):	
-		return False
+		return True
 
 	def __postgresSetup__(self):
-		return False
+		return True
 
 	def __gunicornSetup__(self):
-		return False
+		return True
 
 	def __apacheSetup__(self):
-		return False
+		return True 
 
 	def __dockerSetup__(self):
-		return False
+		return True 
 
 	def __ask__(self, *args):
 		'''
@@ -93,8 +103,8 @@ class setupDependencies:
 		'''
 		Install requirements for OS that are written in requirements.sh
 		'''
-		return [ __shell__('yum install {}'.format(package)) 
+		return [ __shell__('yum -y install {}'.format(package)) 
 				 for package in open('../requirements.sh').readlines() ]	# only CentOS Support
 
 if __name__ == '__main__':
-	print(setup().startSetup())
+	setupDependencies().startSetup()

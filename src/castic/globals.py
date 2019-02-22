@@ -3,6 +3,7 @@
 
 import json, subprocess
 from django.shortcuts import redirect
+from django.utils.timezone import now
 
 # read config file
 with open('../config.json') as jsonFile:
@@ -12,7 +13,7 @@ def __shell__(command):
         '''
         This function makes it less pain to get shell answers
         '''
-        return subprocess.check_output(command, shell=True).decode('utf-8')
+        return subprocess.check_output(command, shell=True).decode('utf-8').strip()
        
 def __log__(msg):
     # if empty argument given, no error occurred
