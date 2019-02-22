@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from setuptools import setup, find_packages
 from setuptools.command.install import install
-from webmanagement import __shell__, getVersion
-from installme import setupDependencies
+from webmanagement.settings import __shell__, getVersion
+from webmanagement.installme import setupDependencies
 
 class Installer(install):
 	def run(self):

@@ -3,14 +3,19 @@
 This script is made to be called from setup.py file.
 '''
 
-from settings import __shell__, __log__
+from .settings import __shell__, __log__
+import sys, os
+
+sys.path.insert(0, '/var/www/castic/')
+from django.conf import settings
+from django import setup
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webmanagement.settings")
+setup()
+
 from django.contrib.auth.models import User
 from getpass import getpass
 
 class setupDependencies:
-	def __init__(self, *args, **kwargs):
-		pass
-
 	def startSetup(self):
 		'''
 		Setup for production.
@@ -88,7 +93,8 @@ class setupDependencies:
 		'''
 		Install requirements for OS that are written in requirements.sh
 		'''
-		return [__shell__('yum install {}'.format(package)) for package in open('../requirements.sh').readlines()]	# only CentOS Support
+		return [ __shell__('yum install {}'.format(package)) 
+				 for package in open('../requirements.sh').readlines() ]	# only CentOS Support
 
 if __name__ == '__main__':
 	print(setup().startSetup())
