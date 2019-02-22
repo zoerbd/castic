@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from index.models import repositories
 import os, sys, json, subprocess, datetime, re, threading
-from webmanagement.settings import config, BASE_DIR, __shell__, loginRequired, __log__
+from castic.globals import config, __shell__, loginRequired, __log__
+from castic.settings import BASE_DIR
 from .check import checkRepositories
 from .mailing import mailingNotification
 

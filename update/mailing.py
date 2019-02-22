@@ -1,6 +1,6 @@
 import re
 from django.core.mail import send_mail
-from webmanagement.settings import config
+from castic.globals import config
 
 class mailingNotification():
 	def __init__(self):

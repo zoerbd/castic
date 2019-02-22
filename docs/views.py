@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from webmanagement.settings import loginRequired
+from castic.globals import loginRequired
 
 # Create your views here.
 @loginRequired

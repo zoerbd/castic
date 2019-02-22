@@ -4,7 +4,7 @@ sys.path.insert(0, '/var/www/castic/') # insert path to import project-stuff (ma
 
 from django.conf import settings
 from django import setup
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webmanagement.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "castic.settings")
 setup()
 from update.check import checkRepositories
 

@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from index.models import repositories
-from webmanagement.settings import loginRequired
+from castic.globals import loginRequired
 
 @loginRequired
 def clearData(request):

@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import settingsForm
 import json, shutil, re, os
-from webmanagement.settings import config, loginRequired, __log__, BASE_DIR
+from castic.globals import config, loginRequired, __log__
+from castic.settings import BASE_DIR
 
 # Create your views here.
 @loginRequired

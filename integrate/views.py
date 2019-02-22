@@ -3,7 +3,7 @@ from django.conf import settings
 from .forms import integrateInformation
 import os, sys, json, subprocess, re, pdb, random
 from subprocess import Popen, PIPE
-from webmanagement.settings import config, __shell__, loginRequired
+from castic.globals import config, __shell__, loginRequired
 
 # Create your views here.
 @loginRequired

@@ -9,7 +9,7 @@ import sys, os
 sys.path.insert(0, '/var/www/castic/')
 from django.conf import settings
 from django import setup
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webmanagement.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "castic.settings")
 setup()
 
 from django.contrib.auth.models import User

@@ -1,6 +1,7 @@
 from index.models import repositories
 import os, sys, json, subprocess, re
-from webmanagement.settings import config, BASE_DIR, __shell__, __log__
+from castic.globals import config, __shell__, __log__
+from castic.settings import BASE_DIR
 from .mailing import mailingNotification
 from index.views import __getFreeDiskSpace__
 from django.utils.timezone import now

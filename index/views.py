@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import repositories
 import os, sys, json, subprocess, re
-from webmanagement.settings import config, __shell__, __log__, loginRequired
+from castic.globals import config, __shell__, __log__, loginRequired
 
 @loginRequired
 def index(request):
