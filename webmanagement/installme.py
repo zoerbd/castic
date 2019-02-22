@@ -49,7 +49,9 @@ class setupDependencies:
 		}
 		if not webInfastruct:
 			return __log__('Error occurred while trying to setup database: {}.'.format(webInfastruct))
-		eval(webInfrastructures(webInfastruct))
+		result = eval(webInfrastructures(webInfastruct))
+		if not result:
+			return __log__('Error occurred while trying to setup webserver infrastructure: {}.'.format(result))
 
 	def __mysqlSetup__(self):
 		return False
