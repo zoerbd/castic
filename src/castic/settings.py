@@ -15,7 +15,7 @@ from django.shortcuts import redirect
 from django.utils.timezone import now
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src')
 
 
 # Quick-start development settings - unsuitable for production
@@ -35,8 +35,8 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'index',
-    'login',
+    'src.index',
+    'src.login',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'castic.urls'
+ROOT_URLCONF = 'src.castic.urls'
 
 TEMPLATES = [
     {
@@ -127,6 +127,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/src/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))

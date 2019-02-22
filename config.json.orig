@@ -1,1 +1,0 @@
-{"general": {"backupPath": "/var/backup/"}, "check": {"DoCheckInBackground": "True", "autoCheck": "12h", "executeCommandAfterCheck": ""}, "notify": {"mailAddress": "dominic.zoerb@gmail.com", "sendMailNotifications": "False", "warnIfDiskSpaceSmallerThan": "20G", "mailFrom": "castic@zoerb.cc", "smtpServer": "localhost", "smtpUsername": "", "smtpPassword": ""}}
