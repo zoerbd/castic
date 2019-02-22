@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from index.models import repositories
+from repositories.models import repositories
 from castic.globals import loginRequired
 
 @loginRequired

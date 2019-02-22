@@ -2,9 +2,10 @@
 # ---- Globally used config-vars and function defined here ---
 
 import json, subprocess
+from django.shortcuts import redirect
 
 # read config file
-with open('config.json') as jsonFile:
+with open('../config.json') as jsonFile:
         config = json.load(jsonFile)
 
 def __shell__(command):

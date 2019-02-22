@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from setuptools import setup, find_packages
 from setuptools.command.install import install
-from castic.globals import __shell__, getVersion
-from castic.installme import setupDependencies
+from src.castic.globals import __shell__, getVersion
+from src.castic.installme import setupDependencies
 
 class Installer(install):
 	def run(self):
@@ -29,7 +29,7 @@ setup(
 		'Operating System :: POSIX',
 		'Programming Language :: Python',
 		'Topic :: Internet :: WWW/HTTP',
-        'Framework :: Django'
+	        'Framework :: Django'
 	],
 	install_requires = open('requirements.txt').read(),
 	scripts = ['manage.py']

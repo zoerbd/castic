@@ -1,9 +1,9 @@
-from index.models import repositories
+from repositories.models import repositories
 import os, sys, json, subprocess, re
 from castic.globals import config, __shell__, __log__
 from castic.settings import BASE_DIR
 from .mailing import mailingNotification
-from index.views import __getFreeDiskSpace__
+from repositories.views import __getFreeDiskSpace__
 from django.utils.timezone import now
 
 def checkRepositories():

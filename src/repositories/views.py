@@ -5,7 +5,7 @@ import os, sys, json, subprocess, re
 from castic.globals import config, __shell__, __log__, loginRequired
 
 @loginRequired
-def index(request):
+def repos(request):
 	'''
 	fetch backup data from postgres and render it to template
 	'''

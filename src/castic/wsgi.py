@@ -1,5 +1,5 @@
 """
-WSGI config for webmanagement project.
+WSGI config for castic project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

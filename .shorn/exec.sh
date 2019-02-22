@@ -1,1 +1,0 @@
-gunicorn castic.wsgi:application

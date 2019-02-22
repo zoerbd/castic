@@ -1,4 +1,4 @@
-"""webmanagement URL Configuration
+"""castic URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -18,10 +18,10 @@ from django.urls import path, include
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
-    path('', include('src.index.urls')),
-    path('login', include('src.login.urls')),
-    path('logout', include('src.logout.urls')),
-    path('settings/', include('src.settings.urls')),
-    path('update/', include('src.update.urls')),
-    path('integrate/', include('src.integrate.urls'))
+    path('', include('repositories.urls')),
+    path('login', include('login.urls')),
+    path('logout', include('logout.urls')),
+    path('settings/', include('settings.urls')),
+    path('update/', include('update.urls')),
+    path('integrate/', include('integrate.urls'))
 ]
