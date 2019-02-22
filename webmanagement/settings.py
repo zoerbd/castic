@@ -164,4 +164,10 @@ def loginRequired(func):
             return redirect('/login')
         return func(*args, **kwargs)
     return wrapper
+
+def getVersion():
+    '''
+    Returns current version.
+    '''
+    return '0.6.2'
 # ------------------------------------------------------------>

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 from setuptools import setup, find_packages
-from something import get_version
 from setuptools.command.install import install
-from webmanagement import __shell__
-from .installme import setupDependencies
+from webmanagement import __shell__, getVersion
+from installme import setupDependencies
 
 class Installer(install):
 	def run(self):
@@ -14,7 +13,7 @@ cmdclass={'install':Installer}
 
 setup(
 	name = 'castic',
-	version = get_version(),
+	version = getVersion(),
 	description = 'A webmanagement built on the top of the non-graphical open-source backup program \'restic\'.',
 	long_description = open('README.md').read(),
 	author = 'Dominic Zoerb',
