@@ -20,9 +20,9 @@ def checkRepositories():
 			for directory in os.listdir(os.path.join(appRoot, 'passwords'))]
 
 	# check if each corresponding repo is valid
-	status = [ 'no error' in __shell__('restic -r {} --password-file {} \
-			--no-cache check'.format(repo, os.path.join(appRoot, 'passwords',
-			repo.split('/')[-1]))) for repo in repos ]
+	status = [ 'no error' in __shell__('restic -r {} --password-file {} --no-cache check'.format(
+				repo, os.path.join(appRoot, 'passwords',
+				repo.split('/')[-1]))) for repo in repos ]
 
 	# update repository data in db
 	for j,repo in enumerate(repos):
