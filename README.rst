@@ -7,6 +7,7 @@ castic
 
 ------------
 
+**Warning: This project is in development state and needs some more time.**.
 
 castic is a webmanagement built on top of the non-graphical backup-tool 'restic' (https://github.com/restic/restic).
 
@@ -14,7 +15,6 @@ Documentation_
 
 .. _Documentation: http://zoerb.cc/comingsoon
 
-**New version in development. Stay tuned**.
 
 How to build castic
 ----------------------
