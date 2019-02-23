@@ -1,6 +1,6 @@
 from repositories.models import repositories
 import os, sys, json, subprocess, re
-from castic.globals import config, __shell__, __log__
+from castic.globals import config, __shell__, __log__, gitProjectDir
 from castic.settings import BASE_DIR
 from .mailing import mailingNotification
 from repositories.views import __getFreeDiskSpace__
@@ -10,7 +10,7 @@ def checkRepositories():
 	'''
 	check if repos are healthty and update db-information
 	'''
-	appRoot = BASE_DIR      # used appRoot-var because it's better readable in my opinion
+	appRoot = gitProjectDir      # used appRoot-var because it's better readable in my opinion
 
 	# correct format of backupPath
 	os.path.join(config['general']['backupPath'], '')

@@ -3,7 +3,7 @@
 This script is made to be called from setup.py file.
 '''
 import pdb
-import sys, os
+import sys, os, shutil
 
 sys.path.insert(0, ('/var/www/castic/src/castic'))		# make this more dynamic later on
 from settings import BASE_DIR
@@ -24,71 +24,132 @@ class setupDependencies:
 		Setup for production.
 		'''
 		print('///--\nWARNING: Make sure to run this script in an existing pipenv.\nDo this by executing the following commands:\n  >> pipenv shell <<\n  >> pipenv update <<\n  >> src/bin/installme.py <<\n///--')
+		
+		# check if os supported
+		if __shell__('cat /etc/os-release | grep PRETTY_NAME | cut -d \'=\' -f 2 | cut -d \' \' -f 1 | cut -d \'"\' -f 2') != 'CentOS':
+			return __log__('Sorry but at the moment, only CentOS systems are supported by this installer!\nExiting.')
+
+		# chec if user is root
 		if int(__shell__('id -u')) != 0:
 			return __log__('Exiting: script has to be executed as root!')
 		if not self.__ask__('Start interactive setup for your webserver-environment?'):
 			return __log__('Exited because setup is not wished.')
-		self.__installOSPackages__()
+		self.__installDependencies__(open(os.path.join(gitProjectDir, 'requirements.sh')).readlines())
 
-		# setup database
-		dbSetups = {
-			'a':'self.__mysqlSetup__()',
-			'b':'self.__sqlliteSetup__()',
-			'c':'self.__postgresSetup__()'
-		}
-		dbSetupOption = self.__ask__('Which database should be used for backend?\n  a) MySQL\n  b) SQLLite\
-		\n  c) Postgres\n  ', '[\'a\'|\'b\'|\'c\']')
-		if dbSetupOption:
-			result = eval(dbSetups[dbSetupOption])
-			if not result:
-				return __log__('Error occurred while trying to setup database: {}'.format(result))
-			manageExecutable = os.path.join(BASE_DIR, 'manage.py')
-			[ __log__('Database migration returned with: {}'.format(__shell__(command)))
-			  for command in [ '{} makemigrations'.format(manageExecutable), 
-			  				   '{}  migrate'.format(manageExecutable)]]
+		# setup (migrate) database
+		manageExecutable = os.path.join(BASE_DIR, 'manage.py')
+		[ __log__('Database migration returned with: {}'.format(__shell__(command)))
+		  for command in [ '{} makemigrations'.format(manageExecutable), 
+		  				   '{}  migrate'.format(manageExecutable)]]
 		
 		# setup user
-		print('Create user for authenticate for castic webmanagement.')
+		print('Creating user for authenticate for castic webmanagement.')
 		user = User.objects.create_user(username=input('Username: '), password=getpass())
 		user.save()
 
 		# setup webserver infrastructure
 		webInfastruct = self.__ask__('Which webserver infrastructure do you want to setup? \
-		\n  a) gunicorn + nginx reverse proxy (recommended)\n  b) apache2 + mod_wsgi\
-		\n  c) Docker (Use this for testing purposes in an isolated virtual environment)\n  ', '[\'a\'|\'b\'|\'c\']')
+		\n  a) gunicorn + nginx reverse proxy (recommended)\
+		\n  b) Docker (Use this for testing purposes in an isolated virtual environment)\n  ', '[\'a\'|\'b\']')
 		webInfrastructures = {
-			'a':'self.__gunicornSetup__()',
-			'b':'self.__apacheSetup__()',
-			'c':'self.__dockerSetup__()'
+			'a':'self.__productionSetup__()',
+			'b':'self.__dockerSetup__()'
 		}
 		if not webInfastruct:
 			return __log__('Error occurred while trying to setup database: {}.'.format(webInfastruct))
-		# ----------------
-		# ////// getting error here: 
-		# ------> TypeError: 'dict' object is not callable
-		result = eval(webInfrastructures(webInfastruct))
-		# //////
-		# ----------------
+
+		result = eval(webInfrastructures[webInfastruct])
 		if not result:
 			return __log__('Error occurred while trying to setup webserver infrastructure: {}.'.format(result))
 
-	def __mysqlSetup__(self):
-		return True
-	
-	def __sqlliteSetup__(self):	
-		return True
+	def __productionSetup__(self):
+		'''
+		This method is called from self.startSetup and 
+		manages nginx-reverseProxy/gunicorn production setup.
+		'''
+		self.__installDependencies__(['nginx'], ['gunicorn'])
+		self.__setupNginxReverseProxy__()
+		self.__setupGunicorn__()
 
-	def __postgresSetup__(self):
-		return True
 
-	def __gunicornSetup__(self):
-		return True
+	def __setupNginxReverseProxy__(self):
+		'''
+		This function overwrites the nginx.conf with 
+		reverse proxy configuration (localhost:8000) for gunicorn.
+		'''
+		nginxConfPath = '/etc/nginx/nginx.conf'
+		nginxConf = open(nginxConfPath).readlines()
+		shutil.copyfile(nginxConfPath, nginxConfPath + '.orig')
 
-	def __apacheSetup__(self):
-		return True 
+		port = 80
+		if not self.__ask__('Should port 80 be used for your vHost?'):
+			port = int(input('Which port should be used for your vHost? '))
+		
+		structure = self.__getConfStructure__(nginxConf)
+
+		vhostConfig = ['   server {',
+					'listen       {};'.format(str(port)),
+					'server_name  {};'.format(__shell__('cat /etc/hostname')),
+					'root         /var/www/castic;',
+					'include /etc/nginx/default.d/*.conf;',
+					'location /static/ {',
+					'        root /var/www/castic/src;',
+					'}',
+					'location / {',
+					'	proxy_pass http://unix:/run/gunicorn/socket;',
+					'}',
+					'}']
+
+		[nginxConf.insert(structure['http'][1] - 1, line) for line in reversed(vhostConfig)]
+		with open(nginxConfPath) as outfile:
+			outfile.write(nginxConf)
+		return __shell__('systemctl restart nginx')
+
+	def __getConfStructure__(self, conf):
+		'''
+		This method gets called by self.__setupNginxReverseProxy__.
+		It returns a dict that displays the structure of the nginx-config.
+		Formatted like this: 
+			{
+				'<tag>':[<start>, <end>],
+						.
+						.
+						.
+				'<tagN>':[<startN>, <endN>]
+			}
+		'''
+		struct = {}
+		for j, line in enumerate(conf):
+			if '{' in line:
+				struct[line.split('{')[0]] = [j]
+			if '}' in line:
+				struct[struct.keys()[-1]].append(j)
+		return struct
+
+
+	def __setupGunicorn__(self):
+		'''
+		This function prepares a gunicorn production setup on localhost:8000.
+		Based on https://docs.gunicorn.org/en/stable/deploy.html#nginx-configuration.
+		'''
+		# create /etc/systemd/system/gunicorn.service and .socket
+		systemdDir = '/etc/systemd/system'
+		files = [os.path.join(BASE_DIR, 'bin/gunicorn/gunicorn.{}'.format(ext)) for ext in ['socket', 'service']]
+		[ shutil.copyfile(filename, systemdDir) for filename in files ]
+		[ __shell__('systemctl enable {}'.format(filename.split('/')[-1])) for filename in files ]
+		return [ __shell__('systemctl restart {}'.format(filename.split('/')[-1])) for filename in files ]
+
 
 	def __dockerSetup__(self):
-		return True 
+		'''
+		This method is called from self.startSetup and 
+		manages docker isolated testing setup.
+		'''		
+		self.__installDependencies__(['docker'])
+		__shell__('systemctl start docker')
+		sys.path.insert(0, gitProjectDir)
+		__shell__('docker build -t castic')
+		return __log__('Docker setup returned with: {}'.format(__shell__('docker run -it castic')))
 
 	def __ask__(self, *args):
 		'''
@@ -108,13 +169,15 @@ class setupDependencies:
 		if not question in [entry.lower() for entry in eval(args[1].replace('|', ','))]:
 			return False
 		return question
-	
-	def __installOSPackages__(self):
-		'''
-		Install requirements for OS that are written in requirements.sh
-		'''
-		return [ __shell__('yum -y install {}'.format(package)) 
-				 for package in open(os.path.join(gitProjectDir, 'requirements.sh')).readlines() ]	# only CentOS Support
 
+	def __installDependencies__(self, osList, pythonList=None):
+		'''
+		This method will be called from internal methods that 
+		require some OS and python packages to be installed.
+		'''
+		[__shell__('yum -y install {}'.format(package) for package in osList)]			# only yum support right now
+		if pythonList:
+			[__shell__('python3 -m pip install {}').format(package) for package in pythonList]
+	
 if __name__ == '__main__':
 	setupDependencies().startSetup()
