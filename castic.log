@@ -21,4 +21,9 @@ Exiting.'.2019-02-20 19:15:44.748102+00:00 - WARNING: Available disk space is be
 Mail-notification returned with: 'Error in config-syntax detected.
 Exiting.'.2019-02-20 19:17:17.941890+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
 Mail-notification returned with: 'Error in config-syntax detected.
-Exiting.'.
+Exiting.'.2019-02-23 09:37:08.101102+00:00 - Database migration returned with: No changes detected
+2019-02-23 09:37:08.645228+00:00 - Database migration returned with: Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
+Running migrations:
+  No migrations to apply.
+2019-02-23 09:37:16.984940+00:00 - Exited because setup is not wished.

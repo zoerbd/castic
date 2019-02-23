@@ -25,7 +25,7 @@ def __log__(msg):
 
     # document and return
     print(msg)
-    with open('../castic.log', 'a') as logfile:
+    with open(os.path.join(gitProjectDir, 'castic.log'), 'a') as logfile:
         logfile.write('{} - {}\n'.format(now(), msg))
     return msg
 

@@ -1,6 +1,0 @@
-2019-02-23 09:24:25.063143+00:00 - Exited because setup is not wished.
-2019-02-23 09:33:50.209098+00:00 - Database migration returned with: No changes detected
-2019-02-23 09:33:50.748952+00:00 - Database migration returned with: Operations to perform:
-  Apply all migrations: admin, auth, contenttypes, login, repositories, sessions
-Running migrations:
-  No migrations to apply.
