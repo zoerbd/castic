@@ -59,8 +59,7 @@ class setupDependencies:
 			return __log__('Error occurred while trying to setup database: {}.'.format(webInfastruct))
 
 		result = eval(webInfrastructures[webInfastruct])
-		if not result:
-			return __log__('Error occurred while trying to setup webserver infrastructure: {}.'.format(result))
+		__log__('setup for webserver infrastructure returned with: {}.'.format(result))
 
 	def __productionSetup__(self):
 		'''
@@ -69,7 +68,7 @@ class setupDependencies:
 		'''
 		self.__installDependencies__(['nginx'], ['gunicorn'])
 		self.__setupNginxReverseProxy__()
-		self.__setupGunicorn__()
+		return self.__setupGunicorn__()
 
 
 	def __setupNginxReverseProxy__(self):
@@ -85,46 +84,43 @@ class setupDependencies:
 		if not self.__ask__('Should port 80 be used for your vHost?'):
 			port = int(input('Which port should be used for your vHost? '))
 		
-		structure = self.__getConfStructure__(nginxConf)
+		beginHttp = self.__getConfStructure__(nginxConf)
+		if len(beginHttp) < 1:
+			return __log__('Error occurred while trying to setup nginx: http block not found in /etc/nginx/nginx.conf.')
 
-		vhostConfig = ['   server {',
-					'listen       {};'.format(str(port)),
-					'server_name  {};'.format(__shell__('cat /etc/hostname')),
-					'root         /var/www/castic;',
-					'include /etc/nginx/default.d/*.conf;',
-					'location /static/ {',
-					'        root /var/www/castic/src;',
-					'}',
-					'location / {',
-					'	proxy_pass http://unix:/run/gunicorn/socket;',
-					'}',
+		vhostConfig = ['server {',
+					'\tlisten       {};'.format(str(port)),
+					'\tserver_name  {};'.format(__shell__('cat /etc/hostname')),
+					'\troot         /var/www/castic;',
+					'\tinclude /etc/nginx/default.d/*.conf;',
+					'\tlocation /static/ {',
+					'\t        root /var/www/castic/src;',
+					'\t}',
+					'\tlocation / {',
+					'\t	proxy_pass http://unix:/run/gunicorn/socket;',
+					'\t}',
 					'}']
 
-		[nginxConf.insert(structure['http'][1] - 1, line) for line in reversed(vhostConfig)]
-		with open(nginxConfPath) as outfile:
-			outfile.write(nginxConf)
+		[nginxConf.insert(beginHttp[0] + 1, line + '\n') for line in reversed(vhostConfig)]
+		with open(nginxConfPath, 'w') as outfile:
+			outfile.write(''.join(nginxConf))
 		return __shell__('systemctl restart nginx')
 
 	def __getConfStructure__(self, conf):
 		'''
 		This method gets called by self.__setupNginxReverseProxy__.
 		It returns a dict that displays the structure of the nginx-config.
-		Formatted like this: 
-			{
-				'<tag>':[<start>, <end>],
-						.
-						.
-						.
-				'<tagN>':[<startN>, <endN>]
-			}
 		'''
-		struct = {}
-		for j, line in enumerate(conf):
-			if '{' in line:
-				struct[line.split('{')[0]] = [j]
-			if '}' in line:
-				struct[struct.keys()[-1]].append(j)
-		return struct
+		return [j for j, line in enumerate(conf) if self.__lineIsValid__(['http', '{'], line)]
+
+	def __lineIsValid__(self, tags, line):
+		isValid = []
+		for tag in tags:
+			if '#' in line:
+				isValid.append(tag in line and line.index('#') > line.index(tag))
+			else:
+				isValid.append(tag in line)
+		return all(isValid)
 
 
 	def __setupGunicorn__(self):
@@ -133,9 +129,9 @@ class setupDependencies:
 		Based on https://docs.gunicorn.org/en/stable/deploy.html#nginx-configuration.
 		'''
 		# create /etc/systemd/system/gunicorn.service and .socket
-		systemdDir = '/etc/systemd/system'
+		systemdDir = '/etc/systemd/system/'
 		files = [os.path.join(BASE_DIR, 'bin/gunicorn/gunicorn.{}'.format(ext)) for ext in ['socket', 'service']]
-		[ shutil.copyfile(filename, systemdDir) for filename in files ]
+		[ shutil.copyfile(filename, os.path.join(systemdDir, filename.split('/')[-1])) for filename in files ]
 		[ __shell__('systemctl enable {}'.format(filename.split('/')[-1])) for filename in files ]
 		return [ __shell__('systemctl restart {}'.format(filename.split('/')[-1])) for filename in files ]
 
@@ -177,7 +173,7 @@ class setupDependencies:
 		'''
 		[__shell__('yum -y install {}'.format(package) for package in osList)]			# only yum support right now
 		if pythonList:
-			[__shell__('python3 -m pip install {}').format(package) for package in pythonList]
+			[__shell__('python3 -m pip install {}'.format(package)) for package in pythonList]
 	
 if __name__ == '__main__':
 	setupDependencies().startSetup()
