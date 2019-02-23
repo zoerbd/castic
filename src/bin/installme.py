@@ -23,6 +23,7 @@ class setupDependencies:
 		'''
 		Setup for production.
 		'''
+		print('///--\nWARNING: Make sure to run this script in an existing pipenv.\nDo this by executing the following commands:\n  >> pipenv shell <<\n  >> pipenv update <<\n  >> src/bin/installme.py <<\n///--')
 		if int(__shell__('id -u')) != 0:
 			return __log__('Exiting: script has to be executed as root!')
 		if not self.__ask__('Start interactive setup for your webserver-environment?'):
@@ -36,7 +37,7 @@ class setupDependencies:
 			'c':'self.__postgresSetup__()'
 		}
 		dbSetupOption = self.__ask__('Which database should be used for backend?\n  a) MySQL\n  b) SQLLite\
-		\n  c) Postgres\n ', '[\'a\'|\'b\'|\'c\']')
+		\n  c) Postgres\n  ', '[\'a\'|\'b\'|\'c\']')
 		if dbSetupOption:
 			result = eval(dbSetups[dbSetupOption])
 			if not result:
@@ -54,7 +55,7 @@ class setupDependencies:
 		# setup webserver infrastructure
 		webInfastruct = self.__ask__('Which webserver infrastructure do you want to setup? \
 		\n  a) gunicorn + nginx reverse proxy (recommended)\n  b) apache2 + mod_wsgi\
-		\n  c) Docker (for testing in an isolated virtual environment)\n  ', '[\'a\'|\'b\'|\'c\']')
+		\n  c) Docker (Use this for testing purposes in an isolated virtual environment)\n  ', '[\'a\'|\'b\'|\'c\']')
 		webInfrastructures = {
 			'a':'self.__gunicornSetup__()',
 			'b':'self.__apacheSetup__()',
@@ -94,10 +95,16 @@ class setupDependencies:
 		Ask question and return bool answer.
 		'''
 		if len(args) == 1:
-			return __shell__('read -s -n 1 -p "{} [y|n]\n" a && echo $a'.format(args[0])).lower() in ['y', 'yes']
+			return __shell__('read -s -n 1 -p "{} [y|n]\n" a && echo $a'.format(args[0])).lower() == 'y'
 
 		# do this if options-block (i.e. [y|n|d]) explicitly given and check if answer valid
-		question = input('{} {}'.format(args[0], args[1])).lower()
+		# check one-sized optiosn available to enable using controls without pressing enter
+		if all([ True if len(opt.replace('[', '').replace(']', '').replace('\'', '')) == 1 else False for opt in args[1].split('|')]):
+			question = __shell__('read -s -n 1 -p "{} {}\n" a && echo $a'.format(args[0], args[1].replace('\'', ''))).lower()
+		else:
+			opt.replace('[', '').replace(']', '').replace('\'', '')
+
+		# check if answer in allowed options
 		if not question in [entry.lower() for entry in eval(args[1].replace('|', ','))]:
 			return False
 		return question
