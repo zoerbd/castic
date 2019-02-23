@@ -1,15 +1,7 @@
 #!/usr/bin/env python3
 from setuptools import setup, find_packages
-from setuptools.command.install import install
 from src.castic.globals import __shell__, getVersion
-from src.castic.installme import setupDependencies
-
-class Installer(install):
-	def run(self):
-		install.run(self)
-		print(setupDependencies().startSetup())
-	
-cmdclass={'install':Installer}
+from src.bin.installme import setupDependencies
 
 setup(
 	name = 'castic',
@@ -21,8 +13,8 @@ setup(
 	license = 'GPL3',
 	url = 'https://bitbucket.org/zoerbd/castic',
 	download_url = 'https://bitbucket.org/zoerbd/castic',
-	packages = find_packages(), #exclude=['*.md', '*.log', '*.log', 'Pipfile*', '\.*', 'config*', 'Docker*', 'requirements*']),
-	iclude_package_data = True,
+	packages = find_packages(), 
+	include_package_data = True,
 	zip_safe = False,
 	classifiers = [
 		'Environment :: Web Environment',
@@ -32,5 +24,13 @@ setup(
 	        'Framework :: Django'
 	],
 	install_requires = open('requirements.txt').read(),
-	scripts = ['manage.py']
+	scripts = ['src/manage.py']
 )
+
+# try to execute installme-script
+try:
+	setupDependencies().startSetup()
+except:
+	print('////////')
+	print(' For full setup that includes user creation, database-migration, webserver-infrastructure and more, execute >>>src/bin/installme.py<<<')
+	print('////////')
