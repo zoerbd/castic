@@ -3,6 +3,7 @@ from django.conf import settings
 from .models import repositories
 import os, sys, json, subprocess, re
 from castic.globals import config, __shell__, __log__, loginRequired
+from castic.settings import BASE_DIR
 
 @loginRequired
 def repos(request):
@@ -75,6 +76,12 @@ def __getLastDate__():
 	This function returns last date of overall checks
 	'''
 	values = repositories.objects.values_list().values()
+
+	# if empty, there was no initial check
+	if not values:
+		__shell__(os.path.join(BASE_DIR, 'bin/update.py'))
+		return __getLastDate__()
+
 	for j in range(1, len(values)):
 		latest = values[j]['lastUpdate']
 		if values[j-1]['lastUpdate'] > latest:

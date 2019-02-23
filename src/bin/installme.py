@@ -29,6 +29,7 @@ class setupDependencies:
 		if __shell__('cat /etc/os-release | grep PRETTY_NAME | cut -d \'=\' -f 2 | cut -d \' \' -f 1 | cut -d \'"\' -f 2') != 'CentOS':
 			return __log__('Sorry but at the moment, only CentOS systems are supported by this installer!\nExiting.')
 
+		# chec if user is root
 		if int(__shell__('id -u')) != 0:
 			return __log__('Exiting: script has to be executed as root!')
 		if not self.__ask__('Start interactive setup for your webserver-environment?'):
@@ -56,12 +57,8 @@ class setupDependencies:
 		}
 		if not webInfastruct:
 			return __log__('Error occurred while trying to setup database: {}.'.format(webInfastruct))
-		# ----------------
-		# ////// getting error here: 
-		# ------> TypeError: 'dict' object is not callable
-		result = eval(webInfrastructures(webInfastruct))
-		# //////
-		# ----------------
+
+		result = eval(webInfrastructures[webInfastruct])
 		if not result:
 			return __log__('Error occurred while trying to setup webserver infrastructure: {}.'.format(result))
 
@@ -133,10 +130,11 @@ class setupDependencies:
 	def __setupGunicorn__(self):
 		'''
 		This function prepares a gunicorn production setup on localhost:8000.
+		Based on https://docs.gunicorn.org/en/stable/deploy.html#nginx-configuration.
 		'''
 		# create /etc/systemd/system/gunicorn.service and .socket
 		systemdDir = '/etc/systemd/system'
-		files = [os.path.join(BASE_DIR, 'bin/gunicorn/gunicorn.{}'.format(ext) for ext in ['socket', 'service']]
+		files = [os.path.join(BASE_DIR, 'bin/gunicorn/gunicorn.{}'.format(ext)) for ext in ['socket', 'service']]
 		[ shutil.copyfile(filename, systemdDir) for filename in files ]
 		[ __shell__('systemctl enable {}'.format(filename.split('/')[-1])) for filename in files ]
 		return [ __shell__('systemctl restart {}'.format(filename.split('/')[-1])) for filename in files ]

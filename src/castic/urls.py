@@ -23,5 +23,6 @@ urlpatterns = [
     path('logout', include('logout.urls')),
     path('settings/', include('settings.urls')),
     path('update/', include('update.urls')),
+    path('snapshots/', include('snapshots.urls')),
     path('integrate/', include('integrate.urls'))
 ]
