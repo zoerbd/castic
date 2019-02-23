@@ -21,7 +21,7 @@ setup(
 		'Operating System :: POSIX',
 		'Programming Language :: Python',
 		'Topic :: Internet :: WWW/HTTP',
-	        'Framework :: Django'
+	    'Framework :: Django'
 	],
 	install_requires = open('requirements.txt').read(),
 	scripts = ['src/manage.py']

@@ -1,4 +1,2 @@
 django
-psycopg2
-gunicorn
 pipenv
