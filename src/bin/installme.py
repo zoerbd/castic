@@ -3,10 +3,11 @@
 This script is made to be called from setup.py file.
 '''
 import pdb
-
-from globals import __shell__, __log__
-from settings import BASE_DIR
 import sys, os
+
+sys.path.insert(0, ('/var/www/castic/src/castic'))		# make this more dynamic later on
+from settings import BASE_DIR
+from globals import __shell__, __log__, gitProjectDir
 
 sys.path.insert(0, os.path.join(BASE_DIR))
 from django.conf import settings
@@ -40,8 +41,10 @@ class setupDependencies:
 			result = eval(dbSetups[dbSetupOption])
 			if not result:
 				return __log__('Error occurred while trying to setup database: {}'.format(result))
+			manageExecutable = os.path.join(BASE_DIR, 'manage.py')
 			[ __log__('Database migration returned with: {}'.format(__shell__(command)))
-			  for command in ['./manage.py makemigrations', './manage.py migrate'] ]
+			  for command in [ '{} makemigrations'.format(manageExecutable), 
+			  				   '{}  migrate'.format(manageExecutable)]]
 		
 		# setup user
 		print('Create user for authenticate for castic webmanagement.')
@@ -104,7 +107,7 @@ class setupDependencies:
 		Install requirements for OS that are written in requirements.sh
 		'''
 		return [ __shell__('yum -y install {}'.format(package)) 
-				 for package in open('../requirements.sh').readlines() ]	# only CentOS Support
+				 for package in open(os.path.join(gitProjectDir, 'requirements.sh')).readlines() ]	# only CentOS Support
 
 if __name__ == '__main__':
 	setupDependencies().startSetup()

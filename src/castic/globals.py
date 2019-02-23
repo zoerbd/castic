@@ -1,12 +1,15 @@
 # ------------------------------------------------------------>
 # ---- Globally used config-vars and function defined here ---
 
-import json, subprocess
+import json, subprocess, os, sys
+sys.path.insert(0, '/var/www/castic/src')
 from django.shortcuts import redirect
 from django.utils.timezone import now
+from castic.settings import BASE_DIR
 
 # read config file
-with open('../config.json') as jsonFile:
+gitProjectDir = '/'.join(BASE_DIR.split('/')[:-1])   # get parent dir of src
+with open(os.path.join(gitProjectDir, 'config.json')) as jsonFile:
         config = json.load(jsonFile)
 
 def __shell__(command):
@@ -22,8 +25,8 @@ def __log__(msg):
 
     # document and return
     print(msg)
-    with open('castic.log', 'a') as logfile:
-        logfile.write('{} - {}'.format(now(), msg))
+    with open('../castic.log', 'a') as logfile:
+        logfile.write('{} - {}\n'.format(now(), msg))
     return msg
 
 def loginRequired(func):
