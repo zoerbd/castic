@@ -29,11 +29,11 @@ ALLOWED_HOSTS = [
     'localhost'
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
     'repositories',
+    'snapshots',
     'login',
     'django.contrib.admin',
     'django.contrib.auth',
