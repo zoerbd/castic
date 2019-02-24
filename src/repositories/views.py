@@ -12,7 +12,7 @@ def repos(request):
 	'''
 	repos = repositories.objects.values_list().values()
 	general = {
-		'hostname': __shell__('cat /etc/hostname').replace('\n',''),
+		'hostname': __shell__('cat /etc/hostame').replace('\n',''),
 		'path': config['general']['backupPath'],
 		'space': __getFreeDiskSpace__(),
 		'lastCheck': __getLastDate__(),
