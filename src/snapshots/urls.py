@@ -3,5 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.snapshots, name='snapshots')
+    path('', views.repos, name='repos'),
+    path('<str:absolPath>/', views.snapshots, name='snapshots')
 ]

@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+{% block content %}
+		<div class="sidenav">
+			{% for snap in snaps  %}
+				<a href="#{{snap.snapshotID}}">{{snap.created}}</a>
+			{% endfor %}
+		</div>
+		<div class="main">
+			<div class="container-fluid title">
+				{% for snap in snaps %}
+				<p id="{{snapshotID}}"></p>
+				<div class="item">
+					<p>From repository: {{snap.absolPath}}</p>	
+					<p>SnapshotID: {{snap.snapshotID}}</p>	
+					<p>Was created: {{snap.created}}</p>	
+					<p>Snapshot made from host: {{snap.host}}</p>	
+					<p>Backuped paths: {{snap.paths}}</p>	
+					<button class="btn btn-light">Delete Snapshot</button>
+					<button class="btn btn-light">Restore Snapshot</button>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+{% endblock %}

@@ -10,7 +10,11 @@ def repos(request):
 	'''
 	fetch backup data from postgres and render it to template
 	'''
+	# get repo data and append snapshots-uri to link
 	repos = repositories.objects.values_list().values()
+	for repo in repos:
+		repo['snapshotsURI'] = '/snapshots/{}'.format(repo['absolPath'].replace('/', '.'))
+
 	general = {
 		'hostname': __shell__('cat /etc/hostname').replace('\n',''),
 		'path': config['general']['backupPath'],

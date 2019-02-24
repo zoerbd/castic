@@ -40,6 +40,7 @@
 					{% endif %}
 					<p>Used disk space: {{repo.diskSpace}}</p>
 					<p>Last update: {{repo.lastUpdate}}</p>
+                                        <p><a href="{{repo.snapshotsURI}}">Show snapshots</a></p>
 				</div>
 				<br>
 			{% endfor  %}
