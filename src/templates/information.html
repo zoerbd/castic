@@ -1,7 +1,28 @@
 {% extends 'index.html' %}
 {% block content  %}
+                <script>
+                        $(document).ready(function(){
+                                $('.status').mouseover(function(){
+                                        $(this).css('background-color', '#ecf1df');
+                                        $(this).css('padding', '10px');
+                                        $(this).css('border-radius', '10px');
+                                })
+                                $('.status').mouseout(function(){
+                                        $(this).css('background-color', 'white');
+                                        $(this).css('padding', '0px');
+                                })
+                                if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                                        $('.sidenav').css('display', 'none');
+                                        $('#main').css('width', '100%');
+                                        $('#main').css('margin-left', '0');
+                                        $('.title').css('margin-top', '20%');
+                                        $('#biglogo').css('width', '80%');
+                                        $('#biglogo').css('height', '80%');
+                                }
+                        })
+                </script>
 		<div class="sidenav">
-                    <a href="/update" style="color:green">Check backups</a>
+                    <a href="/update" style="color:green" class="showlink">Check backups</a>
 		    <br>
                     <a href="#main">General information</a>
 		    {% for repo in repos  %}
@@ -40,29 +61,10 @@
 					{% endif %}
 					<p>Used disk space: {{repo.diskSpace}}</p>
 					<p>Last update: {{repo.lastUpdate}}</p>
-                                        <p><a href="{{repo.snapshotsURI}}">Show snapshots</a></p>
+                                        <p><a href="{{repo.snapshotsURI}}" class="showlink">Show snapshots</a></p>
 				</div>
 				<br>
 			{% endfor  %}
-                <script>
-                        $('.status').mouseover(function(){
-                                $(this).css('background-color', '#ecf1df');
-                                $(this).css('padding', '10px');
-                                $(this).css('border-radius', '10px');
-                        })
-                        $('.status').mouseout(function(){
-                                $(this).css('background-color', 'white');
-                                $(this).css('padding', '0px');
-                        })
-                        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-                                $('.sidenav').css('display', 'none');
-                                $('#main').css('width', '100%');
-                                $('#main').css('margin-left', '0');
-                                $('.title').css('margin-top', '20%');
-                                $('#biglogo').css('width', '80%');
-                                $('#biglogo').css('height', '80%');
-                        }
-                </script>
         </div>
         </div>
 {% endblock  %}

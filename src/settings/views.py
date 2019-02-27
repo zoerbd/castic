@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import settingsForm
 import json, shutil, re, os
-from castic.globals import config, loginRequired, __log__
+from castic.globals import config, loginRequired, __log__, gitProjectDir
 from castic.settings import BASE_DIR
 
 # Create your views here.
@@ -25,8 +25,9 @@ def settings(request):
                         newConf = __updateConfig__(config, form.cleaned_data)
 
                         # write out new config
-                        shutil.copyfile('config.json', 'config.json.orig')
-                        with open('config.json', 'w') as wfile:
+                        configPath = os.path.join(gitProjectDir, 'config.json')
+                        shutil.copyfile(configPath, configPath + '.orig')
+                        with open(configPath, 'w') as wfile:
                                 wfile.write(newConf)
 
                         __log__(__updateAutoCheck__(newConf))
@@ -102,8 +103,8 @@ def __generateCronjobStr__(checkInterval):
         checkIntervalNumber = int(checkInterval.replace('h', '').replace('m', ''))      
 
         if 'h' in checkInterval:
-                return cronjob.replace('m h', '0 */{}'.format(int(24 - checkIntervalNumber)))
-        return cronjob.replace('m h', '*/{} 0'.format(int(60 - checkIntervalNumber)))
+                return cronjob.replace('m h', '0 */{}'.format(int(checkIntervalNumber)))
+        return cronjob.replace('m h', '*/{} 0'.format(int(checkIntervalNumber)))
 
 def __replaceAutoCheckCronjob__(checkInterval, cronjobStr):
         '''

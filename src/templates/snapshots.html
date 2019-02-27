@@ -70,7 +70,7 @@
 										{{ form.restorePath }}
 									</div>
 									<br><br>
-									<button class="btn btn-light" onclick="check()">Restore</button>
+									<button class="btn btn-light showlink" onclick="check()">Restore</button>
 							</form>
 					</div>
 				</div>
@@ -81,7 +81,7 @@
 							<form action="/snapshots/{{snap.pathURI}}/delete/{{snap.snapshotID}}" method="GET">
 									<br><br>
 									<p>Are you sure you want to delete this snapshot?</p>
-									<button class="btn btn-light" onclick="check()">Delete</button>
+									<button class="btn btn-light showlink" onclick="check()">Delete</button>
 							</form>
 					</div>
 				</div>
