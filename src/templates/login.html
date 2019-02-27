@@ -10,6 +10,7 @@
 		<link rel="shortcut icon" type="image/x-icon" href="{% static "logo.ico"%}">
 		<script src="{% static "jquery-3.3.1.min.js" %}"></script>
 		<script src="{% static "style.js" %}"></script>
+		<link rel="stylesheet" href="{% static "index.css" %}" type="text/css">
 		<style>
 			.title {
 				color: black; 
@@ -25,8 +26,8 @@
 		</style>
 	</head>
 	<body>
-		<div class='container-fluid title'>
-			<div class="item">
+		<div class='container-fluid container' style="margin-top: 4.6em;">
+			<section>
 				<form action='/login' method="POST">
 					{%  csrf_token  %}
 					<h1>castic Login</h1>
@@ -43,7 +44,7 @@
 					</div>
 					<button type="submit" value="enter" class="btn btn-light showlink">Login</button>
 				</form>
-			</div>
+			</section>
 		</div>
 		<script>
 			let input = $('input');

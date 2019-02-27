@@ -1,10 +1,12 @@
 {% extends 'index.html' %}
 {% block content %}
-			<div class='container-fluid title'>
-				<div class='item'>
+		<main style="margin-left: 0; margin-top: 4em;">
+			<div class='container-fluid container'>
+				<section>
 					{% for repo in repos %}
 						<p><a class="showlink" href='/snapshots/{{repo.nameURL}}/'>{{repo.name}}</a> </p>
 					{% endfor %}
-				</div>
+				</section>
 			</div>
+		</main>
 {% endblock %}

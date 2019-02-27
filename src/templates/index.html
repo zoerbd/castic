@@ -9,115 +9,7 @@
 		<link rel="shortcut icon" type="image/x-icon" href="{% static "logo.ico"%}">
 		<script src="{% static "jquery-3.3.1.min.js" %}"></script>
 		<script src="{% static "style.js" %}"></script>
-		<style>
-			body{
-				font-size: 1.8em;
-				background-color: #e1e9eb;
-			}	
-			.title{
-				color: black; 
-				margin-top: 9%;
-				border-radius: 8px;
-				display: flex;
-				flex-direction: column;
-			}
-			.item{
-				margin-top: 2%;
-				background-color: white;
-				box-shadow: 0 0 5px black;
-				flex-grow: 2;	
-				padding: 3%;
-				order: 2;
-				border-radius: 5px;
-			}
-			nav{
-				box-shadow: 0 0 5px black;
-			}
-			.logo{
-				color: #b4a4b4;
-			}
-			h1 {
-				text-align: center;
-				margin-bottom: 5%;
-			}
-			.header{
-				padding: 5%;
-				background-color: #583D96;
-				color: white;
-				border-radius: 5px;
-				margin-top: 3%;
-			}
-			.general{
-				margin-top: 2%;
-				background-color: white;
-				padding: 3%;
-				border-radius: 5px;
-				box-shadow: 0 0 5px black;
-				margin-bottom: 10%;
-			}
-			.sidenav {
-			  height: 100%;
-			  width: 200px;
-			  position: fixed;
-			  z-index: 1;
-			  top: 0;
-			  left: 0;
-			  background-color: white;
-			  overflow-x: hidden;
-			  padding-top: 20px;
-			  padding-top: 15%;
-			}
-
-			.sidenav a {
-			  padding: 6px 6px 6px 32px;
-			  text-decoration: none;
-			  font-size: 25px;
-			  color: #818181;
-			  display: block;
-			}
-
-			.sidenav a:hover {
-			  color: #444444;
-			}
-			@media screen and (max-height: 450px) {
-			  .sidenav {padding-top: 15px;}
-			  .sidenav a {font-size: 18px;}
-			}
-			.main {
-  				margin-left: 200px; /* Same as the width of the sidenav */
-			}
-			.placeholder{
-				display: block-inline;
-			}
-			.status{
-				color: green;
-			}
-			.loading_modal {
-				display:    none;
-				position:   fixed;
-				z-index:    1000;
-				top:        0;
-				left:       0;
-				height:     100%;
-				width:      100%;
-				background: rgba( 255, 255, 255, .8 ) 
-												url('/static/loading.gif') 
-												50% 50% 
-												no-repeat;
-				}
-
-				/* When the body has the loading class, we turn
-				the scrollbar off with overflow:hidden */
-				body.loading .loading_modal {
-				overflow: hidden;   
-				}
-
-				/* Anytime the body has the loading class, our
-				modal element will be visible */
-				body.loading .loading_modal {
-				display: block;
-				}
-		</style>
+		<link rel="stylesheet" href="{% static "index.css" type="text/css" %}">
 		<script>
 			$(document).ready(function(){
 			$('.showlink').click(function(){
@@ -148,7 +40,7 @@
 		    <li class="nav-item navli">
 		      <a class="nav-link showlink" href="/settings">Settings</a>
 		    </li>
-		    <li>
+		    <li style="float: right;">
 		      <a class="nav-link" href="/logout">logout</a>
 		    </li>
 		  </ul>

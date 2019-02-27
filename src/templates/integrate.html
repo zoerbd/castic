@@ -1,7 +1,8 @@
 {% extends 'index.html' %}
 {% block content %}
-		<div class="container-fluid title">
-			<div class="item">
+	<main style="margin-left: 0;">
+		<div class="container-fluid container">
+			<section>
 				<p><span style="color: red">Warning:</span> You need a user on the remote machine that is able to become root via sudo!</p>
 				<form action="/integrate/" method="POST">
 					{% csrf_token %}
@@ -33,9 +34,7 @@
 					<br>
 					<button class="btn btn-light showlink">Start integration</button>
 				</form>
-			</div>
+			</section>
 		</div>
-		<script>
-		
-		</script>
+	</main>
 {% endblock  %}

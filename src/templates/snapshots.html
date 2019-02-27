@@ -44,11 +44,11 @@
 				<a href="#{{snap.snapshotID}}">{{snap.created}}</a>
 			{% endfor %}
 		</div>
-		<div class="main">
-			<div class="container-fluid title">
+		<main>
+			<div class="container-fluid container">
 				{% for snap in snaps %}
 				<p id="{{snapshotID}}"></p>
-				<div class="item">
+				<section>
 					<p>From repository: {{snap.absolPath}}</p>	
 					<p>SnapshotID: {{snap.snapshotID}}</p>	
 					<p>Was created: {{snap.created}}</p>	
@@ -56,7 +56,7 @@
 					<p>Backuped paths: {{snap.paths}}</p>	
 					<button class="btn btn-light mod_delete">Delete Snapshot</button>
 					<button class="btn btn-light mod_restore">Restore Snapshot</button>
-				</div>
+				</section>
 				<!--modals-->
 				<div class="modal">
 					<div class="modal-content">
@@ -88,7 +88,7 @@
 				<!--modals-->
 				{% endfor %}
 			</div>
-		</div>
+		</main>
 		<script>
 			let modals = document.getElementsByClassName('modal');
 			let spans = document.getElementsByClassName("close");

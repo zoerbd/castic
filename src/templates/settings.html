@@ -5,14 +5,14 @@
 					<a href="#{{cat.category}}">{{cat.category}}</a>
 				{% endfor %}
             </div>
-		<div class="main" id="main">
+		<main>
 			<br>
-			<div class="container-fluid title">
+			<div class="container-fluid container">
 				<form action='/settings/' method='POST'>
 					{%  for cat in cats  %}
 						<p id="{{cat.category}}"></p>
 						<br>
-						<div class="item">
+						<section>
 							<h2>{{cat.category}}</h2>
 							{% for setting in form %}
 								{% for entry in cat.content %}
@@ -27,19 +27,19 @@
 									{% endif %}
 								{% endfor %}
 							{%  endfor  %}
-						</div>
+						</section>
 					{%  endfor  %}
 				<br>
 				<button class="btn btn-light showlink">Submit</button>
 				</form>
 			</div>
 			<br>
-			<div class="container-fluid title">
+			<div class="container-fluid container">
 				<div class="item">
 					<form action="/settings/clear_check_data">
 					<button class="btn btn-light">Clear and renew all data from backup checks</button>
 					</form>
 				</div>
 			</div>
-		</div>
+		</main>
 {% endblock  %}
