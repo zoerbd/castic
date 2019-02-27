@@ -30,10 +30,9 @@
 		    {% endfor  %}
                 </div>
 		<br>
-                <div class="main" id="main">
-                <div class="container-fluid title">
-                        <h1 id="info" class="header">Your backup information.</h1>
-                        <div class="general">
+                <main>
+                <div class="container-fluid container">
+                             <section>
                                 <h2>General information: </h2>
                                 <br>				
 				<p>Hostname: {{general.hostname}}</p>
@@ -46,25 +45,22 @@
                                 <p>Overall status: <span id="ostatus" class="status" >unhealthy</span></p>
 				{% endif  %}
 				{% load static  %}
-                                <img id="biglogo" src="{% static "logo2.png" %}">
-                        </div>
-                        <h1 id="info" class="header">Details to each repository.</h1>
+                            </section>
 			{% for repo in repos  %}
-				<!--span id="{{ repo.name  }}" class="placeholder"></span-->
-				<div class="item">
-					<p>Name: {{ repo.name }}</p>
-					<p>Absolute path: {{repo.absolPath}}</p>
-					{% if repo.health %}
-						<p>Status: <span class="status">healthy</span></p>
-					{% else %}
-						<p>Status: <span style="color:red">not healthy</span></p>
-					{% endif %}
-					<p>Used disk space: {{repo.diskSpace}}</p>
-					<p>Last update: {{repo.lastUpdate}}</p>
-                                        <p><a href="{{repo.snapshotsURI}}" class="showlink">Show snapshots</a></p>
-				</div>
-				<br>
+                        <section>
+                                <p>Name: {{ repo.name }}</p>
+                                <p>Absolute path: {{repo.absolPath}}</p>
+                                {% if repo.health %}
+                                        <p>Status: <span class="status">healthy</span></p>
+                                {% else %}
+                                        <p>Status: <span style="color:red">not healthy</span></p>
+                                {% endif %}
+                                <p>Used disk space: {{repo.diskSpace}}</p>
+                                <p>Last update: {{repo.lastUpdate}}</p>
+                                <p><a href="{{repo.snapshotsURI}}" class="showlink">Show snapshots</a></p>
+                        </section>
+        		<br>
 			{% endfor  %}
-        </div>
-        </div>
+                </div>
+        </main>
 {% endblock  %}
