@@ -9,6 +9,3 @@ class integrateInformation(forms.Form):
 
 	# passwords
 	password = forms.CharField(widget=forms.PasswordInput())
-
-	# check boxes
-	ownPassword = forms.BooleanField(required=False)

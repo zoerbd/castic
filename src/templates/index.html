@@ -45,7 +45,6 @@
 				background-color: #583D96;
 				color: white;
 				border-radius: 5px;
-				border: 2px solid #597999;
 				margin-top: 3%;
 			}
 			.general{
@@ -93,27 +92,61 @@
 			.status{
 				color: green;
 			}
+			.loading_modal {
+				display:    none;
+				position:   fixed;
+				z-index:    1000;
+				top:        0;
+				left:       0;
+				height:     100%;
+				width:      100%;
+				background: rgba( 255, 255, 255, .8 ) 
+												url('/static/loading.gif') 
+												50% 50% 
+												no-repeat;
+				}
+
+				/* When the body has the loading class, we turn
+				the scrollbar off with overflow:hidden */
+				body.loading .loading_modal {
+				overflow: hidden;   
+				}
+
+				/* Anytime the body has the loading class, our
+				modal element will be visible */
+				body.loading .loading_modal {
+				display: block;
+				}
 		</style>
+		<script>
+			$(document).ready(function(){
+			$('.showlink').click(function(){
+				$('body').addClass("loading");
+			});
+			})
+		</script>
 	</head>
-	<body>
+	<body >
+	  <div class="loading_modal">
+    </div>
 		<nav class="navbar navbar-expand-md bg-light navbar-light fixed-top">
-        	<a class="navbar-brand logo" href="/"><img src="{% static "logo.png" %}"></a>
+        	<a class="navbar-brand logo showlink" href="/"><img src="{% static "logo.png" %}"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 		  <ul class="navbar-nav">
 		    <li class="nav-item navli">
-		      <a class="nav-link" href="/">Repositories</a>
+		      <a class="nav-link showlink" href="/">Repositories</a>
 		    </li>
 		    <li class="nav-item navli">
-		      <a class="nav-link" href="/snapshots">Snapshots</a>
+		      <a class="nav-link showlink" href="/snapshots">Snapshots</a>
 		    </li>
 		    <li class="nav-item navli">
-		      <a class="nav-link" href="/integrate">Integrate</a>
+		      <a class="nav-link showlink" href="/integrate">Integrate</a>
 		    </li>
 		    <li class="nav-item navli">
-		      <a class="nav-link" href="/settings">Settings</a>
+		      <a class="nav-link showlink" href="/settings">Settings</a>
 		    </li>
 		    <li>
 		      <a class="nav-link" href="/logout">logout</a>

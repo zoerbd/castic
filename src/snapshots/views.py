@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from castic.globals import loginRequired, __shell__, gitProjectDir
-from .models import snapshots
 from .forms import restoreForm
 from repositories.models import repositories
 import re, os
@@ -11,7 +10,7 @@ def repos(request):
 	'''
 	backend for /snapshots/
 	'''
-	repos = [{'name': entry['absolPath'], 'nameURL': entry['absolPath'].replace('/', '.')} for entry in list(repositories.objects.values())]
+	repos = [{'name': entry['absolPath'], 'nameURL': entry['absolPath'].replace('/', '.')} for entry in list(repositories.objects.order_by('name').values())]
 	return render(request, 'snapshots_index.html', {'repos': repos})
 
 @loginRequired

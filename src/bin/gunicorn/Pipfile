@@ -6,9 +6,6 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = "*"
-gunicorn = "*"
-eventlet = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"

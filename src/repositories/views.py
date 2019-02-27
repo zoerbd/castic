@@ -11,7 +11,7 @@ def repos(request):
 	fetch backup data from postgres and render it to template
 	'''
 	# get repo data and append snapshots-uri to link
-	repos = repositories.objects.values_list().values()
+	repos = list(repositories.objects.order_by('name').values())
 	for repo in repos:
 		repo['snapshotsURI'] = '/snapshots/{}'.format(repo['absolPath'].replace('/', '.'))
 
@@ -64,8 +64,8 @@ def __getMountPoint__(output, root):
 		pattern = re.compile(r'({}/?)\n'.format(root))
 		mountPoint = [match.group(1) for match in pattern.finditer(output)]
 
-		if len(mountPoint) > 1:
-			return __log__('Fatal error in index/views __getFreeDiskSpace__(): len of matched disk-mounts > 1.')
+	if len(mountPoint) != 1:
+		return __log__('Fatal error in index/views __getFreeDiskSpace__(): len of matched disk-mounts != 1.')
 	return mountPoint[0]
 
 def __getAvailableSpace__(output, root):
