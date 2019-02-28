@@ -16,7 +16,11 @@ def __shell__(command):
         '''
         This function makes it less pain to get shell answers
         '''
-        return subprocess.check_output(command, shell=True).decode('utf-8').strip()
+        process = subprocess.Popen(command.split(' '), stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        stdout, stderr = [ item.decode('utf-8').strip() for item in process.communicate()]
+        if not stderr:
+            return stdout
+        return __log__("Shell command failed with: {}".format(stderr))
        
 def __log__(msg):
     # if empty argument given, no error occurred

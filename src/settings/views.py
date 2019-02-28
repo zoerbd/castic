@@ -112,8 +112,17 @@ def __replaceAutoCheckCronjob__(checkInterval, cronjobStr):
         It replaces the cronjob for automating the backup check.
         Returns error-str if an exception occurrs. 
         '''
-        crontabPath = '/var/spool/cron/root'    # maybe make this as setting available later
-        shutil.copyfile(crontabPath, crontabPath + '.orig')     # save backup file in case of bugs/exceptions
+        crontabPath = '/var/spool/cron/crontabs/root'    # maybe make this as setting available later
+        if not os.path.isdir(crontabPath.replace('root', '')):
+            newCrontabPath = crontabPath.split('/')
+            newCrontabPath.remove(newCrontabPath[-2])
+            crontabPath = '/'.join(newCrontabPath)
+        try:
+            shutil.copyfile(crontabPath, crontabPath + '.orig')     # save backup file in case of bugs/exceptions
+        except FileNotFoundError:
+            with open(crontabPath, 'w') as cronfile:
+                cronfile.write('# created by castic\n')
+            return __replaceAutoCheckCronjob__(checkInterval, cronjobStr)
         with open(crontabPath, 'r') as crontab:
                 crontabContent = crontab.readlines()
         

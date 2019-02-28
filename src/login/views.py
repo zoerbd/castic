@@ -15,6 +15,6 @@ def login(request):
 			if user is not None:
 				djangoLogin(request, user)
 				return redirect('/')
-		return redirect('/login')
+		return redirect('/login/')
 	form = loginForm()
 	return render(request, 'login.html', {'form' : form})
