@@ -26,12 +26,11 @@
 		</style>
 	</head>
 	<body>
-		<div class='container-fluid container' style="margin-top: 4.6em;">
-			<section>
+		<div class='container-fluid container form'>
 				<form action='/login/' method="POST">
 					{%  csrf_token  %}
-					<h1>castic Login</h1>
-					<h2>Dear user, please authenticate yourself to get access.</h2>
+					<h1>Castic Login</h1>
+					<br>
 					<div class="fieldWrapper form-group">
 							{{ form.name.errors }}
 							<label for="{{ form.name.id_for_label }}">Username:</label>
@@ -42,15 +41,22 @@
 							<label for="{{ form.password.id_for_label }}">Password:</label>
 							{{ form.password }}
 					</div>
-					<button type="submit" value="enter" class="btn btn-light showlink">Login</button>
+					<button type="submit" value="enter" class="btn linkbtn showlink">Login</button>
 				</form>
-			</section>
 		</div>
+				<br>
+				<br>
 		<script>
 			let input = $('input');
 			for (let i=0; i < input.length; i++){
 				input[i].addClass = 'form-control';
 			}
+			$(document).ready(function(){
+			$('.showlink').click(function(){
+				$('body').addClass("loading");
+			});
 		</script>
+		<div class="loading_modal">
+   		</div>
 	</body>
 </html>

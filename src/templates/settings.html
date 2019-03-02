@@ -4,16 +4,19 @@
 				{% for cat in cats  %}
 					<a href="#{{cat.category}}">{{cat.category}}</a>
 				{% endfor %}
+					<a href="#debug">debug</a>
             </div>
 		<main>
-			<br>
 			<div class="container-fluid container">
 				<form action='/settings/' method='POST'>
 					{%  for cat in cats  %}
 						<p id="{{cat.category}}"></p>
 						<br>
-						<section>
+						<div class="genBox">
+						<div class="genInfo">
 							<h2>{{cat.category}}</h2>
+						</div>
+							<div class="genContent">
 							{% for setting in form %}
 								{% for entry in cat.content %}
 									{% if setting.name in entry.key %}
@@ -27,18 +30,26 @@
 									{% endif %}
 								{% endfor %}
 							{%  endfor  %}
-						</section>
+							</div>
+							</div>
 					{%  endfor  %}
 				<br>
-				<button class="btn btn-light showlink">Submit</button>
 				</form>
 			</div>
-			<br>
+			<p id="debug"></p>
 			<div class="container-fluid container">
-				<div class="item">
-					<form action="/settings/clear_check_data">
-					<button class="btn btn-light">Clear and renew all data from backup checks</button>
-					</form>
+				<div class="genBox">
+					<div class="genInfo">
+						<h2>debug</h2>
+					</div>
+					<div class="genContent">
+						<h3>Here are some debug methods you can call if you got an error.</h3>
+						<form action="/settings/clear_check_data">
+							<div class="genContent">
+								<button class="btn linkbtn">Clear and renew all data from backup checks</button>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</main>

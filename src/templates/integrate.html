@@ -1,8 +1,13 @@
 {% extends 'index.html' %}
 {% block content %}
 	<main style="margin-left: 0;">
-		<div class="container-fluid container">
-			<section>
+		<br>
+		<div class="container-fluid container genSection">
+			<div class="genBox">
+				<div class="genInfo">
+					<h2>Integrate restic backup and castic monitoring on a new system</h2>
+				</div>
+				<div class="genContent">
 				<p><span style="color: red">Warning:</span> You need a user on the remote machine that is able to become root via sudo!</p>
 				<form action="/integrate/" method="POST">
 					{% csrf_token %}
@@ -11,30 +16,35 @@
 							<label for="{{ form.user.id_for_label }}">Remote-user:</label>
 							{{ form.user }}
 					</div>
+					<br>
 					<div class="fieldWrapper form-group">
 							{{ form.password.errors }}
 							<label for="{{ form.password.id_for_label }}">Password:</label>
 							{{ form.password }}
 					</div>
+					<br>
 					<div class="fieldWrapper form-group">
 							{{ form.dest.errors }}
 							<label for="{{ form.dest.id_for_label }}">Remote-destination:</label>
 							{{ form.dest }}
 					</div>
+					<br>
 					<div class="fieldWrapper form-group">
 							{{ form.repoPath.errors }}
 							<label for="{{ form.repoPath.id_for_label }}">Path to new repository: {{ config.general.backupPath }}</label>
 							{{ form.repoPath }}
 					</div>
+					<br>
 					<div class="fieldWrapper form-group">
 						{{ form.backupPath.errors }}
 						<label for="{{ form.backupPath.id_for_label }}">Path to backup at remote-machine:</label>
 						{{ form.backupPath }}
 					</div>
 					<br>
-					<button class="btn btn-light showlink">Start integration</button>
+					<button class="btn linkbtn showlink">Start integration</button>
 				</form>
-			</section>
+				</div>
+			</div>
 		</div>
 	</main>
 {% endblock  %}

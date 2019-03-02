@@ -21,6 +21,7 @@ h1 {
   background-color: white;
   overflow-x: hidden;
   padding-top: 4em;
+  padding-bottom: 4em;
 }
 
 .sidenav a {
@@ -90,14 +91,125 @@ main {
 		line-height: 1.3em;
 		font-size: 1.1em;
 		border-radius: 15px;
-		box-shadow: 0 0 15px grey;
+		box-shadow: 0 0 5px black;
 		margin-top: 0.1em;
 		margin-bottom: 1.5em;
 		background-color: white;
-		padding-left: 4em;
+		padding-left: 2em;
 	}
 
 	.general {
 		background-image: url(logo2.png);
 		padding: 1em;
+	}
+
+	input {
+		box-sizing: border-box;
+		color: #43535b;
+		padding: 0.1em;
+		width: 100% 
+	}
+
+	h1 {
+		text-align: center;
+	}
+
+	.form {
+		margin-top: 4.6em; 
+		background-color:white; 
+		padding:2em; 
+		border-radius:0.5em; 
+		box-shadow: 0 0 5px black;
+	}
+
+	.genInfo {
+		padding: 2em;
+		padding-top: 1.3em;
+		padding-bottom: 1em;
+		background-color: #583d96;
+		color: white;
+		text-align: center;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+	}
+
+	.genSection {
+		border-top-left-radius: 0; 
+		border-top-right-radius: 0;
+		border-radius: 0 0 0 black;
+	}
+
+	.genBox {
+		box-shadow: 0 0 5px black;
+		border-radius: 15px;
+		margin-bottom: 1em;
+	}
+
+	.genContent {
+		padding: 2em; 
+		background-color: white; 
+		border-radius: 15px;
+	}
+
+	p {
+		box-sizing: border-box;
+	}
+
+	@media all and (max-width: 800px){
+		.form {
+			margin: 0 auto;
+			border-radius: 0;
+			overflow: hidden;
+			box-shadow: 0 0 0 black;
+		}
+		body {
+			background-color: white;
+		}
+		section {
+			/*
+			box-shadow: 0 0 0 black;
+			padding: 0;
+			*/
+			width: 100%;
+			padding-left: 1em;
+			padding-right: 1em;
+		}
+		main {
+			margin: 0;
+			overflow: hidden;
+		}
+		.sidenav {
+			display: none;
+		}
+		.genInfo {
+			padding: 1em;
+			padding-top: 1.3em;
+		}
+	}
+
+	.linkbtn {
+		text-decoration: none;
+		background-color: #583d96;
+		color: white;
+		padding: 0.5em;
+		border-radius: 5px;
+		text-align: center;
+	}
+	.linkbtn:hover{
+		text-decoration: none;
+		color: white;
+	}
+	.generalcolor {
+		background-color: rgb(128, 103, 236); 
+		color: white;
+	}
+
+	.seperator {
+		background-color: grey;
+		width: 75%;
+		height: 0.1em;
+		left: 25%;
+		border-radius: 15px;
+		text-align: center;
+		margin: 0 auto;
 	}
