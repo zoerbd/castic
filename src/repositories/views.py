@@ -33,8 +33,7 @@ def __getFreeDiskSpace__():
 	output = __shell__('df -h')
 
 	mountPoint = __getMountPoint__(output, root) # fix this shit here: return value
-	availableSpace = __getAvailableSpace__(output, mountPoint)
-	overallSpace = __getOverallSpace__(output, mountPoint)
+	overallSpace, availableSpace = __getOverallSpace__(output, mountPoint)
 	
 	return '{} out of {} left on {}'.format(availableSpace, overallSpace, mountPoint)
 
@@ -42,8 +41,9 @@ def __getOverallSpace__(output, root):
 	'''
 	Return overall space of disk at mountpoint
 	'''
-	pattern = re.compile(r'\s+(\d+\w+).+(\d+\w)\s+\d%\s+{}\n'.format(root))
-	return [match.group(1) for match in pattern.finditer(output)][0]
+	patternOverall = re.compile(r'\s+(\d+[A-Z]).+\s+(\d+[A-Z])\s+\d+%\s+{}[\n]'.format(root))
+	patternAvailable = re.compile(r'(\d+[A-Z])\s+\d+%\s+{}[\n]'.format(root))
+	return [(match.group(1), match.group(2)) for match in patternOverall.finditer(output)][0]
 
 def __getMountPoint__(output, root):
 	'''
@@ -67,13 +67,6 @@ def __getMountPoint__(output, root):
 	if len(mountPoint) != 1:
 		return __log__('Fatal error in index/views __getFreeDiskSpace__(): len of matched disk-mounts != 1.')
 	return mountPoint[0]
-
-def __getAvailableSpace__(output, root):
-	'''
-	Return available disk-space of mount-points disk
-	'''
-	pattern = re.compile(r'(\d+\w)\s+\d%\s+{}\n'.format(root))
-	return [match.group(1) for match in pattern.finditer(output)][0]
 
 def __getLastDate__():
 	'''
