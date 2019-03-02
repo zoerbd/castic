@@ -1,7 +1,3 @@
-========
-castic
-========
-
 .. image:: https://bitbucket.org/zoerbd/castic/raw/85c9031ce95321e4033a3284bdbdd6a903d61c5b/src/static/title_smaller.png
 
 ------------
