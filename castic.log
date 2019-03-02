@@ -10,3 +10,12 @@ Running migrations:
 2019-02-24 16:39:10.780622+00:00 - setup for webserver infrastructure returned with: ['', ''].
 2019-02-28 09:50:52.321298+00:00 - Sorry but at the moment, only CentOS systems are supported by this installer!
 Exiting.
+2019-03-02 11:40:40.828145+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
+Mail-notification returned with: 'Error in config-syntax detected.
+Exiting.'.
+2019-03-02 11:40:52.962366+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
+Mail-notification returned with: 'Error in config-syntax detected.
+Exiting.'.
+2019-03-02 11:43:51.678617+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
+Mail-notification returned with: 'Error in config-syntax detected.
+Exiting.'.

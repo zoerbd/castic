@@ -5,8 +5,8 @@ After = network.target
 [Service]
 PermissionsStartOnly = true
 PIDFile = /run/castic/castic.pid
-User = castic
-Group = castic
+User = root
+Group = root
 WorkingDirectory = /var/www/castic/src
 ExecStartPre = /bin/mkdir /run/castic
 ExecStartPre = /bin/chown -R castic:castic /run/castic

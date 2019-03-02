@@ -36,6 +36,14 @@ class setupDependencies:
 			return __log__('Exited because setup is not wished.')
 		self.__installDependencies__(open(os.path.join(gitProjectDir, 'requirements.sh')).readlines())
 
+		# install restic
+		if self.__ask__('Should restic be installed?'):
+			__shell__('https://github.com/restic/restic/releases/download/v0.9.4/restic_0.9.4_linux_amd64.bz2')
+			__shell__('bunzip2 restic_0.9.4_linux_amd64.bz2')
+			shutil.copyfile('restic_0.9.4_linux_amd64', '/usr/bin/restic')
+			__shell__('chmod a+x /usr/bin/restic')
+			__shell__('rm -R ./restic_0.9.4_linux_amd64*')
+
 		# setup (migrate) database
 		manageExecutable = os.path.join(BASE_DIR, 'manage.py')
 		[ __log__('Database migration returned with: {}'.format(__shell__(command)))
@@ -60,6 +68,20 @@ class setupDependencies:
 
 		result = eval(webInfrastructures[webInfastruct])
 		__log__('setup for webserver infrastructure returned with: {}.'.format(result))
+
+		# backupPath to config
+		backupPath = input('Enter the path of your stored repositories: ')
+		configFile = os.path.join(gitProjectDir, 'config.json'
+		with open(configFile, 'r') as jsonFile:
+			data = json.load(jsonFile)
+		data['general']['backupPath'] = backupPath
+		with open(configFile, 'w') as jsonFile:
+			json.dump(data, jsonFile)
+
+		# initial backup
+		if __ask__('Should an initial backup check be done? (warmly recommended)'):
+			from update.check import checkRepositories
+			checkRepositories()
 
 	def __productionSetup__(self):
 		'''
@@ -131,8 +153,6 @@ class setupDependencies:
 		# create gunicorn service 
 		systemdDir = '/etc/systemd/system/'
 		shutil.copyfile(os.path.join(BASE_DIR, 'bin/gunicorn.service'), os.path.join(systemdDir, 'castic.service'))
-		__shell__('useradd castic -M -s /usr/sbin/nologin -r')
-		__shell__('chown -R castic:castic /var/www/castic')
 		__shell__('systemctl enable gunicorn')
 		__shell__('systemctl start gunicorn')
 
