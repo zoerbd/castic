@@ -4,6 +4,7 @@ castic - docs
 
 Features
 ----------------------
+
 Castic features the most common things you would expect a backup system to do.
 Here is an short overview:
 	information:
@@ -14,5 +15,27 @@ Here is an short overview:
 		-> has ansible backend to include new remote systems via ssh
 	Misc:
 		-> automated checks and mail-notifications
+
+Building in detail (+building by hand)
+----------------------
+Coming soon!
+
+Projecte structure explained
+----------------------
+Coming soon!
+
+How To's
+----------------------
+Coming soon!
+
+Debugging
+----------------------
+Coming soon!
+
+
+Concepts behing each functionality
+----------------------
+Coming soon!
+
 ------------
 
