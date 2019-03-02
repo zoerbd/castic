@@ -2,8 +2,7 @@
 castic
 ========
 
-.. image:: https://zoerb.cc:5000/static/
-   :target: https://zoerb.cc:5000/
+.. image:: https://bitbucket.org/zoerbd/castic/raw/90fa63ae4c763196113d928e96d29935287ca28a/src/static/title.svg/
 
 ------------
 
