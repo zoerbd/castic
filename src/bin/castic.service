@@ -1,0 +1,20 @@
+[Unit]
+Description = GunicornServerForCastic
+After = network.target
+
+[Service]
+PermissionsStartOnly = true
+PIDFile = /run/castic/castic.pid
+User = castic
+Group = castic
+WorkingDirectory = /var/www/castic/src
+ExecStartPre = /bin/mkdir /run/castic
+ExecStartPre = /bin/chown -R castic:castic /run/castic
+ExecStart = /usr/bin/env gunicorn castic.wsgi -b localhost:8000 --pid /run/castic/castic.pid
+ExecReload = /bin/kill -s HUP $MAINPID
+ExecStop = /bin/kill -s TERM $MAINPID
+ExecStopPost = /bin/rm -rf /run/castic
+PrivateTmp = true
+
+[Install]
+WantedBy = multi-user.target

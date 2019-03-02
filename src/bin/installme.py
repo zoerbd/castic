@@ -128,12 +128,13 @@ class setupDependencies:
 		This function prepares a gunicorn production setup on localhost:8000.
 		Based on https://docs.gunicorn.org/en/stable/deploy.html#nginx-configuration.
 		'''
-		# create /etc/systemd/system/gunicorn.service and .socket
+		# create gunicorn service 
 		systemdDir = '/etc/systemd/system/'
-		files = [os.path.join(BASE_DIR, 'bin/gunicorn/gunicorn.{}'.format(ext)) for ext in ['socket', 'service']]
-		[ shutil.copyfile(filename, os.path.join(systemdDir, filename.split('/')[-1])) for filename in files ]
-		[ __shell__('systemctl enable {}'.format(filename.split('/')[-1])) for filename in files ]
-		return [ __shell__('systemctl restart {}'.format(filename.split('/')[-1])) for filename in files ]
+		shutil.copyfile(os.path.join(BASE_DIR, 'bin/gunicorn.service'), os.path.join(systemdDir, 'castic.service'))
+		__shell__('useradd castic -M -s /usr/sbin/nologin -r')
+		__shell__('chown -R castic:castic /var/www/castic')
+		__shell__('systemctl enable gunicorn')
+		__shell__('systemctl start gunicorn')
 
 
 	def __dockerSetup__(self):
