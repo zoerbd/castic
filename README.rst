@@ -4,11 +4,11 @@
 
 **Warning: This project is in development state and needs some more time.**.
 
-castic is a webmanagement built on top of the non-graphical backup-tool 'restic' (https://github.com/restic/restic).
+castic is a web-based monitoring and management tool built on top of the non-graphical backup-tool 'restic' (https://github.com/restic/restic).
 
 Documentation_
 
-.. _Documentation: http://zoerb.cc/comingsoon
+.. _Documentation: https://bitbucket.org/zoerbd/castic/src/master/docs/
 
 
 How to build castic
