@@ -1,7 +1,7 @@
 # ------------------------------------------------------------>
 # ---- Globally used config-vars and function defined here ---
 
-import json, subprocess, os, sys
+import json, subprocess, os, sys, re
 sys.path.insert(0, '/var/www/castic/src')
 from django.shortcuts import redirect
 from django.utils.timezone import now
@@ -18,9 +18,25 @@ def __shell__(command):
         '''
         process = subprocess.Popen(command.split(' '), stderr=subprocess.PIPE, stdout=subprocess.PIPE)
         stdout, stderr = [ item.decode('utf-8').strip() for item in process.communicate()]
-        if not stderr:
-            return stdout
-        return __log__("Shell command failed with: {}".format(stderr))
+        if stderr:
+
+            # avoiding unlocked repository errors by unlocking and cleaning cache
+            if 'restic -r' in command and 'locked' in stderr:
+                err = ''        # prevent from beeing undefined in return __log__
+                pattern = re.compile(r'restic\s\-r\s(.+)\s.*\-\-password\-file\s(.+)[\s|\n]')
+
+                # may fail because of possible wrong command formatting -> group(1) or group(2) not existing
+                try:
+                    for match in pattern.finditer(command):
+                        repo = match.group(1)
+                        pwFile = match.group(2)
+                    __shell__('restic -r {} --no-cache --cleanup-cache unlock --password-file {}'.format(repo, pwFile))
+                    return __shell__(command)
+                except Exception as err:
+                    err = '\nTried to unlock repo but another exception occurred: {}.'.format(err)
+
+                return __log__("Shell command failed with: {}.{}".format(stderr, err))
+        return stdout
        
 def __log__(msg):
     # if empty argument given, no error occurred
