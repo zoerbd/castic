@@ -22,7 +22,7 @@ def snapshots(request, absolPath=None):
 	form = restoreForm()
 	if not snaps:
 		snaps = '.'		# if error occurred, prevent from outputting empty template
-	return render(request, 'snapshots.html', {'snaps':snaps, 'form':form})
+	return render(request, 'snapshots.html', {'snaps':list(reversed(snaps)), 'form':form})
 
 @loginRequired
 def delete(request, absolPath, snapID):
