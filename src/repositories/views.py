@@ -58,7 +58,7 @@ def __getMountPoint__(output, root):
 
 		# in last iteration root-var is enpty str, so mounted path is /
 		if not root:
-			root = '/'
+			return '/'
 
 		# check if mountpoint exists
 		for line in output.split('\n'):
