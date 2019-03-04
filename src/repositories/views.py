@@ -62,7 +62,7 @@ def __getMountPoint__(output, root):
 
 		# check if mountpoint exists
 		for line in output.split('\n'):
-			pattern = re.compile(r'({}/?)\n'.format(root))
+			pattern = re.compile(r'({}/?)$'.format(root))
 			mountPoint = [ match.group(1) for match in pattern.finditer(line) ]
 			if mountPoint:
 				if len(mountPoint) != 1:
