@@ -41,9 +41,14 @@ def __getOverallSpace__(output, root):
 	'''
 	Return overall space of disk at mountpoint
 	'''
-	patternOverall = re.compile(r'\s+(\d+[A-Z]).+\s+(\d+[A-Z])\s+\d+%\s+{}[\n]'.format(root))
-	patternAvailable = re.compile(r'(\d+[A-Z])\s+\d+%\s+{}[\n]'.format(root))
-	return [(match.group(1), match.group(2)) for match in patternOverall.finditer(output)][0]
+	patternOverall = re.compile(r'\s+(\d+\.?\d+[A-Z]).+\s+(\d+\.?\d+[A-Z])\s+\d+%\s+{}?[\n]?$'.format(root))
+	patternAvailable = re.compile(r'(\d+\.?\d+[A-Z])\s+\d+%\s+{}?[\n]?$'.format(root))
+	for line in output.split('\n'):
+		try:
+			return [(match.group(1), match.group(2)) for match in patternOverall.finditer(line)][0]
+		except:
+			pass
+	return __log__('Fatal error in __getOverallSpace__: couldn\'t determine available and overall space via regex.', '')
 
 def __getMountPoint__(output, root):
 	'''
