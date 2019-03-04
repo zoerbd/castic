@@ -41,9 +41,14 @@ def __getOverallSpace__(output, root):
 	'''
 	Return overall space of disk at mountpoint
 	'''
-	patternOverall = re.compile(r'\s+(\d+[A-Z]).+\s+(\d+[A-Z])\s+\d+%\s+{}[\n]'.format(root))
-	patternAvailable = re.compile(r'(\d+[A-Z])\s+\d+%\s+{}[\n]'.format(root))
-	return [(match.group(1), match.group(2)) for match in patternOverall.finditer(output)][0]
+	patternOverall = re.compile(r'\s+(\d+\.?\d+[A-Z]).+\s+(\d+\.?\d+[A-Z])\s+\d+%\s+{}?[\n]?$'.format(root))
+	patternAvailable = re.compile(r'(\d+\.?\d+[A-Z])\s+\d+%\s+{}?[\n]?$'.format(root))
+	for line in output.split('\n'):
+		try:
+			return [(match.group(1), match.group(2)) for match in patternOverall.finditer(line)][0]
+		except:
+			pass
+	return __log__('Fatal error in __getOverallSpace__: couldn\'t determine available and overall space via regex.', '')
 
 def __getMountPoint__(output, root):
 	'''
@@ -58,15 +63,17 @@ def __getMountPoint__(output, root):
 
 		# in last iteration root-var is enpty str, so mounted path is /
 		if not root:
-			root = '/'
+			return '/'
 
 		# check if mountpoint exists
-		pattern = re.compile(r'({}/?)\n'.format(root))
-		mountPoint = [match.group(1) for match in pattern.finditer(output)]
+		for line in output.split('\n'):
+			pattern = re.compile(r'({}/?)$'.format(root))
+			mountPoint = [ match.group(1) for match in pattern.finditer(line) ]
+			if mountPoint:
+				if len(mountPoint) != 1:
+					return __log__('Fatal error in index/views __getFreeDiskSpace__(): len of matched disk-mounts != 1.')
+				return mountPoint[0]
 
-	if len(mountPoint) != 1:
-		return __log__('Fatal error in index/views __getFreeDiskSpace__(): len of matched disk-mounts != 1.')
-	return mountPoint[0]
 
 def __getLastDate__():
 	'''
