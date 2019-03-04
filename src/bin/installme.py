@@ -5,7 +5,7 @@ This script is made to be called from setup.py file.
 import pdb
 import sys, os, shutil
 
-sys.path.insert(0, ('/var/www/castic/src/castic'))		# make this more dynamic later on
+sys.path.insert(0, os.path.join(input('Path to the source folder of castic (for example: /var/www/castic/src/): '), 'castic'))
 from settings import BASE_DIR
 from globals import __shell__, __log__, gitProjectDir
 
@@ -24,16 +24,30 @@ class setupDependencies:
 		Setup for production.
 		'''
 		print('///--\nWARNING: Make sure to run this script in an existing pipenv.\nDo this by executing the following commands:\n  >> pipenv shell <<\n  >> pipenv update <<\n  >> src/bin/installme.py <<\n///--')
-		
-		# check if os supported
-		if __shell__('cat /etc/os-release | grep PRETTY_NAME | cut -d \'=\' -f 2 | cut -d \' \' -f 1 | cut -d \'"\' -f 2') != 'CentOS':
-			return __log__('Sorry but at the moment, only CentOS systems are supported by this installer!\nExiting.')
 
 		# chec if user is root
 		if int(__shell__('id -u')) != 0:
 			return __log__('Exiting: script has to be executed as root!')
 		if not self.__ask__('Start interactive setup for your webserver-environment?'):
 			return __log__('Exited because setup is not wished.')
+		
+		# check if os supported
+		if __shell__('cat /etc/os-release | grep PRETTY_NAME | cut -d \'=\' -f 2 | cut -d \' \' -f 1 | cut -d \'"\' -f 2') != 'CentOS':
+			__log__('Sorry but at the moment, only CentOS systems are supported for the full setup!\nSo you have to manage package installation and webserver infrastructure by yourself.\nContinuing with a basic setup.')
+		else:
+			self.__OSSpecificSetup__()
+
+		self.__generalSetup__()
+		
+		# initial backup
+		if __ask__('Should an initial backup check be done? (warmly recommended)'):
+			from update.check import checkRepositories
+			checkRepositories()
+
+	def __OSSpecificSetup__(self):
+		'''
+		This is the part of the setup that is only available on CentOS systems.
+		'''
 		self.__installDependencies__(open(os.path.join(gitProjectDir, 'requirements.sh')).readlines())
 
 		# install restic
@@ -43,18 +57,7 @@ class setupDependencies:
 			shutil.copyfile('restic_0.9.4_linux_amd64', '/usr/bin/restic')
 			__shell__('chmod a+x /usr/bin/restic')
 			__shell__('rm -R ./restic_0.9.4_linux_amd64*')
-
-		# setup (migrate) database
-		manageExecutable = os.path.join(BASE_DIR, 'manage.py')
-		[ __log__('Database migration returned with: {}'.format(__shell__(command)))
-		  for command in [ '{} makemigrations'.format(manageExecutable), 
-		  				   '{}  migrate'.format(manageExecutable)]]
 		
-		# setup user
-		print('Creating user for authenticate for castic webmanagement.')
-		user = User.objects.create_user(username=input('Username: '), password=getpass())
-		user.save()
-
 		# setup webserver infrastructure
 		webInfastruct = self.__ask__('Which webserver infrastructure do you want to setup? \
 		\n  a) gunicorn + nginx reverse proxy (recommended)\
@@ -69,19 +72,30 @@ class setupDependencies:
 		result = eval(webInfrastructures[webInfastruct])
 		__log__('setup for webserver infrastructure returned with: {}.'.format(result))
 
+
+	def __generalSetup__(self):
+		'''
+		This is the part of the setup that is available on any system.
+		'''
+		# setup (migrate) database
+		manageExecutable = os.path.join(BASE_DIR, 'manage.py')
+		[ __log__('Database migration returned with: {}'.format(__shell__(command)))
+		  for command in [ '{} makemigrations'.format(manageExecutable), 
+		  				   '{}  migrate'.format(manageExecutable)]]
+		
+		# setup user
+		print('Creating user for authenticate for castic webmanagement.')
+		user = User.objects.create_user(username=input('Username: '), password=getpass())
+		user.save()
+
 		# backupPath to config
 		backupPath = input('Enter the path of your stored repositories: ')
-		configFile = os.path.join(gitProjectDir, 'config.json'
+		configFile = os.path.join(gitProjectDir, 'config.json')
 		with open(configFile, 'r') as jsonFile:
 			data = json.load(jsonFile)
 		data['general']['backupPath'] = backupPath
 		with open(configFile, 'w') as jsonFile:
 			json.dump(data, jsonFile)
-
-		# initial backup
-		if __ask__('Should an initial backup check be done? (warmly recommended)'):
-			from update.check import checkRepositories
-			checkRepositories()
 
 	def __productionSetup__(self):
 		'''
