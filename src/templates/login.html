@@ -7,10 +7,11 @@
 		<title>castic</title>
 		{% load static %}
 		<link rel="stylesheet" href="{% static "style.css" %}" type="text/css">
-		<link rel="shortcut icon" href="{% static "logo.svg"%}">
+		<link rel="shortcut icon" href="{% static "logo.ico"%}" type="image/ico">
 		<script src="{% static "jquery-3.3.1.min.js" %}"></script>
 		<script src="{% static "style.js" %}"></script>
 		<link rel="stylesheet" href="{% static "index.css" %}" type="text/css">
+		<script src="{% static "dynamics.js" %}"></script>
 		<style>
 			.title {
 				color: black; 
@@ -29,19 +30,24 @@
 		<div class='container-fluid container form'>
 				<form action='/login/' method="POST">
 					{%  csrf_token  %}
-					<h1>Authentication for castic</h1>
-					<br>
-					<div class="fieldWrapper form-group">
-							{{ form.name.errors }}
-							<label for="{{ form.name.id_for_label }}">Username:</label>
-							{{ form.name }}
+					<div class="genBox">
+						<div class="genInfo">
+							<h1>Authentication for castic</h1>
+						</div>
+						<div class="genContent">
+							<div class="fieldWrapper form-group">
+									{{ form.name.errors }}
+									<label for="{{ form.name.id_for_label }}">Username:</label>
+									{{ form.name }}
+							</div>
+							<div class="fieldWrapper form-group">
+									{{ form.password.errors }}
+									<label for="{{ form.password.id_for_label }}">Password:</label>
+									{{ form.password }}
+							</div>
+							<button style="margin-top: 0.7em;" type="submit" value="enter" class="btn linkbtn showlink">Submit</button>
+						</div>
 					</div>
-					<div class="fieldWrapper form-group">
-							{{ form.password.errors }}
-							<label for="{{ form.password.id_for_label }}">Password:</label>
-							{{ form.password }}
-					</div>
-					<button type="submit" value="enter" class="btn linkbtn showlink">Login</button>
 				</form>
 		</div>
 				<br>

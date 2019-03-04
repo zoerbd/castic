@@ -48,7 +48,7 @@ def __getOverallSpace__(output, root):
 			return [(match.group(1), match.group(2)) for match in patternOverall.finditer(line)][0]
 		except:
 			pass
-	return __log__('Fatal error in __getOverallSpace__: couldn\'t determine available and overall space via regex.', '')
+	return (__log__('Fatal error in __getOverallSpace__: couldn\'t determine available and overall space via regex.'), '')
 
 def __getMountPoint__(output, root):
 	'''

@@ -2,13 +2,18 @@
 {% block content %}
 		<main style="margin-left: 0; margin-top: 4em;">
 			<div class='container-fluid container'>
-				<section>
-					<h1>Please choose a repository to show all snapshots for.</h1>
-					<br>
-					{% for repo in repos %}
-						<p class="linkbtn"><a class="showlink linkbtn" href='/snapshots/{{repo.nameURL}}/'>{{repo.name}}</a> </p>
-					{% endfor %}
-				</section>
+					<div class="genBox">
+						<div class="genInfo">
+							<h1>Please choose a repository to show all snapshots for!</h1>
+						</div>
+						<div class="genContent">
+							<div class="centered_table">
+								{% for repo in repos %}
+										<a class="showlink centered_table_link" href='/snapshots/{{repo.nameURL}}/'><p class="centered_table_item">{{repo.name}}</p></a>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
 			</div>
 		</main>
 {% endblock %}
