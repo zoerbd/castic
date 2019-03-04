@@ -20,6 +20,8 @@ def snapshots(request, absolPath=None):
 	'''
 	snaps = snapshotManagement(request).updateSnapshots(absolPath)
 	form = restoreForm()
+	if not snaps:
+		snaps = '.'		# if error occurred, prevent from outputting empty template
 	return render(request, 'snapshots.html', {'snaps':snaps, 'form':form})
 
 @loginRequired
@@ -72,7 +74,7 @@ class snapshotManagement:
 		]
 		'''
 		snapshots = []
-		pattern = re.compile(r'(\w{8})\s+(\d{4}\-\d{2}\-\d{2}\s+\d{2}\:\d{2}\:\d{2})\s+(\w+\.\w+)\s+(/.+)')
+		pattern = re.compile(r'(\w{8})\s+(\d{4}\-\d{2}\-\d{2}\s+\d{2}\:\d{2}\:\d{2})\s+([\w|\.|\-]+)\s+(/.*)')
 		for match in pattern.finditer(snaps):
 			snapshots.append({
 				'absolPath' : absolPath,
