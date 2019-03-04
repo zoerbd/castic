@@ -61,12 +61,14 @@ def __getMountPoint__(output, root):
 			root = '/'
 
 		# check if mountpoint exists
-		pattern = re.compile(r'({}/?)\n'.format(root))
-		mountPoint = [match.group(1) for match in pattern.finditer(output)]
+		for line in output.split('\n'):
+			pattern = re.compile(r'({}/?)\n'.format(root))
+			mountPoint = [ match.group(1) for match in pattern.finditer(line) ]
+			if mountPoint:
+				if len(mountPoint) != 1:
+					return __log__('Fatal error in index/views __getFreeDiskSpace__(): len of matched disk-mounts != 1.')
+				return mountPoint[0]
 
-	if len(mountPoint) != 1:
-		return __log__('Fatal error in index/views __getFreeDiskSpace__(): len of matched disk-mounts != 1.')
-	return mountPoint[0]
 
 def __getLastDate__():
 	'''
