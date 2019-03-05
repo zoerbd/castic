@@ -7,7 +7,7 @@
 							<h1>Please choose a repository to show all snapshots for!</h1>
 						</div>
 						<div class="genContent">
-							<div class="centered_table">
+							<div class="centered_table" style="border-top: 2px solid rgba(0,0,0,0.2);">
 								{% for repo in repos %}
 										<a class="showlink centered_table_link" href='/snapshots/{{repo.nameURL}}/'><p class="centered_table_item">{{repo.name}}</p></a>
 								{% endfor %}
