@@ -214,13 +214,12 @@ main {
 	}
 
 	.centered_table {
-		text-align: center;
 		margin: 0 auto;
 		width: 50%;
+		text-align: center;
 	}
 
 	.centered_table_item{
-		text-align: center;
 		margin: 0 auto;
 		padding: 0.3em;
 		top: 50%;
