@@ -16,7 +16,7 @@ def update(request):
                 checkRepositories() 
 
         # if enabled, send notification
-        #result = mailingNotification().manageMailing()
+        result = mailingNotification().manageMailing()
         result = ''
 
         # if result returned something, an error occurred
