@@ -1,6 +1,9 @@
 import re
-from django.core.mail import send_mail
 from castic.globals import config
+import smtplib
+from repositories.models import repositories
+from repositories.views import __getFreeDiskSpace__
+from django.utils.timezone import now
 
 class mailingNotification():
 	def __init__(self):
@@ -49,15 +52,35 @@ class mailingNotification():
 		It authenticates the user at localhost or remote-end and
 		tries to send the previously rendered mail.
 		Returns nothing except an error occurred.
-		Based on send_mail docs from: https://docs.djangoproject.com/en/2.1/topics/email/
 		'''
-		return send_mail(
-			'Castic: backup status notification',
-			'message',
-			self.config['mailFrom'],
-			[self.config['mailAddress']],
-			fail_silently=False,
-			auth_user=self.config['smtpUsername'],
-			auth_password=self.config['smtpPassword'],
-			connection=self.config['smtpServer']
-		)
+		# //// include these options
+		user = self.config['smtpUsername']
+		password = self.config['smtpPassword']
+		# //// include these options
+
+		content = """From: {}
+To: {}
+Subject: Castic: Backup information\n
+This is a generic mail from your castic server.
+I am built to check all backups on certain time periods.\nAvailable disk-space on your backup volume: {}.\n\n""".format(
+		self.config['mailFrom'], self.config['mailAddress'], __getFreeDiskSpace__())
+
+		# check if all repos are healthy (fetch data from db). if not, append error message
+		errors = [ '{0} - FATAL ERROR: Error was detected in repository \'{1}\'.\nYou should check the repo \
+					and verify that the backup is done correctly.'.format(now(), list(repositories.objects.values())[j])
+					for j, health in enumerate(repositories.objects.values_list('health')) if health[0] != 1]
+		content.append('\n'.join(errors))
+
+		if not errors:
+				content.append('All integrated servers were backuped successfully.\nEverything seems clean and healthy.\n\n')
+		content.append('Regards,\nyour backup-friend check_backups.py')
+
+		try:
+				smtp = smtplib.SMTP(self.config['smtpServer'])
+				smtp.sendmail(
+					self.config['mailFrom'], 
+					[self.config['mailAddress']], 
+					content
+				)
+		except Exception as err:
+				return __log__(' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: {}\n'.format(err))
