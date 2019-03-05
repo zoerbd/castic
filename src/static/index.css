@@ -109,7 +109,7 @@ main {
 		box-sizing: border-box;
 		color: #43535b;
 		padding: 0.1em;
-		width: 100% 
+		width: 100%;
 	}
 
 	h1 {
@@ -117,8 +117,8 @@ main {
 	}
 
 	.form {
-		margin-top: 4.6em; 
 		padding:2em; 
+		margin: 0 auto;
 	}
 
 	.genInfo {
@@ -146,7 +146,8 @@ main {
 	.genContent {
 		padding: 2em; 
 		background-color: white; 
-		border-radius: 15px;
+		border-bottom-left-radius: 15px;
+		border-bottom-right-radius: 15px;
 	}
 
 	p {

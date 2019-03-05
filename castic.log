@@ -177,3 +177,6 @@ Exiting.'.
 2019-03-05 07:34:53.370348+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
 2019-03-05 07:35:46.797684+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
 2019-03-05 07:41:11.134296+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-05 07:46:49.713824+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-05 07:46:58.959582+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-05 07:47:45.918218+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.

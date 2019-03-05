@@ -23,22 +23,9 @@
 		<script src="{% static "style.js" %}"></script>
 		<link rel="stylesheet" href="{% static "index.css" %}" type="text/css">
 		<script src="{% static "dynamics.js" %}"></script>
-		<style>
-			.title {
-				color: black; 
-				border-radius: 8px;
-				display: flex;
-  				justify-content: center;
-  				align-items: center;
-				margin-left: auto;
-				margin-right: auto;
-				margin-top: auto;
-				margin-bottom: auto;
-			}
-		</style>
 	</head>
-	<body>
-		<div class='container-fluid container form'>
+	<body style="width: 100%; height: 100%; margin: 0 auto;">
+		<div class='container form'>
 				<form action='/login/' method="POST">
 					{%  csrf_token  %}
 					<div class="genBox">
@@ -68,10 +55,6 @@
 			for (let i=0; i < input.length; i++){
 				input[i].addClass = 'form-control';
 			}
-			$(document).ready(function(){
-			$('.showlink').click(function(){
-				$('body').addClass("loading");
-			});
 		</script>
 		<div class="loading_modal">
    		</div>
