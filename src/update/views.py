@@ -17,7 +17,6 @@ def update(request):
 
         # if enabled, send notification
         result = mailingNotification().manageMailing()
-        result = ''
 
         # if result returned something, an error occurred
         if result:
