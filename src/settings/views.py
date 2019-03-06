@@ -130,6 +130,8 @@ def __replaceAutoCheckCronjob__(checkInterval, cronjobStr):
         for j, line in enumerate(crontabContent):
                 if os.path.join(BASE_DIR, 'bin/update.py') in line:
                         crontabContent[j] = cronjobStr
+                        # error test for django-rose
+                        hey there peter rohlader.pett
                 elif j == len(crontabContent) - 1:
                         crontabContent.append(cronjobStr)
 
