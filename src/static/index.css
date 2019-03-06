@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 body{
 	font-size: 1.8em;
 	background-color: #f5f9fa;
 	color: #43535b;
+	font-family: 'Montserrat', sans-serif;
 }	
 nav{
 	box-shadow: 0 0 15px rgba(0,0,0,0.2);
@@ -59,200 +62,189 @@ main {
 	left:       0;
 	height:     100%;
 	width:      100%;
-	background: rgba( 255, 255, 255, .8 ) 
-									url('/static/loading.svg') 
-									50% 50% 
-									no-repeat;
+	background: rgba( 255, 255, 255, .8 ) url('/static/loading.svg') 50% 50% no-repeat;
 	}
 
-	/* When the body has the loading class, we turn
-	the scrollbar off with overflow:hidden */
-	body.loading .loading_modal {
+body.loading .loading_modal {
 	overflow: hidden;   
-	}
+}
 
-	/* Anytime the body has the loading class, our
-	modal element will be visible */
-	body.loading .loading_modal {
+body.loading .loading_modal {
 	display: block;
-	}
+}
 
-	.container {
-		margin: 0 auto;
-		padding: 0.6em;
-		display: block;
-		grid-template-columns: 30% auto;
-		color: #43535b;
-	}
-	
-	section {
-		width: 95%;
-		margin: 0 auto;
-		padding: 2em;
-		letter-spacing: 0.008em;
-		line-height: 1.3em;
-		font-size: 1.1em;
-		border-radius: 15px;
-		box-shadow: 0 0 15px rgba(0,0,0,0.2);
-		margin-top: 0.1em;
-		margin-bottom: 1.5em;
-		background-color: white;
-		padding-left: 2em;
-	}
+.container {
+	margin: 0 auto;
+	padding: 0.6em;
+	display: block;
+	grid-template-columns: 30% auto;
+	color: #43535b;
+}
 
-	.general {
-		background-image: url(logo2.png);
-		padding: 1em;
-	}
+section {
+	width: 95%;
+	margin: 0 auto;
+	padding: 2em;
+	letter-spacing: 0.008em;
+	line-height: 1.3em;
+	font-size: 1.1em;
+	border-radius: 15px;
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	margin-top: 0.1em;
+	margin-bottom: 1.5em;
+	background-color: white;
+	padding-left: 2em;
+}
 
-	input {
-		box-sizing: border-box;
-		color: #43535b;
-		padding: 0.1em;
-		width: 100%;
-	}
+.general {
+	background-image: url(logo2.png);
+	padding: 1em;
+}
 
-	h1 {
-		text-align: center;
-	}
+input {
+	box-sizing: border-box;
+	color: #43535b;
+	padding: 0.1em;
+	width: 100%;
+}
 
+h1 {
+	text-align: center;
+}
+
+.form {
+	padding:2em; 
+	margin: 0 auto;
+}
+
+.genInfo {
+	padding: 0.3em;
+	padding-top: 0.5em;
+	padding-bottom: 0.2em;
+	background-color: #583d96;
+	color: white;
+	text-align: center;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+.genSection {
+	border-top-left-radius: 0; 
+	border-top-right-radius: 0;
+}
+
+.genBox {
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 15px;
+	margin-bottom: 1em;
+}
+
+.genContent {
+	padding: 2em; 
+	background-color: white; 
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+
+p {
+	box-sizing: border-box;
+}
+
+@media all and (max-width: 800px){
 	.form {
-		padding:2em; 
 		margin: 0 auto;
+		border-radius: 0;
+		overflow: hidden;
+		box-shadow: 0 0 0 black;
 	}
-
+	body {
+		background-color: white;
+	}
+	section {
+		width: 100%;
+		padding-left: 1em;
+		padding-right: 1em;
+	}
+	main {
+		margin: 0;
+		overflow: hidden;
+	}
+	.sidenav {
+		display: none;
+	}
 	.genInfo {
-		padding: 0.3em;
-		padding-top: 0.5em;
-		padding-bottom: 0.2em;
-		background-color: #583d96;
-		color: white;
-		text-align: center;
-		border-top-left-radius: 15px;
-		border-top-right-radius: 15px;
+		padding: 1em;
+		padding-top: 1.3em;
 	}
+}
 
-	.genSection {
-		border-top-left-radius: 0; 
-		border-top-right-radius: 0;
-	}
+.linkbtn {
+	text-decoration: none;
+	background-color: #583d96;
+	color: white;
+	padding: 0.5em;
+	border-radius: 5px;
+	text-align: center;
+}
+.linkbtn:hover{
+	text-decoration: none;
+	color: white;
+}
+.generalcolor {
+	background-color: rgb(128, 103, 236); 
+	color: white;
+}
 
-	.genBox {
-		box-shadow: 0 0 15px rgba(0,0,0,0.2);
-		border-radius: 15px;
-		margin-bottom: 1em;
-	}
+.seperator {
+	background-color: #43535b;
+	width: 75%;
+	height: 0.1em;
+	left: 25%;
+	border-radius: 15px;
+	text-align: center;
+	margin: 0 auto;
+}
 
-	.genContent {
-		padding: 2em; 
-		background-color: white; 
-		border-bottom-left-radius: 15px;
-		border-bottom-right-radius: 15px;
-	}
+.centered_table {
+	margin: 0 auto;
+	width: 50%;
+	text-align: center;
+}
 
-	p {
-		box-sizing: border-box;
-	}
+.centered_table_item{
+	margin: 0 auto;
+	padding: 0.3em;
+	top: 50%;
+	border-bottom: 2px solid rgba(0,0,0,0.2);
+	text-decoration: none;
+	box-sizing: border-box;
+	cursor: pointer;
+}
 
-	@media all and (max-width: 800px){
-		.form {
-			margin: 0 auto;
-			border-radius: 0;
-			overflow: hidden;
-			box-shadow: 0 0 0 black;
-		}
-		body {
-			background-color: white;
-		}
-		section {
-			/*
-			box-shadow: 0 0 0 black;
-			padding: 0;
-			*/
-			width: 100%;
-			padding-left: 1em;
-			padding-right: 1em;
-		}
-		main {
-			margin: 0;
-			overflow: hidden;
-		}
-		.sidenav {
-			display: none;
-		}
-		.genInfo {
-			padding: 1em;
-			padding-top: 1.3em;
-		}
-	}
+.centered_table_link {
+	text-decoration: none;
+	color: #43535b; 
+}
 
-	.linkbtn {
-		text-decoration: none;
-		background-color: #583d96;
-		color: white;
-		padding: 0.5em;
-		border-radius: 5px;
-		text-align: center;
-	}
-	.linkbtn:hover{
-		text-decoration: none;
-		color: white;
-	}
-	.generalcolor {
-		background-color: rgb(128, 103, 236); 
-		color: white;
-	}
+.centered_table_link:hover {
+	text-decoration: none;
+	color: #43535b;
+}
 
-	.seperator {
-		background-color: grey;
-		width: 75%;
-		height: 0.1em;
-		left: 25%;
-		border-radius: 15px;
-		text-align: center;
-		margin: 0 auto;
-	}
+.btn {
+	font-size: 0.8em;
+	padding: 0.2;
+	margin: 0.1;
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
 
-	.centered_table {
-		margin: 0 auto;
-		width: 50%;
-		text-align: center;
-	}
+.snapshotbtns {
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	margin-top: 1em;
+}
 
-	.centered_table_item{
-		margin: 0 auto;
-		padding: 0.3em;
-		top: 50%;
-		border-bottom: 2px solid rgba(0,0,0,0.2);
-		text-decoration: none;
-		box-sizing: border-box;
-		cursor: pointer;
-	}
-
-	.centered_table_link {
-		text-decoration: none;
-		color: #43535b; 
-	}
-
-	.centered_table_link:hover {
-		text-decoration: none;
-		color: #43535b;
-	}
-
-	.btn {
-		font-size: 0.8em;
-		padding: 0.2;
-		margin: 0.1;
-		box-shadow: 0 0 15px rgba(0,0,0,0.2);
-	}
-
-	.snapshotbtns {
-		margin-left: 0.5em;
-		margin-right: 0.5em;
-		margin-top: 1em;
-	}
-
-	.logoimg {
-		width: 2.5em; 
-		height: 2.5em;
-	}
+.logoimg {
+	width: 2.5em; 
+	height: 2.5em;
+}

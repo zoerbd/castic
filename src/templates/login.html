@@ -15,7 +15,6 @@
 			<link rel="shortcut icon" href="{% static "favicon.ico" %}">
 		<!-- Favicons -->
 		<link rel="stylesheet" href="{% static "style.css" %}" type="text/css">
-		<link rel="shortcut icon" href="{% static "logo.ico"%}" type="image/ico">
 		<script src="{% static "jquery-3.3.1.min.js" %}"></script>
 		<script src="{% static "style.js" %}"></script>
 		<link rel="stylesheet" href="{% static "index.css" %}" type="text/css">
@@ -23,27 +22,27 @@
 	</head>
 	<body style="width: 100%; height: 100%; margin: 0 auto;">
 		<div class='container form'>
-				<form action='/login/' method="POST">
-					{%  csrf_token  %}
-					<div class="genBox">
-						<div class="genInfo">
-							<h2>Authentication for castic</h2>
-						</div>
-						<div class="genContent">
-							<div class="fieldWrapper form-group">
-									{{ form.name.errors }}
-									<label for="{{ form.name.id_for_label }}">Username:</label>
-									{{ form.name }}
-							</div>
-							<div class="fieldWrapper form-group">
-									{{ form.password.errors }}
-									<label for="{{ form.password.id_for_label }}">Password:</label>
-									{{ form.password }}
-							</div>
-							<button style="margin-top: 0.7em;" type="submit" value="enter" class="btn linkbtn showlink">Submit</button>
-						</div>
+			<form action='/login/' method="POST">
+				{%  csrf_token  %}
+				<div class="genBox">
+					<div class="genInfo">
+						<h2>Authentication for castic</h2>
 					</div>
-				</form>
+					<div class="genContent">
+						<div class="fieldWrapper form-group">
+								{{ form.name.errors }}
+								<label for="{{ form.name.id_for_label }}">Username:</label>
+								{{ form.name }}
+						</div>
+						<div class="fieldWrapper form-group">
+								{{ form.password.errors }}
+								<label for="{{ form.password.id_for_label }}">Password:</label>
+								{{ form.password }}
+						</div>
+						<button style="margin-top: 0.7em;" type="submit" value="enter" class="btn linkbtn showlink">Submit</button>
+					</div>
+				</div>
+			</form>
 		</div>
 				<br>
 				<br>
