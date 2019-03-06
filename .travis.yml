@@ -16,4 +16,4 @@ before_script:
   - cd src
 
 script:
-  - coverage run --source=castic runtests.py --keepdb
+  - gunicorn castic.wsgi -b 0.0.0.0:80
