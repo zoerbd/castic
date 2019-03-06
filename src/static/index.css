@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
-
 body{
 	font-size: 1.8em;
 	background-color: #f5f9fa;
@@ -94,11 +93,6 @@ section {
 	margin-bottom: 1.5em;
 	background-color: white;
 	padding-left: 2em;
-}
-
-.general {
-	background-image: url(logo2.png);
-	padding: 1em;
 }
 
 input {

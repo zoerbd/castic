@@ -1,31 +1,41 @@
+
 .. image:: https://bitbucket.org/zoerbd/castic/raw/85c9031ce95321e4033a3284bdbdd6a903d61c5b/src/static/title_smaller.png
 
 ------------
 
-castic is a minimalistic web-based monitoring and management tool built on top of 
+castic is a minimal web-based monitoring and management tool built on top of 
 the non-graphical backup-tool 'restic' (https://github.com/restic/restic).
 
 Documentation_
 
 .. _Documentation: https://bitbucket.org/zoerbd/castic/src/master/docs/
 
+|
 
 Requirements and support
-----------------------
+------------------------
 Castic is mostly built and tested on CentOS 7, thats why I strongly recommend using a RHEL based distro.
-Ubuntu and other distros should also work, but you have to setup some parts by yourself (i.e. mainly django user creation, webserver infrastructure, package installation).
-A web based setup comes maybe with futher releases.
+Ubuntu and other distros should also work, but you have to setup some parts by yourself (i.e. mainly webserver infrastructure and package installation).
+
+|
 
 How to build castic
 ----------------------
 
-1. Clone the repository and cd to it.
-     ``git clone https://bitbucket.org/zoerbd/castic``
-     ``cd castic``
-2. Install the package with: 
-     ``pip install -e .``
-3. Recommended: If you are using a CentOS system I stongly recommend using the interactive installer, run this command: 
-        ``src/bin/installme.py``
-   If you got another distro than CentOS take a look at the docs folder.
+1. Clone the repository and cd into it.
 
-------------
+     ``git clone https://bitbucket.org/zoerbd/castic``
+
+     ``cd castic``
+
+2. Install the package with: 
+
+     ``pip install -e .``
+
+3. Recommended: I strongly recommend using the interactive installer, by running this command: 
+
+        ``src/bin/installme.py``
+
+If you got another distro than CentOS you will have to setup some parts by yourself, so take a look at the docs folder for more details.
+
+---------

@@ -46,7 +46,7 @@ class mailingNotification():
 				return False
 		return True
 
-	def __renderAndSendMail__(self, mail):
+	def __renderAndSendMail__(self):
 		'''
 		This method gets called by manageMailing().
 		It authenticates the user at localhost or remote-end and
@@ -69,15 +69,15 @@ I am built to check all backups on certain time periods.\nAvailable disk-space o
 		errors = [ '{0} - FATAL ERROR: Error was detected in repository \'{1}\'.\nYou should check the repo \
 					and verify that the backup is done correctly.'.format(now(), list(repositories.objects.values())[j])
 					for j, health in enumerate(repositories.objects.values_list('health')) if health[0] != 1]
-		content.append('\n'.join(errors))
+		content += '\n'.join(errors)
 
 		if not errors:
-				content.append('All integrated servers were backuped successfully.\nEverything seems clean and healthy.\n\n')
-		content.append('Regards,\nyour backup-friend check_backups.py')
+				content += 'All integrated servers were backuped successfully.\nEverything seems clean and healthy.\n\n'
+		content += 'Regards,\nyour backup-friend check_backups.py'
 
 		try:
 				smtp = smtplib.SMTP(self.config['smtpServer'])
-				smtp.sendmail(
+				smtp.sendmail (
 					self.config['mailFrom'], 
 					[self.config['mailAddress']], 
 					content
