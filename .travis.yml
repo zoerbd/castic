@@ -16,4 +16,4 @@ before_script:
   - cd src
 
 script:
-  - gunicorn castic.wsgi -b 0.0.0.0:8080
+  - ./manage.py test
