@@ -14,9 +14,6 @@ install:
 
 before_script:
   - cd src
-  - bin/installme.py
-  - ./manage.py makemigrations
-  - ./manage.py migrate
 
 script:
   - coverage run --source=castic runtests.py --keepdb
