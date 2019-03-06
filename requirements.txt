@@ -1,4 +1,5 @@
 django
+django-nose
 pipenv
 gunicorn
 py-smtp
