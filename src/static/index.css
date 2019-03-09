@@ -130,12 +130,22 @@ h1 {
 .genSection {
 	border-top-left-radius: 0; 
 	border-top-right-radius: 0;
+	font-size: 1em;
+}
+
+.right {
+	float: right;
 }
 
 .genBox {
 	box-shadow: 0 0 15px rgba(0,0,0,0.2);
 	border-radius: 15px;
-	margin-bottom: 1em;
+	/*margin: 1em;*/
+	display: grid;
+}
+
+.genBoxSmall {
+	width: 48%;
 }
 
 .genContent {

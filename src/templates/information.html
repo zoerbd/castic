@@ -23,7 +23,7 @@
                 <main>
                 <div id="main"></div>
                 <div class="container-fluid container genSection">
-                        <div class="genBox">
+                        <div class="row genBox">
                              <div class="genInfo generalcolor">
                                 <h2>General information</h2>
                              </div>
@@ -42,27 +42,31 @@
                               </div>
                         </div>
                         <br>
-			{% for repo in repos  %}
-                        <div id="{{repo.name}}"></div>
-                         <div class="genBox">
-                                <div class="genInfo">
-                                        <h2>Name: {{ repo.name }}</h2>
+                        <div class="row">
+                                {% for repo in repos  %}
+                                <p id="{{repo.name}}"></p>
+                                <div class="col-md-6">
+                                <!--div class="genBox genBoxSmall"-->
+                                        <div class="genInfo">
+                                                <h2>Name: {{ repo.name }}</h2>
+                                        </div>
+                                        <div class="genContent"> 
+                                                <p>Absolute path: {{repo.absolPath}}</p>
+                                                {% if repo.health %}
+                                                        <p>Status: <span class="status">healthy</span></p>
+                                                {% else %}
+                                                        <p>Status: <span style="color:red">not healthy</span></p>
+                                                {% endif %}
+                                                <p>Used disk space: {{repo.diskSpace}}</p>
+                                                <p>Last update: {{repo.lastUpdate}}</p>
+                                                <br>
+                                                <p><a href="{{repo.snapshotsURI}}" class="btn showlink linkbtn">Show snapshots</a></p>
+                                        </div>
                                 </div>
-                                <div class="genContent"> 
-                                        <p>Absolute path: {{repo.absolPath}}</p>
-                                        {% if repo.health %}
-                                                <p>Status: <span class="status">healthy</span></p>
-                                        {% else %}
-                                                <p>Status: <span style="color:red">not healthy</span></p>
-                                        {% endif %}
-                                        <p>Used disk space: {{repo.diskSpace}}</p>
-                                        <p>Last update: {{repo.lastUpdate}}</p>
-                                        <br>
-                                        <p><a href="{{repo.snapshotsURI}}" class="btn showlink linkbtn">Show snapshots</a></p>
-                                </div>
+                                <!--/div-->
+                                <br>
+                                {% endfor  %}
                         </div>
-        		<br>
-			{% endfor  %}
                 </div>
         </main>
 {% endblock  %}
