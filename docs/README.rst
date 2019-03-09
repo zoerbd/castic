@@ -19,6 +19,16 @@ Here is an short overview:
 
 |
 
+Integration for backup check
+----------------------
+
+Integrating new repositories for backup check by hand, is pretty easy.
+You only have to create a file with the name of your repository in /path/to/castic/passwords/ that conatins
+the password to the repository.
+Restic looks for your configured backup path, appends the file name of your password-file and everything should work fine.
+
+|
+
 Building and Setup without installer
 ----------------------
 
