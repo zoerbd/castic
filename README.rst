@@ -1,5 +1,5 @@
 
-.. image:: https://bitbucket.org/zoerbd/castic/raw/85c9031ce95321e4033a3284bdbdd6a903d61c5b/src/static/title_smaller.png
+.. image:: https://www.dropbox.com/s/n5wgmnunpyyojt3/title_smaller.png?dl=0/
 
 ------------
 
@@ -8,7 +8,7 @@ the non-graphical backup-tool 'restic' (https://github.com/restic/restic).
 
 Documentation_
 
-.. _Documentation: https://www.dropbox.com/s/n5wgmnunpyyojt3/title_smaller.png?dl=0/
+.. _Documentation: https://github.com/zoerbd/castic/tree/dev/docs
 
 |
 
