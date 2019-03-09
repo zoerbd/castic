@@ -40,11 +40,17 @@ If you got another distro than CentOS you will have to setup some parts by yours
 
 |
 
-Screenshot
+Screenshots
 ----------------------
 
 |
 
 .. image:: https://www.teching.dev/castic/screenshot.png
+
+|
+
+.. image:: https://www.teching.dev/castic/screenshot2.png
+
+|
 
 ---------
