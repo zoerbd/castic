@@ -8,7 +8,7 @@ the non-graphical backup-tool 'restic' (https://github.com/restic/restic).
 
 Documentation_
 
-.. _Documentation: https://bitbucket.org/zoerbd/castic/src/master/docs/
+.. _Documentation: https://www.dropbox.com/s/n5wgmnunpyyojt3/title_smaller.png?dl=0/
 
 |
 
