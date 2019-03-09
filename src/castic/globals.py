@@ -12,10 +12,12 @@ gitProjectDir = '/'.join(BASE_DIR.split('/')[:-1])   # get parent dir of src
 with open(os.path.join(gitProjectDir, 'config.json')) as jsonFile:
         config = json.load(jsonFile)
 
-def __shell__(command):
+def __shell__(command, old=False):
         '''
         This function makes it less pain to get shell answers
         '''
+        if old:
+            return subprocess.check_output(command, shell=True).decode('utf-8').strip()
         process = subprocess.Popen(command.split(' '), stderr=subprocess.PIPE, stdout=subprocess.PIPE)
         stdout, stderr = [ item.decode('utf-8').strip() for item in process.communicate()]
         if stderr:

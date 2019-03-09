@@ -3,13 +3,13 @@
 This script is made to be called from setup.py file.
 '''
 import pdb
-import sys, os, shutil
+import sys, os, shutil, json
 
 sys.path.insert(0, os.path.join(input('Path to the source folder of castic (for example: /var/www/castic/src/): '), 'castic'))
 from settings import BASE_DIR
-from globals import __shell__, __log__, gitProjectDir
 
 sys.path.insert(0, os.path.join(BASE_DIR))
+from globals import __shell__, __log__, gitProjectDir
 from django.conf import settings
 from django import setup
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "castic.settings")
@@ -40,7 +40,7 @@ class setupDependencies:
 		self.__generalSetup__()
 		
 		# initial backup
-		if __ask__('Should an initial backup check be done? (warmly recommended)'):
+		if self.__ask__('Should an initial backup check be done? (warmly recommended)'):
 			from update.check import checkRepositories
 			checkRepositories()
 
@@ -187,12 +187,12 @@ class setupDependencies:
 		Ask question and return bool answer.
 		'''
 		if len(args) == 1:
-			return __shell__('read -s -n 1 -p "{} [y|n]\n" a && echo $a'.format(args[0])).lower() == 'y'
+			return __shell__('read -s -n 1 -p "{} [y|n]\n" a && echo $a'.format(args[0]), True).lower() == 'y'
 
 		# do this if options-block (i.e. [y|n|d]) explicitly given and check if answer valid
 		# check one-sized optiosn available to enable using controls without pressing enter
 		if all([ True if len(opt.replace('[', '').replace(']', '').replace('\'', '')) == 1 else False for opt in args[1].split('|')]):
-			question = __shell__('read -s -n 1 -p "{} {}\n" a && echo $a'.format(args[0], args[1].replace('\'', ''))).lower()
+			question = __shell__('read -s -n 1 -p "{} {}\n" a && echo $a'.format(args[0], args[1].replace('\'', '')), True).lower()
 		else:
 			opt.replace('[', '').replace(']', '').replace('\'', '')
 

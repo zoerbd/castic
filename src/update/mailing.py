@@ -34,9 +34,9 @@ class mailingNotification():
 
 		content = """From: {}
 To: {}
-Subject: Castic: Backup information\n
+Subject: Castic: backup information\n
 This is a generic mail from your castic server.
-I am built to check all backups on certain time periods.\nAvailable disk-space on your backup volume: {}.\n\n""".format(
+I am checking all made backups on certain time periods.\nAvailable disk-space on your backup volume: {}.\n\n""".format(
 		self.config['mailFrom'], self.config['mailAddress'], __getFreeDiskSpace__())
 
 		# check if all repos are healthy (fetch data from db). if not, append error message
