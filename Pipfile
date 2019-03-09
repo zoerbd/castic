@@ -9,7 +9,7 @@ rope = "*"
 [packages]
 django = "*"
 gunicorn = "*"
-smtplib = "*"
+py_smtp = "*"
 
 [requires]
 python_version = "3.7"

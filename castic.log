@@ -392,3 +392,31 @@ Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND
 2019-03-09 14:45:09.328328+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
 Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
 '.
+2019-03-09 14:49:26.584689+00:00 - empty command given
+2019-03-09 14:49:26.596178+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-09 14:49:26.596290+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
+Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+'.
+2019-03-09 14:49:46.268789+00:00 - empty command given
+2019-03-09 14:49:46.279892+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-09 14:49:46.280010+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
+Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+'.
+2019-03-09 14:50:59.669767+00:00 - empty command given
+2019-03-09 14:50:59.680125+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-09 14:50:59.680230+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
+Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+'.
+2019-03-09 14:59:48.544057+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-09 14:59:48.544177+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-09 14:59:52.715073+00:00 - empty command given
+2019-03-09 14:59:52.723265+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-09 14:59:52.723379+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
+Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+'.

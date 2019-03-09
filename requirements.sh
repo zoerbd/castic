@@ -1,2 +1,3 @@
 sshpass
 ansible
+nginx

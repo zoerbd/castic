@@ -23,19 +23,19 @@
                 <main>
                 <div id="main"></div>
                 <div class="container-fluid container genSection">
-                        <div class="row genBox">
+                        <div class="genBox">
                              <div class="genInfo generalcolor">
                                 <h2>General information</h2>
                              </div>
                              <div class="genContent">
-				<p>Hostname: {{general.hostname}}</p>
-				<p>Storage path: {{general.path}}</p>
-				<p>Available space: {{general.space}}</p>
-				<p>Last check: {{general.lastCheck}}</p>
+				<p><span class="stickingOutContentGen">Hostname:</span> {{general.hostname}}</p>
+				<p><span class="stickingOutContentGen">Storage path:</span> {{general.path}}</p>
+				<p><span class="stickingOutContentGen">Available space:</span> {{general.space}}</p>
+				<p><span class="stickingOutContentGen">Last check:</span> {{general.lastCheck}}</p>
 				{% if general.status  %}
-                                <p>Overall status: <span id="ostatus" class="status">healthy</span></p>
+                                <p><span class="stickingOutContentGen">Overall status: </span><span id="ostatus" class="status">healthy</span></p>
 				{% else  %}
-                                <p>Overall status: <span id="ostatus" class="status">unhealthy</span></p>
+                                <p><span class="stickingOutContentGen">Overall status:</span> <span id="ostatus" class="status">unhealthy</span></p>
 				{% endif %}
                                 <br>
                                 <a href="/update/" class="btn showlink linkbtn generalcolor">Check backups</a>
@@ -44,25 +44,24 @@
                         <br>
                         <div class="row">
                                 {% for repo in repos  %}
-                                <p id="{{repo.name}}"></p>
-                                <div class="col-md-6">
-                                <!--div class="genBox genBoxSmall"-->
+                                <div class="col-md-6" style="margin-bottom: 1.5em;">
+                                <div id="{{repo.name}}" class="genBox">
                                         <div class="genInfo">
                                                 <h2>Name: {{ repo.name }}</h2>
                                         </div>
                                         <div class="genContent"> 
-                                                <p>Absolute path: {{repo.absolPath}}</p>
+                                                <p><span class="stickingOutContent">Absolute path:</span> {{repo.absolPath}}</p>
                                                 {% if repo.health %}
-                                                        <p>Status: <span class="status">healthy</span></p>
+                                                        <p><span class="stickingOutContent">Status:</span> <span class="status">healthy</span></p>
                                                 {% else %}
-                                                        <p>Status: <span style="color:red">not healthy</span></p>
+                                                        <p><span class="stickingOutContent">Status:</span> <span style="color:red">not healthy</span></p>
                                                 {% endif %}
-                                                <p>Used disk space: {{repo.diskSpace}}</p>
-                                                <p>Last update: {{repo.lastUpdate}}</p>
+                                                <p><span class="stickingOutContent">Used disk space:</span> {{repo.diskSpace}}</p>
+                                                <p><span class="stickingOutContent">Last check:</span> {{repo.lastUpdate}}</p>
                                                 <br>
                                                 <p><a href="{{repo.snapshotsURI}}" class="btn showlink linkbtn">Show snapshots</a></p>
                                         </div>
-                                <!--/div-->
+                                </div>
                                 </div>
                                 <br>
                                 {% endfor  %}
