@@ -1,5 +1,5 @@
 import re
-from castic.globals import config
+from castic.globals import config, __log__
 import smtplib
 from repositories.models import repositories
 from repositories.views import __getFreeDiskSpace__

@@ -45,7 +45,7 @@ def checkRepositories():
 					col.save()
 
 	# execute shell "command after"-option
-	os.system(config['check']['executeCommandAfterCheck'])
+	__shell__(config['check']['executeCommandAfterCheck'])
 
 	# call diskSpace-warning if necessary
 	__warnIfLowSpace__()
@@ -76,3 +76,4 @@ def __warnIfLowSpace__():
 	# if available space below 'warnIfSpaceSmallerThan'-value, send warning log and mail if enabled
 	if values[0] - values[1] < 0:
 		return __log__('WARNING: Available disk space is below \'warnIfSpaceSmallerThan\'-value.\nMail-notification returned with: \'{}\'.'.format(mailingNotification().manageMailing()))
+

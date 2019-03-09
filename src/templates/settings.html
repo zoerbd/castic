@@ -26,6 +26,22 @@
 										<label id="{{ setting.id_for_label }}" for="{{ setting.id_for_label }}">{{ setting.label }}: </label>
 										{{ setting }}
 									</div>
+									{% if setting.label == 'Number of snapshots to keep on all repos' %}
+										<br>
+										<button class="btn linkbtn mod_restore" type=button>Forget rules for particular repos</button>
+											<div class="modal">
+												<div class="modal-content">
+													<span class="close">&times;</span>
+													<br>
+													<div class="container">
+														<p>I am sorry. Feature is still in development.</p>
+														<!--button class="btn linkbtn showlink">Submit</button-->
+														<br><br>
+													</div>
+												</div>
+											</div>
+											<script>modals();</script>
+									{% endif %}
 									<br>
 									{% endif %}
 								{% endfor %}

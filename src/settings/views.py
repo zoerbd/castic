@@ -3,6 +3,7 @@ from .forms import settingsForm
 import json, shutil, re, os
 from castic.globals import config, loginRequired, __log__, gitProjectDir
 from castic.settings import BASE_DIR
+from repositories.models import repositories
 
 # Create your views here.
 @loginRequired
@@ -30,7 +31,7 @@ def settings(request):
                         with open(configPath, 'w') as wfile:
                                 wfile.write(newConf)
 
-                        __log__(__updateAutoCheck__(newConf))
+                        __log__(checkAndForgetAutomation(newConf).updateAll())
                         return redirect('/settings/')
                 return render(request, 'checkOutput.html', {"output" : __log__('Form was invalid!')})
 
@@ -66,73 +67,130 @@ def __updateConfig__(confOrig, confNew):
                                 pass
         return json.dumps(confOrig, ensure_ascii=False)
 
-def __updateAutoCheck__(conf):
-        '''
-        This function is called from settings() out of settings/views.
-        It updates users cronjob for doing AutoCheck (simply call /update on given time).
-        '''
-        checkInterval = json.loads(conf)['check']['autoCheck']
-        if __checkAutoCheckSyntax__(checkInterval):
-                checkInterval = '24h'
-        cronjob = __generateCronjobStr__(checkInterval)
 
-        # replace in crontab-file if actual cronjobStr in cronjob-var (instead of error)
-        if '* * *' in cronjob:
-                return __log__(__replaceAutoCheckCronjob__(checkInterval, cronjob))
+class checkAndForgetAutomation:
+        def __init__(self, conf):
+                self.conf = conf
 
-def __checkAutoCheckSyntax__(checkInterval):
-        '''
-        This function is called from __updateAutoCheck__() out of settings/views.
-        Returns error-str if input is invalid.
-        '''
-        pattern = re.compile(r'[False|\d+[h|m]]')
-        if not pattern.finditer(checkInterval):
-                return __log__('Got invalid syntax in AutoCheck setting.\nRestoring to default value of 24h\nGiven value {}.'.format(checkInterval))
+        def updateAll(self):
+                '''
+                This function is called from settings() out of settings/views.
+                It updates users cronjob for doing AutoCheck.
+                '''
 
-def __generateCronjobStr__(checkInterval):
-        '''
-        This function is called from __updateAutoCheck__() out of settings/views. 
-        It generates the cronjob for automating the backup check.
-        Returns error-str if an exception occurrs.
-        '''
-        if not checkInterval:
-                return __log__('AutoCheck disabled in settings.')
-        cronjob = 'm h * * *  {}'.format(os.path.join(BASE_DIR, 'bin/update.py'))
+                values = {
+                        'check' : {
+                                'col' : [
+                                        'check',
+                                        'autoCheck'
+                                ],
+                                'interval' : '24h',      # default value
+                                'method' : 'self.__generateCheckCronjobStr__()',
+                                'task_pattern' : '/bin/update.py',
+                                'pattern' : r'[False|\d+[h|m]]'
+                        },
+                        'forget' : {
+                                'col': [
+                                        'general',
+                                        'autoForgetAll'
+                                ],
+                                'interval' : '8',         # default value
+                                'method' : 'self.__generateForgetCronjobStr__()',
+                                'task_pattern': 'forget --prune --keep-last',
+                                'pattern' : r'[False|\d+]'
 
-        # get number of checkInterval in int
-        checkIntervalNumber = int(checkInterval.replace('h', '').replace('m', ''))      
+                        }
+                }
 
-        if 'h' in checkInterval:
-                return cronjob.replace('m h', '0 */{}'.format(int(checkIntervalNumber)))
-        return cronjob.replace('m h', '*/{} 0'.format(int(checkIntervalNumber)))
+                for automationMethod in values.keys():
+                        methodname = values[automationMethod]
+                        self.pattern = methodname['pattern']    # pattern for syntax check
+                        self.task_pattern = methodname['task_pattern']
 
-def __replaceAutoCheckCronjob__(checkInterval, cronjobStr):
-        '''
-        This function is called from __updateAutoCheck__() out of settings/views. 
-        It replaces the cronjob for automating the backup check.
-        Returns error-str if an exception occurrs. 
-        '''
-        crontabPath = '/var/spool/cron/crontabs/root'    # maybe make this as setting available later
-        if not os.path.isdir(crontabPath.replace('root', '')):
-            newCrontabPath = crontabPath.split('/')
-            newCrontabPath.remove(newCrontabPath[-2])
-            crontabPath = '/'.join(newCrontabPath)
-        try:
-            shutil.copyfile(crontabPath, crontabPath + '.orig')     # save backup file in case of bugs/exceptions
-        except FileNotFoundError:
-            with open(crontabPath, 'w') as cronfile:
-                cronfile.write('# created by castic\n')
-            return __replaceAutoCheckCronjob__(checkInterval, cronjobStr)
-        with open(crontabPath, 'r') as crontab:
-                crontabContent = crontab.readlines()
-        
-        # replace current cronjob, if none set, append
-        for j, line in enumerate(crontabContent):
-                if os.path.join(BASE_DIR, 'bin/update.py') in line:
-                        crontabContent[j] = cronjobStr
-                elif j == len(crontabContent) - 1:
-                        crontabContent.append(cronjobStr)
+                        self.interval = json.loads(self.conf)[methodname['col'][0]][methodname['col'][1]]
+                        if self.__checkAutoCheckSyntax__():
+                                self.interval = methodname['interval']
+                        cronjob = eval(methodname['method'])
 
-        # write out new cronjob
-        with open(crontabPath, 'w') as crontab:
-                crontab.write(''.join(crontabContent))
+                        # replace in crontab-file if actual cronjobStr in cronjob-var (instead of error -> either result or error is returned)
+                        if '* * *' in cronjob:
+                                __log__(self.__replaceOrCreateCronjob__(cronjob))
+                        else:
+                                __log__('Error occurred while trying to create cronjobs in settings/views.py.\nOutput: {}'.format(cronjob))
+
+        def __replaceOrCreateCronjob__(self, cronjobStr):
+                '''
+                This function is called from __updateAutoCheck__() out of settings/views. 
+                It replaces the cronjob for automating the backup check.
+                Returns error-str if an exception occurrs. 
+                '''
+                crontabPath = '/var/spool/cron/crontabs/root'    # maybe make this as setting available later
+                if not os.path.isdir(crontabPath.replace('root', '')):
+                        newCrontabPath = crontabPath.split('/')
+                        newCrontabPath.remove(newCrontabPath[-2])
+                        crontabPath = '/'.join(newCrontabPath)
+                try:
+                        shutil.copyfile(crontabPath, crontabPath + '.orig')     # save backup file in case of bugs/exceptions
+                except FileNotFoundError:
+                        with open(crontabPath, 'w') as cronfile:
+                                cronfile.write('# created by castic\n')
+                        return self.__replaceOrCreateCronjob__(cronjobStr)
+                with open(crontabPath, 'r') as crontab:
+                        crontabContent = crontab.readlines()
+                
+                # replace current cronjob, if none set, append
+                for j, line in enumerate(crontabContent):
+                        if  self.task_pattern  in line:
+                                crontabContent[j] = ''
+                crontabContent.append(cronjobStr)
+
+                # write out new cronjob
+                with open(crontabPath, 'w') as crontab:
+                        crontab.write(''.join(crontabContent))
+
+        def __checkAutoCheckSyntax__(self):
+                '''
+                This function is called from __updateAutoCheck__() out of settings/views.
+                Returns error-str if input is invalid.
+                '''
+                pattern = re.compile(self.pattern)
+                if not pattern.finditer(self.interval):
+                        return __log__('Got invalid syntax in AutoCheck/AutoForget setting.\nGiven value {}.'.format(self.interval))
+
+        def __generateCheckCronjobStr__(self):
+                '''
+                This function is called from __updateAutoCheck__() out of settings/views. 
+                It generates the cronjob for automating the backup check.
+                Returns error-str if an exception occurrs.
+                '''
+                if not self.interval:
+                        return __log__('AutoCheck disabled in settings.')
+                cronjob = 'm h * * *  {}\n'.format(os.path.join(BASE_DIR, 'bin/update.py'))
+
+                # get number of interval in int
+                checkIntervalNumber = int(self.interval.replace('h', '').replace('m', ''))      
+
+                if 'h' in self.interval:
+                        return cronjob.replace('m h', '0 */{}'.format(int(checkIntervalNumber)))
+                return cronjob.replace('m h', '*/{} 0'.format(int(checkIntervalNumber)))
+
+        def __generateForgetCronjobStr__(self):
+                '''
+                This function is called from __updateAutoCheck__() out of settings/views. 
+                It generates the cronjob for automating the backup forget.
+                Returns error-str if an exception occurrs.
+                '''
+                if not self.interval:
+                        return __log__('AutoForget disabled in settings.')
+
+                return ''.join([ '{} * * *  {}\n'.format(self.__getCronTime__(j), 'restic -r {}\
+                        --password-file {} forget --prune --keep-last {}'.format(repo.absolPath, os.path.join(gitProjectDir, 'passwords',  repo.absolPath.split('/')[-1]), self.interval))
+                        for j, repo in enumerate(repositories.objects.all()) ])
+
+        def __getCronTime__(self, index):
+                '''
+                This function is called from __generateForgetCronjobStr__() out of settings/views. 
+                Returns first two nums of cronjob.
+                '''
+                index *= 20
+                return '{} {}'.format(int(index%60), int(index/60))

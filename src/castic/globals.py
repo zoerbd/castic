@@ -16,6 +16,8 @@ def __shell__(command, old=False):
         '''
         This function makes it less pain to get shell answers
         '''
+        if not command:
+            return __log__('empty command given')
         if old:
             return subprocess.check_output(command, shell=True).decode('utf-8').strip()
         process = subprocess.Popen(command.split(' '), stderr=subprocess.PIPE, stdout=subprocess.PIPE)

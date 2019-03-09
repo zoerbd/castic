@@ -21,3 +21,32 @@ $(document).ready(function(){
 		last_was_floated = false;
 	}
 })
+
+function modals(){
+	let modals = document.getElementsByClassName('modal');
+	let spans = document.getElementsByClassName("close");
+	let btns = [
+		'button.mod_restore',
+		'button.mod_delete'
+	]
+
+	for (let j=0; j<modals.length; j++){
+		$(document).ready(function(){
+				$(btns[j]).click(function(){
+					modals[j].style.display = "block";
+				});
+		})
+
+		// When the user clicks on <span> (x), close the modal
+		spans[j].onclick = function() {
+			modals[j].style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modals[j]) {
+				modals[j].style.display = "none";
+			}
+		}
+	}
+}

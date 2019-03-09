@@ -4,12 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+rope = "*"
 
 [packages]
 django = "*"
 gunicorn = "*"
 smtplib = "*"
-django-nose = "*"
 
 [requires]
 python_version = "3.7"

@@ -377,3 +377,18 @@ Continuing with a basic setup.
 2019-03-09 10:08:24.904901+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
 2019-03-09 10:08:43.860427+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
 2019-03-09 10:10:15.368048+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-09 10:12:38.417964+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-09 11:56:22.077160+00:00 - empty command given
+2019-03-09 11:57:49.262526+00:00 - empty command given
+2019-03-09 11:58:34.196152+00:00 - empty command given
+2019-03-09 11:58:34.206517+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-09 11:58:34.206610+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
+Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+'.
+2019-03-09 14:45:09.313354+00:00 - empty command given
+2019-03-09 14:45:09.328210+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-09 14:45:09.328328+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
+Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+'.

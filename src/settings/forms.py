@@ -3,6 +3,7 @@ from django import forms
 class settingsForm(forms.Form):
 	# general
 	backupPath = forms.CharField(label='Backup path', max_length=32)
+	autoForgetAll = forms.CharField(label='Number of snapshots to keep on all repos', max_length=32)
 
 	# check
 	DoCheckInBackground = forms.CharField(label='Check backups in background', max_length=32)
