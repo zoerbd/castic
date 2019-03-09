@@ -89,8 +89,10 @@ db management
 As the projects uses SQLite, the DB setup is pretty easy.
 Simply make sure to be in the virtual environment (pipenv shell) and type the following commands:
 
-	cd src			# cd into the src folder of the project
+	cd src
+
 	./manage.py makemigrations
+
 	./manage.py migrate
 
 
