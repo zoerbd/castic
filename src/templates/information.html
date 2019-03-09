@@ -46,7 +46,7 @@
                                 {% for repo in repos  %}
                                 <p id="{{repo.name}}"></p>
                                 <div class="col-md-6">
-                                <!--div class="genBox genBoxSmall"-->
+                                <div class="genBox genBoxSmall">
                                         <div class="genInfo">
                                                 <h2>Name: {{ repo.name }}</h2>
                                         </div>
@@ -63,7 +63,7 @@
                                                 <p><a href="{{repo.snapshotsURI}}" class="btn showlink linkbtn">Show snapshots</a></p>
                                         </div>
                                 </div>
-                                <!--/div-->
+                                </div>
                                 <br>
                                 {% endfor  %}
                         </div>
