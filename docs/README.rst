@@ -2,6 +2,8 @@
 castic - docs
 ========
 
+|
+
 Features
 ----------------------
 
@@ -15,10 +17,14 @@ Here is an short overview:
 	Integrate:
 		-> has ansible backend to include new remote systems via ssh
 
+|
+
 Building and Setup without installer
 ----------------------
 
 Warning: a debian based system is used for the following steps, but for other systems, the packages and paths should be named similar.
+
+|
 
 Install requirements and dependencies
 ########
@@ -49,6 +55,8 @@ After that we need to make sure that our python dependencies are installed and o
 
 	pipenv update
 
+|
+
 setup infrastructure
 ########
 
@@ -78,20 +86,51 @@ Now we only have to commit small changes to our /etc/nginx/nginx.conf file, simp
 db management
 ########
 
+As the projects uses SQLite, the DB setup is pretty easy.
+Simply make sure to be in the virtual environment (pipenv shell) and type the following commands:
 
-user creation + mgmt
+	cd src			# cd into the src folder of the project
+	./manage.py makemigrations
+	./manage.py migrate
+
+
+user management
 ########
+
+Castic has no dedicated management system for it's user, but you should take a look at accessing
+your users from commandline.
+
+	./manage.py shell
+
+Then import the necessary database model:
+
+	>>> from django.contrib.auth.models import User
+	>>> from getpass import getpass
+
+
+After that, you can for example create a new user:
+
+	>>> user = User.objects.create_user(username=input('Your username: '), password=getpass())
+	>>> user.save()
+
+Exit by typing CTRL + D or exit().
+
+|
 
 configuration file
 ########
 
-How To's
-----------------------
-Coming soon!
+You find a config.json file in the projects source.
+It's basically that one place where all user made settings are stored.
+It could also be solved by doing that in the database but I personally like it when I have quick and easy commandline 
+access to whatever settings I want to alter or review.
+But of course you don't have to edit it directly.
+The settings tab does nothing but let you set exactly those values that are written in the config.json 
+(simply generates new config file each time you submit).
 
-Projecte structure explained
-----------------------
-Coming soon!
+Warning: Please be careful to meet formal requirements when chaning values, because in the current release, there is no strong protection on submit.
+
+|
 
 ------------
 
