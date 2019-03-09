@@ -38,4 +38,11 @@ How to build castic
 
 If you got another distro than CentOS you will have to setup some parts by yourself, so take a look at the docs folder for more details.
 
+|
+
+Screenshot
+----------------------
+
+.. image:: https://www.teching.dev/castic/screenshot.png
+
 ---------
