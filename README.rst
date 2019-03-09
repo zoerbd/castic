@@ -43,6 +43,8 @@ If you got another distro than CentOS you will have to setup some parts by yours
 Screenshot
 ----------------------
 
+|
+
 .. image:: https://www.teching.dev/castic/screenshot.png
 
 ---------
