@@ -525,3 +525,8 @@ Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND
 2019-03-11 18:59:03.485166+00:00 - empty command given
 2019-03-11 18:59:03.493852+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
 2019-03-11 19:01:16.963957+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 19:19:02.058512+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 19:19:05.290076+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 19:19:11.931476+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 19:19:23.136281+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 19:19:27.883297+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.

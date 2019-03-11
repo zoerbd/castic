@@ -16,6 +16,13 @@ def snapshots(request, absolPath=None):
 	return render(request, 'snapshots.html', {'snaps':list(reversed(snaps)), 'form':form})
 
 @loginRequired
+def snapshot(request):
+	'''
+	Placeholder for root url of /snapshots/.
+	'''
+	return redirect('/')
+
+@loginRequired
 def delete(request, absolPath, snapID):
 	'''
 	backend for /snapshpots/<str:absolPath>/delete/<str:snapID>
