@@ -420,3 +420,108 @@ Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND
 2019-03-09 14:59:52.723379+00:00 - WARNING: Available disk space is below 'warnIfSpaceSmallerThan'-value.
 Mail-notification returned with: ' <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
 '.
+2019-03-11 18:25:56.713381+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:26:04.854391+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:26:21.144497+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:26:21.146458+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:26:21.146647+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:26:26.093705+00:00 - empty command given
+2019-03-11 18:26:26.097914+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:26:34.539798+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:28:15.466932+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:28:16.824519+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:28:16.826378+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:28:16.826604+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:28:21.011295+00:00 - empty command given
+2019-03-11 18:28:21.015481+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:28:41.066728+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:28:41.068130+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:28:41.068228+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:28:47.698791+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:28:47.700375+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:28:47.700632+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:28:51.903054+00:00 - empty command given
+2019-03-11 18:28:51.907173+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:29:19.199259+00:00 - empty command given
+2019-03-11 18:29:19.204606+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:30:19.357807+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:30:19.359325+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:30:19.359519+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:30:22.985894+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:30:23.740427+00:00 - empty command given
+2019-03-11 18:30:23.744470+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:30:24.790644+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:30:24.795014+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:30:24.795103+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:30:28.876613+00:00 - empty command given
+2019-03-11 18:30:28.880712+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:30:40.596701+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:30:40.598137+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:30:40.598326+00:00 -  <--SMTP--> ERROR OCCURED WHILE TRYING TO SEND MAIL: [Errno 111] Connection refused
+
+2019-03-11 18:30:44.646719+00:00 - empty command given
+2019-03-11 18:30:44.651214+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:33:55.365345+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:33:57.928272+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:33:59.141036+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:33:59.881143+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:34:01.236995+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:34:01.299081+00:00 - empty command given
+2019-03-11 18:34:01.330716+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:34:01.645100+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:34:02.088415+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:34:03.482581+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:36:14.935132+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:36:22.997510+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:36:31.075783+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:36:37.090155+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:36:49.196605+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:37:17.326385+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:37:24.360770+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:37:32.806074+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:37:38.776027+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:37:43.860043+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:42:30.845398+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:42:35.910019+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:42:47.065877+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:43:25.334008+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:44:05.272466+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:44:56.202448+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:44:57.309647+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:45:04.847580+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:48:06.054716+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:48:27.362126+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:48:33.927938+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:48:39.096795+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:48:44.160909+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:48:49.815723+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:48:53.962232+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:48:58.968382+00:00 - empty command given
+2019-03-11 18:48:58.976429+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:49:18.628154+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:49:24.855887+00:00 - empty command given
+2019-03-11 18:49:24.860043+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:49:25.230994+00:00 - empty command given
+2019-03-11 18:49:25.235753+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:49:39.641566+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:49:44.169083+00:00 - empty command given
+2019-03-11 18:49:44.173044+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:49:48.102553+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:58:52.543519+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:58:58.298242+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 18:59:03.485166+00:00 - empty command given
+2019-03-11 18:59:03.493852+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-11 19:01:16.963957+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.

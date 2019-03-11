@@ -188,6 +188,7 @@ p {
 	padding: 0.5em;
 	border-radius: 5px;
 	text-align: center;
+	box-shadow: 0 2px 15px rgba(0,0,0,0.3);
 }
 .linkbtn:hover{
 	text-decoration: none;

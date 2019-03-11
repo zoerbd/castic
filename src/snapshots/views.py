@@ -4,15 +4,6 @@ from .forms import restoreForm
 from repositories.models import repositories
 import re, os
 
-# Create your views here.
-@loginRequired
-def repos(request):
-	'''
-	backend for /snapshots/
-	'''
-	repos = [{'name': entry['absolPath'], 'nameURL': entry['absolPath'].replace('/', '.')} for entry in list(repositories.objects.order_by('name').values())]
-	return render(request, 'snapshots_index.html', {'repos': repos})
-
 @loginRequired
 def snapshots(request, absolPath=None):
 	'''
@@ -42,7 +33,7 @@ def restore(request, absolPath, snapID):
 		if not form.is_valid():
 			return render(request, 'checkOutput.html', {'output':'Form was not valid, sorry!'})
 		__shell__('restic -r {} restore --no-cache {} --target {} --password-file {}'.format(absolPath.replace('.', '/'), snapID, form['restorePath'].value(), os.path.join(gitProjectDir, 'passwords', absolPath.split('.')[-1])))
-	return redirect('/snapshots')
+	return redirect('/')
 
 class snapshotManagement:
 	def __init__(self, request, allRepos=None):

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from repositories.models import repositories
 import os, sys, json, subprocess, datetime, re, threading
-from castic.globals import config, __shell__, loginRequired, __log__
+from castic.globals import config, __shell__, loginRequired, __log__, __optionIsEnabled__
 from castic.settings import BASE_DIR
 from .check import checkRepositories
 from .mailing import mailingNotification
@@ -16,7 +16,10 @@ def update(request):
                 checkRepositories() 
 
         # if enabled, send notification
-        result = mailingNotification().manageMailing()
+        result = ''
+
+        if __optionIsEnabled__(config['notify']['sendMailNotifications']):
+                result = mailingNotification().manageMailing()
 
         # if result returned something, an error occurred
         if result:

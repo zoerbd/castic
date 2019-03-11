@@ -14,6 +14,7 @@ Documentation_
 
 Requirements and support
 ------------------------
+As castic is a python3/django based app, you need an functional python3.6/3.7 environment (including pip, the python package installer).
 Castic is mostly built and tested on CentOS 7, thats why I strongly recommend using a RHEL based distro.
 Ubuntu and other distros should also work, but you have to setup some parts by yourself (i.e. mainly webserver infrastructure and package installation).
 

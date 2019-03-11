@@ -3,9 +3,9 @@ $(document).ready(function(){
 		$('body').addClass("loading");
 	});
 	$('.btn').hover(function(){
-			$(this).css('box-shadow', '0 1px 15px rgba(0,0,0,0.6)');
+			$(this).css('box-shadow', '0 4px 15px rgba(0,0,0,0.4)');
 	}, function() {
-			$(this).css('box-shadow', '0 0 15px rgba(0,0,0,0.2)');
+			$(this).css('box-shadow', '0 2px 15px rgba(0,0,0,0.3)');
 	});
 
 	let genBoxes = $('.genBoxSmall');

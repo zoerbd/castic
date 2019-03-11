@@ -12,6 +12,15 @@ gitProjectDir = '/'.join(BASE_DIR.split('/')[:-1])   # get parent dir of src
 with open(os.path.join(gitProjectDir, 'config.json')) as jsonFile:
         config = json.load(jsonFile)
 
+def __optionIsEnabled__(option):
+        '''
+        This function takes a look if a config.json setting is enabled or not.
+        Returns bool.
+        '''
+        if option in ['false', 'False', '0', 0]:
+            return False
+        return True
+
 def __shell__(command, old=False):
         '''
         This function makes it less pain to get shell answers

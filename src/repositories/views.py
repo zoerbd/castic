@@ -22,7 +22,7 @@ def repos(request):
 		'lastCheck': __getLastDate__(),
 		'status': __getOverallHealth__()
 	}
-	return render(request, 'information.html', {'repos':repos, 'general':general})
+	return render(request, 'repositories.html', {'repos':repos, 'general':general})
 
 def __getFreeDiskSpace__():
 	'''
@@ -60,10 +60,6 @@ def __getMountPoint__(output, root):
 
 		# update root by cutting last /<something>
 		root = '/'.join(root.split('/')[:-1])
-
-		# in last iteration root-var is enpty str, so mounted path is /
-		if not root:
-			return '/'
 
 		# check if mountpoint exists
 		for line in output.split('\n'):
