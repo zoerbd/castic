@@ -93,6 +93,9 @@ Now we only have to commit small changes to our /etc/nginx/nginx.conf file, simp
 		}
 	}
 
+WARNING: I would strongly recommend you to increase the keepalive_timout value on your web server if you are using it on larger repositories as
+checking, deleting and restoring backups takes some time.
+
 db management
 ########
 
