@@ -184,7 +184,9 @@ class checkAndForgetAutomation:
                         return __log__('AutoForget disabled in settings.')
 
                 return ''.join([ '{} * * *  {}\n'.format(self.__getCronTime__(j), 'restic -r {}\
-                        --password-file {} forget --prune --keep-last {}'.format(repo.absolPath, os.path.join(gitProjectDir, 'passwords',  repo.absolPath.split('/')[-1]), self.interval))
+                        --password-file {} forget --prune --keep-last {} >> {}'.format(repo.absolPath, 
+                        os.path.join(gitProjectDir, 'passwords',  repo.absolPath.split('/')[-1]), self.interval, 
+                        os.path.join(gitProjectDir, 'castic.log'))) 
                         for j, repo in enumerate(repositories.objects.all()) ])
 
         def __getCronTime__(self, index):

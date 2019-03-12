@@ -9,7 +9,7 @@ fi
 chmod 600 ~/.ssh
 
 # setup password-free ssh
-echo ',)xUIo5V`=q?bRVyYC5g/E:q8dSC4Mnc\IT5sl=<902N5pI<3Bc<]M61pCI_)?UF?Q>?fIGN<Fu_y<G0P+s9S+o>;Kwm)9Tzr@2pIcL-eio:sE;;CL1>/)`U`eP]M=c8' > /etc/restic.pw
+echo '5O\yu]F9d*kRUn^/oZ>Y,*K|)x/=Okve`J)Ca[wC`Fg5jr>227Eum5P/q|1cAs7QBM=CakXjnKlD1|\e)nl)xp)O1MUnq?,2JDm^9O0Z8Nm57Z?g{uh_/hrLb.7I@MSB' > /etc/restic.pw
 chmod 600 /etc/restic.pw
 
 # generate key if not existing
@@ -21,5 +21,5 @@ chmod 600 ~/.ssh/id_rsa*
 sshpass -f /etc/restic.pw ssh-copy-id restic@"teching.dev" >> /dev/null 2>&1
 
 # init repo and backup
-restic -r sftp:"teching.dev":"clear" init --password-file /etc/restic.pw
-restic -r sftp:"teching.dev":"clear" backup "ls -la" --password-file /etc/restic.pw
+restic -r sftp:"teching.dev":"/var/www/castic/zoerb" init --password-file /etc/restic.pw
+restic -r sftp:"teching.dev":"/var/www/castic/zoerb" backup "/" --password-file /etc/restic.pw

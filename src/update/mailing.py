@@ -51,9 +51,11 @@ I am checking all made backups on certain time periods.\nAvailable disk-space on
 
 		try:
 				smtp = smtplib.SMTP(self.config['smtpServer'])
+				if self.config['smtpUser'] and self.config['smtpPassword']:
+					smtp.login(self.config['smtpUser'], self.config['smtpPassword'])
 				smtp.sendmail (
 					self.config['mailFrom'], 
-					[self.config['mailAddress']], 
+					self.config['mailAddress'].split(','),
 					content
 				)
 		except Exception as err:

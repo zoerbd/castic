@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from .forms import integrateInformation
-import os, sys, json, subprocess, re, pdb, random
+import os, sys, json, subprocess, re, pdb, random, shutil
 from subprocess import Popen, PIPE
-from castic.globals import config, __shell__, loginRequired
+from castic.globals import config, __shell__, loginRequired, gitProjectDir
 
 # Create your views here.
 @loginRequired
@@ -29,7 +29,7 @@ class Rendering:
 		self.user = user
 		self.pw = pw
 		self.dest = dest
-		self.repoPath = repoPath
+		self.repoPath = os.path.join(gitProjectDir, repoPath)
 		self.backupPath = backupPath
 		self.resticPW = resticPW
 		self.ownHost = __shell__('cat /etc/hostname'.replace('\n', ''))
@@ -42,15 +42,15 @@ class Rendering:
 		result = Popen( [ 'ansible-playbook', './integrate/ansible_rendered/setup.yml', '-e', 
 						'\"ansible_user={0} ansible_ssh_pass={1} ansible_sudo_pass={1}\"'.format(self.user, self.pw) ], 
 						stdout = PIPE, stderr = PIPE)
-		with open(os.path.join('./passwords', self.repoPath), 'w') as pwfile:
+		with open(os.path.join(gitProjectDir, 'passwords', self.repoPath), 'w') as pwfile:
 			pwfile.write(self.resticPW)
 		return ''.join([line.decode('utf-8') for line in result.communicate()])
 
 	def renderAnsible(self):
 			'''
 			This function renders the ansible configuration and 
-			roles and executes it on after that on remote machine.
-			Integration is based on my shell script to integrate restic.
+			roles and executes it after that on remote machine.
+			Integration is based on shell script to integrate restic.
 			'''
 			originRoot = './integrate/ansible'
 			renderedRoot = './integrate/ansible_rendered'
@@ -75,7 +75,8 @@ class Rendering:
 				for filename, content in updatedPair:
 					with open(filename, 'a') as fileobj:
 						fileobj.write(''.join(content))
-			return 0
+			shutil.copyfile(os.path.join(gitProjectDir, 'src/integrate/ansible_rendered/ansible.cfg'), '/etc/ansible/ansible.cfg')
+			shutil.copyfile(os.path.join(gitProjectDir, 'src/integrate/ansible_rendered/hosts'), '/etc/ansible/hosts')
 		
 	def __doReplacement__(self, line, pattern):
 		'''

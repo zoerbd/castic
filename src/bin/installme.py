@@ -50,14 +50,6 @@ class setupDependencies:
 		'''
 		self.__installDependencies__(open(os.path.join(gitProjectDir, 'requirements.sh')).readlines())
 
-		# install restic
-		if self.__ask__('Should restic be installed?'):
-			__shell__('https://github.com/restic/restic/releases/download/v0.9.4/restic_0.9.4_linux_amd64.bz2')
-			__shell__('bunzip2 restic_0.9.4_linux_amd64.bz2')
-			shutil.copyfile('restic_0.9.4_linux_amd64', '/usr/bin/restic')
-			__shell__('chmod a+x /usr/bin/restic')
-			__shell__('rm -R ./restic_0.9.4_linux_amd64*')
-		
 		# setup webserver infrastructure
 		webInfastruct = self.__ask__('Which webserver infrastructure do you want to setup? \
 		\n  a) gunicorn + nginx reverse proxy (recommended)\
@@ -87,6 +79,14 @@ class setupDependencies:
 		print('Creating user for authenticate for castic webmanagement.')
 		user = User.objects.create_user(username=input('Username: '), password=getpass())
 		user.save()
+
+		# install restic
+		if self.__ask__('Should restic be installed?'):
+			__shell__('https://github.com/restic/restic/releases/download/v0.9.4/restic_0.9.4_linux_amd64.bz2')
+			__shell__('bunzip2 restic_0.9.4_linux_amd64.bz2')
+			shutil.copyfile('restic_0.9.4_linux_amd64', '/usr/bin/restic')
+			__shell__('chmod a+x /usr/bin/restic')
+			__shell__('rm -R ./restic_0.9.4_linux_amd64*')
 
 		# backupPath to config
 		backupPath = input('Enter the path of your stored repositories: ')
