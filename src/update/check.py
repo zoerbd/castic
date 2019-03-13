@@ -1,6 +1,6 @@
 from repositories.models import repositories
 import os, sys, json, subprocess, re
-from castic.globals import config, __shell__, __log__, gitProjectDir, optionIsEnabled
+from castic.globals import config, __shell__, __log__, gitProjectDir, __optionIsEnabled__
 from castic.settings import BASE_DIR
 from .mailing import mailingNotification
 from repositories.views import __getFreeDiskSpace__
@@ -50,17 +50,17 @@ def checkRepositories():
 	# call diskSpace-warning if necessary
 	__warnIfLowSpace__()
 
-        # if enabled, send notification
+	# if enabled, send notification
 	# -------------------------------
-        result = ''
+	result = ''
 
-        if __optionIsEnabled__(config['notify']['sendMailNotifications']):
-                result = mailingNotification().manageMailing()
+	if __optionIsEnabled__(config['notify']['sendMailNotifications']):
+		result = mailingNotification().manageMailing()
 
-        # if result returned something, an error occurred
-        if result:
-                __log__(result)
-                return render(request, 'checkOutput.html', {'output':result})
+	# if result returned something, an error occurred
+	if result:
+		__log__(result)
+		return render(request, 'checkOutput.html', {'output':result})
 	# -------------------------------
 
 def __warnIfLowSpace__():
