@@ -39,8 +39,7 @@ class Rendering:
 		This function executes the previously rendered ansible-backend
 		and returns the exit message.
 		'''
-		result = __shell__('ansible-playbook ./integrate/ansible_rendered/setup.yml -e \"ansible_user={}\
-							ansible_ssh_pass={}\"'.format(self.user, self.pw))
+		result = __shell__('ansible-playbook ./integrate/ansible_rendered/setup.yml -e \"ansible_user={0}\" -e \"ansible_ssh_pass={1}\" -e \"ansible_become_pass={1}\"'.format(self.user, self.pw))
 		with open(os.path.join(gitProjectDir, 'passwords', ''.join(self.repoPath.split('/')[-1])), 'w') as pwfile:
 			pwfile.write(self.resticPW)
 		return result
