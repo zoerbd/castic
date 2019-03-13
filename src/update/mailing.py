@@ -40,14 +40,13 @@ I am checking all made backups on certain time periods.\nAvailable disk-space on
 		self.config['mailFrom'], self.config['mailAddress'], __getFreeDiskSpace__())
 
 		# check if all repos are healthy (fetch data from db). if not, append error message
-		errors = [ '{0} - FATAL ERROR: Error was detected in repository \'{1}\'.\nYou should check the repo \
-					and verify that the backup is done correctly.'.format(now(), list(repositories.objects.values())[j])
+		errors = [ '{0} - FATAL ERROR: Error was detected in repository \'{1}\'.\nYou should check the repo and verify that the backup is done correctly.'.format(now(), list(repositories.objects.values())[j])
 					for j, health in enumerate(repositories.objects.values_list('health')) if health[0] != 1]
 		content += '\n'.join(errors)
 
 		if not errors:
 				content += 'All integrated servers were backuped successfully.\nEverything seems clean and healthy.\n\n'
-		content += 'Regards,\nyour backup-friend check_backups.py'
+		content += '\nRegards,\nyour backup-friend castic.'
 
 		try:
 				smtp = smtplib.SMTP(self.config['smtpServer'])

@@ -14,16 +14,5 @@ def update(request):
                 threading.Thread(target=checkRepositories).start()
         else:
                 checkRepositories() 
-
-        # if enabled, send notification
-        result = ''
-
-        if __optionIsEnabled__(config['notify']['sendMailNotifications']):
-                result = mailingNotification().manageMailing()
-
-        # if result returned something, an error occurred
-        if result:
-                __log__(result)
-                return render(request, 'checkOutput.html', {'output':result})
         return redirect('/')
 
