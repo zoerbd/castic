@@ -95,7 +95,7 @@ class Rendering:
 		for match in pattern.finditer(line):
 			variable = match.group(1)
 			line = line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)).replace('\n', ''))
-		return line#line.replace('??{}??'.format(variable), eval('self.{}'.format(variable)))
+		return line
 
 	def __createAnsibleFiles__(self, updatedPair):
 		for filename, content in updatedPair:

@@ -10,18 +10,16 @@ def checkRepositories():
 	'''
 	check if repos are healthty and update db-information
 	'''
-	appRoot = gitProjectDir      # used appRoot-var because it's better readable in my opinion
-
 	# correct format of backupPath
 	os.path.join(config['general']['backupPath'], '')
 
 	# build path to repos based on given passwords
 	repos = [ os.path.join(config['general']['backupPath'],directory)
-			for directory in os.listdir(os.path.join(appRoot, 'passwords'))]
+			for directory in os.listdir(os.path.join(gitProjectDir, 'passwords'))]
 
 	# check if each corresponding repo is valid
 	status = [ 'no error' in __shell__('restic -r {} --password-file {} --no-cache check'.format(
-				repo, os.path.join(appRoot, 'passwords',
+				repo, os.path.join(gitProjectDir, 'passwords',
 				repo.split('/')[-1]))) for repo in repos ]
 
 	# update repository data in db

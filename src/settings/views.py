@@ -42,7 +42,7 @@ def settings(request):
                 for cat in cats
         ]
 
-        # merge initial values - fix this later to be more dynamic and less spaghetti
+        # merge initial values
         newInitialValues = initialValues[0][0]
         for categ in initialValues:
                 for j in range(1, len(categ)):

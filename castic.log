@@ -64,3 +64,9 @@ zoerb.cc                   : ok=0    changed=0    unreachable=1    failed=0
 2019-03-14 09:27:43.909863+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
 2019-03-14 09:28:02.869429+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
 2019-03-14 09:28:06.606376+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 09:39:47.314405+00:00 - empty command given
+2019-03-14 09:39:47.319349+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 09:39:54.907197+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 09:40:10.223751+00:00 - empty command given
+2019-03-14 09:40:10.229189+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 09:40:12.531971+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.

@@ -32,7 +32,7 @@ def __getFreeDiskSpace__():
 	root = os.path.join(config['general']['backupPath'], '')	# make sure path ends with /
 	output = __shell__('df -h')
 
-	mountPoint = __getMountPoint__(output, root) # fix this shit here: return value
+	mountPoint = __getMountPoint__(output, root)
 	overallSpace, availableSpace = __getOverallSpace__(output, mountPoint)
 	
 	return '{} out of {} left on {}'.format(availableSpace, overallSpace, mountPoint)
