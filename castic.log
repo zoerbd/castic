@@ -43,3 +43,20 @@ fatal: [zoerb.cc]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect 
 
 PLAY RECAP *********************************************************************
 zoerb.cc                   : ok=0    changed=0    unreachable=1    failed=0
+2019-03-14 08:15:45.579743+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:15:50.767961+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:15:53.396857+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:15:57.388764+00:00 - empty command given
+2019-03-14 08:15:57.395197+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:16:00.645538+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:16:09.323920+00:00 - empty command given
+2019-03-14 08:16:09.330032+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:16:09.861270+00:00 - empty command given
+2019-03-14 08:16:09.866468+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:16:14.056675+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:16:18.490996+00:00 - empty command given
+2019-03-14 08:16:18.495312+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:23:34.579719+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:23:36.877376+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:23:40.290456+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
+2019-03-14 08:24:01.528042+00:00 - Fatal error in __getOverallSpace__: couldn't determine available and overall space via regex.
