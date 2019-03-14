@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import settingsForm
 import json, shutil, re, os
-from castic.globals import config, loginRequired, __log__, gitProjectDir
+from castic.globals import config, loginRequired, __log__, gitProjectDir, __shell__
 from castic.settings import BASE_DIR
 from repositories.models import repositories
 
@@ -71,6 +71,7 @@ def __updateConfig__(confOrig, confNew):
 class checkAndForgetAutomation:
         def __init__(self, conf):
                 self.conf = conf
+                self.wasChecked = False
 
         def updateAll(self):
                 '''
@@ -78,7 +79,7 @@ class checkAndForgetAutomation:
                 It updates users cronjob for doing AutoCheck.
                 '''
 
-                values = {
+                self.values = {
                         'check' : {
                                 'col' : [
                                         'check',
@@ -102,8 +103,8 @@ class checkAndForgetAutomation:
                         }
                 }
 
-                for automationMethod in values.keys():
-                        methodname = values[automationMethod]
+                for automationMethod in self.values.keys():
+                        methodname = self.values[automationMethod]
                         self.pattern = methodname['pattern']    # pattern for syntax check
                         self.task_pattern = methodname['task_pattern']
 
@@ -117,6 +118,18 @@ class checkAndForgetAutomation:
                                 __log__(self.__replaceOrCreateCronjob__(cronjob))
                         else:
                                 __log__('Error occurred while trying to create cronjobs in settings/views.py.\nOutput: {}'.format(cronjob))
+
+        def __changesDetected__(self, content):
+                '''
+                This function checks if part of cron config changed to prevent updating each time
+                any setting is updated.
+                Returning True if changesMade else False.
+                '''
+                # only check forget
+                if not self.wasChecked:
+                        self.wasChecked = True
+                        return all([self.values['forget']['interval'] in line.split('--keep-last')[-1] for line in content])
+                return False
 
         def __replaceOrCreateCronjob__(self, cronjobStr):
                 '''
@@ -137,6 +150,9 @@ class checkAndForgetAutomation:
                         return self.__replaceOrCreateCronjob__(cronjobStr)
                 with open(crontabPath, 'r') as crontab:
                         crontabContent = crontab.readlines()
+
+                if not self.__changesDetected__(crontabContent):
+                        return 'No changes detected'
                 
                 # replace current cronjob, if none set, append
                 for j, line in enumerate(crontabContent):

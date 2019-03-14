@@ -3,7 +3,7 @@ from django.conf import settings
 from .forms import integrateInformation
 import os, sys, json, subprocess, re, pdb, random, shutil
 from subprocess import Popen, PIPE
-from castic.globals import config, __shell__, loginRequired, gitProjectDir
+from castic.globals import config, __shell__, loginRequired, gitProjectDir, __log__
 
 # Create your views here.
 @loginRequired
@@ -40,9 +40,12 @@ class Rendering:
 		and returns the exit message.
 		'''
 		result = __shell__('ansible-playbook ./integrate/ansible_rendered/setup.yml -e \"ansible_user={0}\" -e \"ansible_ssh_pass={1}\" -e \"ansible_become_pass={1}\"'.format(self.user, self.pw))
-		with open(os.path.join(gitProjectDir, 'passwords', ''.join(self.repoPath.split('/')[-1])), 'w') as pwfile:
+		passwdpath = os.path.join(gitProjectDir, 'passwords', ''.join(self.repoPath.split('/')[-1]))
+		with open(passwdpath, 'w') as pwfile:
 			pwfile.write(self.resticPW)
-		return result
+		if 'error' in result or 'failure' in result:
+			__shell__('rm {}'.format(passwdpath))
+			__log__('Error occurred while trying to integrate: {}'.format(result))
 
 	def renderAnsible(self):
 			'''
