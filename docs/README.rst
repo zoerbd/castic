@@ -10,16 +10,12 @@ Features
 Castic features the most common things you would expect a backup system to do.
 Here is an short overview:
 information:
-	.. hlist::
-	:columns: 1
-	* -> shows overall server information such as available disk space on used partition
-	* -> lists for each repository important information such as space it takes, date of last check and of course the health status
-	* -> enables you to take a look at any snapshot you took (including restore and delete options)
-	* -> automated checks and mail-notifications
+	* shows overall server information such as available disk space on used partition
+	* lists for each repository important information such as space it takes, date of last check and of course the health status
+	* enables you to take a look at any snapshot you took (including restore and delete options)
+	* automated checks and mail-notifications
 Integrate:
-	.. hlist::
-	:columns: 1
-	* -> has ansible backend to include new remote systems via ssh
+	* has ansible backend to include new remote systems via ssh
 
 |
 
