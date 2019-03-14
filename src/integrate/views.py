@@ -15,7 +15,8 @@ def integrate(request):
 		form = integrateInformation(request.POST)
 		if form.is_valid():
 			rend = Rendering(form['user'].value(), form['password'].value(), 
-					form['dest'].value(), form['repoPath'].value(), form['backupPath'].value())
+					form['dest'].value(), form['repoPath'].value(), form['backupPath'].value(),
+					form['localUser'].value(), form['localPassword'].value())
 			rend.renderAnsible()
 			result = rend.doIntegrationAndSavePW()
 			return render(request, 'checkOutput.html', {'output':result})
@@ -25,13 +26,15 @@ def integrate(request):
 	return render(request, 'integrate.html', {"form":form, "config":config})
 
 class Rendering:
-	def __init__(self, user, pw, dest, repoPath, backupPath, resticPW = ''.join([chr(random.randint(41,125)) for i in range(128)])):
+	def __init__(self, user, pw, dest, repoPath, backupPath, localUser, localPassword, resticPW = ''.join([chr(random.randint(41,125)) for i in range(128)])):
 		self.user = user
 		self.pw = pw
 		self.dest = dest
 		self.repoPath = os.path.join(gitProjectDir, repoPath)
 		self.backupPath = backupPath
 		self.resticPW = resticPW
+		self.localUser = localUser
+		self.localPassword = localPassword
 		self.ownHost = __shell__('cat /etc/hostname'.replace('\n', ''))
 
 	def doIntegrationAndSavePW(self):
@@ -43,9 +46,10 @@ class Rendering:
 		passwdpath = os.path.join(gitProjectDir, 'passwords', ''.join(self.repoPath.split('/')[-1]))
 		with open(passwdpath, 'w') as pwfile:
 			pwfile.write(self.resticPW)
-		if 'error' in result or 'failure' in result:
+		if 'error' in result or 'Failed' in result or 'fatal' in result:
 			__shell__('rm {}'.format(passwdpath))
-			__log__('Error occurred while trying to integrate: {}'.format(result))
+			return __log__('Error occurred while trying to integrate: {}'.format(result))
+		return result
 
 	def renderAnsible(self):
 			'''

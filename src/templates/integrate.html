@@ -13,14 +13,25 @@
 					{% csrf_token %}
 					<div class="fieldWrapper form-group">
 							{{ form.user.errors }}
-							<label for="{{ form.user.id_for_label }}">Remote-user:</label>
+							<label for="{{ form.user.id_for_label }}">Remote user:</label>
 							{{ form.user }}
 					</div>
 					<br>
 					<div class="fieldWrapper form-group">
 							{{ form.password.errors }}
-							<label for="{{ form.password.id_for_label }}">Password:</label>
+							<label for="{{ form.password.id_for_label }}">Password for remote user:</label>
 							{{ form.password }}
+					</div>
+					<br>
+					<div class="fieldWrapper form-group">
+							{{ form.localUser.errors }}
+							<label for="{{ form.localUser.id_for_label }}">User on local machine:</label>
+							{{ form.localUser }}
+					</div>
+					<div class="fieldWrapper form-group">
+							{{ form.localPassword.errors }}
+							<label for="{{ form.localPassword.id_for_label }}">Password for local user:</label>
+							{{ form.localPassword }}
 					</div>
 					<br>
 					<div class="fieldWrapper form-group">
