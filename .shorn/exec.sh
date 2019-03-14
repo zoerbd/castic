@@ -1,1 +1,0 @@
-gunicorn webmanagement.wsgi:application

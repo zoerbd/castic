@@ -6,7 +6,7 @@ from src.bin.installme import setupDependencies
 setup(
 	name = 'castic',
 	version = getVersion(),
-	description = 'A webmanagement built on the top of the non-graphical open-source backup program \'restic\'.',
+	description = 'A web-based monitor/management built on the top of the non-graphical open-source backup program \'restic\'.',
 	long_description = open('README.md').read(),
 	author = 'Dominic Zoerb',
 	author_email = 'dominic.zoerb@gmail.com',
