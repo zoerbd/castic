@@ -9,13 +9,15 @@ Features
 
 Castic features the most common things you would expect a backup system to do.
 Here is an short overview:
-information:
-	* shows overall server information such as available disk space on used partition
-	* lists for each repository important information such as space it takes, date of last check and of course the health status
-	* enables you to take a look at any snapshot you took (including restore and delete options)
-	* automated checks and mail-notifications
+
+Information:
+* shows overall server information such as available disk space on used partition
+* lists for each repository important information such as space it takes, date of last check and of course the health status
+* enables you to take a look at any snapshot you took (including restore and delete options)
+* automated checks and mail-notifications
+
 Integrate:
-	* has ansible backend to include new remote systems via ssh
+* Planned for next release: has ansible backend to include new remote systems via ssh
 
 |
 
@@ -67,7 +69,7 @@ After that we need to make sure that our python dependencies are installed and o
 
 |
 
-setup infrastructure
+Setup infrastructure
 ########
 
 Now we start to setup our deployment infrastructure.
@@ -96,7 +98,7 @@ Now we only have to commit small changes to our /etc/nginx/nginx.conf file, simp
 WARNING: I would strongly recommend you to increase the keepalive_timout value on your web server if you are using it on larger repositories as
 checking, deleting and restoring backups takes some time.
 
-db management
+Database management
 ########
 
 As the projects uses SQLite, the DB setup is pretty easy.
@@ -109,7 +111,7 @@ Simply make sure to be in the virtual environment (pipenv shell) and type the fo
 	./manage.py migrate
 
 
-user management
+User management
 ########
 
 Castic has no dedicated management system for it's user, but you should take a look at accessing
@@ -132,7 +134,7 @@ Exit by typing CTRL + D or exit().
 
 |
 
-configuration file
+Configuration
 ########
 
 You find a config.json file in the projects source.
