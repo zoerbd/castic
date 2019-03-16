@@ -27,7 +27,7 @@ def __shell__(command, old=False):
         '''
         if not command:
             return __log__('empty command given')
-        if old:
+        if old or "&&" in command or "|" in command:
             return subprocess.check_output(command, shell=True).decode('utf-8').strip()
         process = subprocess.Popen(command.split(' '), stderr=subprocess.PIPE, stdout=subprocess.PIPE)
         stdout, stderr = [ item.decode('utf-8').strip() for item in process.communicate()]

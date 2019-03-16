@@ -30,7 +30,7 @@ def __getFreeDiskSpace__():
 	'''
 	# get mount-point	
 	root = os.path.join(config['general']['backupPath'], '')	# make sure path ends with /
-	output = __shell__('df -h')
+	output = __shell__('df -h', old=True)
 
 	mountPoint = __getMountPoint__(output, root)
 	overallSpace, availableSpace = __getOverallSpace__(output, mountPoint)
@@ -41,10 +41,9 @@ def __getOverallSpace__(output, root):
 	'''
 	Return overall and available space of disk at mountpoint
 	'''
-	patternOverall = re.compile(r'\s+(\d+\.?\d+[A-Z]).+\s+(\d+\.?\d+[A-Z])\s+\d+%\s+{}?[\n]?$'.format(root))
-	patternAvailable = re.compile(r'(\d+\.?\d+[A-Z])\s+\d+%\s+{}?[\n]?$'.format(root))
+	pattern = re.compile(r'\s+(\d+\.?\d+[A-Z]).+\s+(\d+\.?\d+[A-Z])\s+\d+%\s+{}?[\n]?$'.format(root))
 	for line in output.split('\n'):
-		result = [(match.group(1), match.group(2)) for match in patternOverall.finditer(line)]
+		result = [(match.group(1), match.group(2)) for match in pattern.finditer(line)]
 		if result:
 			return result[0]
 	return (__log__('Fatal error in __getOverallSpace__: couldn\'t determine available and overall space via regex.'), '')
@@ -59,6 +58,9 @@ def __getMountPoint__(output, root):
 
 		# update root by cutting last /<something>
 		root = '/'.join(root.split('/')[:-1])
+
+		if not root:
+			root = '/'
 
 		# check if mountpoint exists
 		for line in output.split('\n'):
@@ -81,7 +83,9 @@ def __getLastDate__():
 		__shell__(os.path.join(BASE_DIR, 'bin/update.py'))
 		return __getLastDate__()
 
-	for j in range(1, len(values)):
+	if len(values) == 1:
+		return values[0]['lastUpdate']
+	for j in range(1,len(values)):
 		latest = values[j]['lastUpdate']
 		if values[j-1]['lastUpdate'] > latest:
 			latest = values[j-1]['lastUpdate']

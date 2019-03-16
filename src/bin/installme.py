@@ -5,7 +5,9 @@ This script is made to be called from setup.py file.
 import pdb
 import sys, os, shutil, json
 
-sys.path.insert(0, os.path.join(input('Path to the source folder of castic (for example: /var/www/castic/src/): '), 'castic'))
+sourcePath = '/var/www/castic/'
+sourcePath = input('Path to the castic source folder (default: /var/www/castic/): ')
+sys.path.insert(0, os.path.join(sourcePath, 'src/castic'))
 from settings import BASE_DIR
 
 sys.path.insert(0, os.path.join(BASE_DIR))
@@ -40,7 +42,7 @@ class setupDependencies:
 		self.__generalSetup__()
 		
 		# initial backup
-		if self.__ask__('Should an initial backup check be done? (warmly recommended)'):
+		if self.__ask__('Should an initial backup check be done?\nWARNING: To access your repositories, create in your the passwords folder of your castic root directory for each repo a file with its name which contains the password'):
 			from update.check import checkRepositories
 			checkRepositories()
 
@@ -71,9 +73,8 @@ class setupDependencies:
 		'''
 		# setup (migrate) database
 		manageExecutable = os.path.join(BASE_DIR, 'manage.py')
-		[ __log__('Database migration returned with: {}'.format(__shell__(command)))
-		  for command in [ '{} makemigrations'.format(manageExecutable), 
-		  				   '{}  migrate'.format(manageExecutable)]]
+		[ __shell__(command, old=True)
+		  for command in [ '{} makemigrations'.format(manageExecutable), '{}  migrate'.format(manageExecutable)]]
 		
 		# setup user
 		print('Creating user for authenticate for castic webmanagement.')
@@ -82,7 +83,7 @@ class setupDependencies:
 
 		# install restic
 		if self.__ask__('Should restic be installed?'):
-			__shell__('https://github.com/restic/restic/releases/download/v0.9.4/restic_0.9.4_linux_amd64.bz2')
+			__shell__('wget https://github.com/restic/restic/releases/download/v0.9.4/restic_0.9.4_linux_amd64.bz2')
 			__shell__('bunzip2 restic_0.9.4_linux_amd64.bz2')
 			shutil.copyfile('restic_0.9.4_linux_amd64', '/usr/bin/restic')
 			__shell__('chmod a+x /usr/bin/restic')
@@ -187,12 +188,12 @@ class setupDependencies:
 		Ask question and return bool answer.
 		'''
 		if len(args) == 1:
-			return __shell__('read -s -n 1 -p "{} [y|n]\n" a && echo $a'.format(args[0]), True).lower() == 'y'
+                      return input(args[0] + '[y|n]').lower() == 'y'
 
 		# do this if options-block (i.e. [y|n|d]) explicitly given and check if answer valid
 		# check one-sized optiosn available to enable using controls without pressing enter
 		if all([ True if len(opt.replace('[', '').replace(']', '').replace('\'', '')) == 1 else False for opt in args[1].split('|')]):
-			question = __shell__('read -s -n 1 -p "{} {}\n" a && echo $a'.format(args[0], args[1].replace('\'', '')), True).lower()
+                    question = input('{} {}'.format(args[0], args[1].replace('\'', ''))).lower()
 		else:
 			opt.replace('[', '').replace(']', '').replace('\'', '')
 

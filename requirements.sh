@@ -1,3 +1,4 @@
 sshpass
 ansible
 nginx
+wget
