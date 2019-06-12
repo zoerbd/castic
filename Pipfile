@@ -7,7 +7,7 @@ verify_ssl = true
 rope = "*"
 
 [packages]
-django = "*"
+django = ">=2.1.9"
 gunicorn = "*"
 py_smtp = "*"
 
