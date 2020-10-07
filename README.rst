@@ -1,5 +1,5 @@
 
-.. image:: https://www.zoerb.me/castic_logo.png
+.. image:: https://www.zoerb.me/static/castic_logo.png
 
 ------------
 
@@ -46,11 +46,11 @@ Screenshots
 
 |
 
-.. image:: https://www.zoerb.me/castic_screenshot.png
+.. image:: https://www.zoerb.me/static/castic_screenshot.png
 
 |
 
-.. image:: https://www.zoerb.me/castic_screenshot2.png
+.. image:: https://www.zoerb.me/static/castic_screenshot2.png
 
 |
 
