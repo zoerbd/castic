@@ -1,5 +1,5 @@
 
-.. image:: https://www.teching.dev/castic/logo.png
+.. image:: https://www.zoerb.me/castic_logo.png
 
 ------------
 
@@ -46,11 +46,11 @@ Screenshots
 
 |
 
-.. image:: https://www.teching.dev/castic/screenshot.png
+.. image:: https://www.zoerb.me/castic_screenshot.png
 
 |
 
-.. image:: https://www.teching.dev/castic/screenshot2.png
+.. image:: https://www.zoerb.me/castic_screenshot2.png
 
 |
 
