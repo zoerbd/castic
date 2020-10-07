@@ -1,5 +1,5 @@
 
-.. image:: https://www.zoerb.me/static/castic_logo.png
+.. image:: https://www.zoerb.me/static/castic_logo_small.png
 
 ------------
 
